@@ -26,6 +26,7 @@ export const MENU: MenuItem[] = [
     icon: 'file',
     link: '/reports'
   },
+ /*
   {
     label: 'Apps',
     icon: 'mail',
@@ -72,6 +73,7 @@ export const MENU: MenuItem[] = [
       }
     ]
   },
+  */
   {
     label: 'UI Kit',
     icon: 'feather',
