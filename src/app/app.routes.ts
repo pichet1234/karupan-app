@@ -15,6 +15,22 @@ export const routes: Routes = [
         loadChildren: () => import('./views/pages/dashboard/dashboard.routes')
       },
       {
+        path: 'borrow',
+        loadChildren: () => import('./views/pages/borrow/borrow.routes')
+      },
+      {
+        path: 'receive',
+        loadChildren: () => import('./views/pages/receive/receive.routes')
+      },
+      {
+        path: 'kreturn',
+        loadChildren: () => import('./views/pages/kreturn/kreturn.routes')
+      },
+      {
+        path: 'reports',
+        loadChildren: () => import('./views/pages/reports/reports.routes')
+      },
+      {
         path: 'apps',
         loadChildren: () => import('./views/pages/apps/apps.routes')
       },

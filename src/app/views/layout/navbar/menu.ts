@@ -7,6 +7,26 @@ export const MENU: MenuItem[] = [
     link: '/dashboard'
   },
   {
+    label: 'รับครุภัณฑ์',
+    icon:'package',
+    link: '/receive'
+  },
+  {
+    label: 'ยืมครุภัณฑ์',
+    icon:'box',
+    link: '/borrow'
+  },
+  {
+    label: 'คืนครุภัณฑ์',
+    icon: 'package',
+    link: '/kreturn'
+  },
+  {
+    label: 'รายงาน',
+    icon: 'file',
+    link: '/reports'
+  },
+  {
     label: 'Apps',
     icon: 'mail',
     subMenus: [
