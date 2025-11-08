@@ -31,6 +31,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/pages/reports/reports.routes')
       },
       {
+        path: 'setting',
+        loadChildren: () => import('./views/pages/setting/setting.routes')
+      },
+      {
         path: 'apps',
         loadChildren: () => import('./views/pages/apps/apps.routes')
       },

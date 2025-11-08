@@ -26,6 +26,11 @@ export const MENU: MenuItem[] = [
     icon: 'file',
     link: '/reports'
   },
+  {
+    label: 'setting',
+    icon: 'settings',
+    link: '/setting'
+  },
  /*
   {
     label: 'Apps',
