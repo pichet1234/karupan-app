@@ -5,55 +5,89 @@
           <h6 class="card-title">รับครุภัณฑ์</h6>
             <form>
               <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                   <div class="mb-3">
-                    <label class="form-label">First Name</label>
-                    <input type="text" class="form-control" placeholder="Enter first name">
+                    <label class="form-label">ประเภทครุภัณฑ์</label>
+                    <select class="form-select" id="exampleFormControlSelect1">
+                      <option selected disabled>กรุณาเลือก</option>
+                      <option value="0">งบบริจาค</option>
+                      <option value="1">งบค่าเสื่อม</option>
+                      <option value="2">งบปีงบกระมาณ</option>
+                      <option value="3">เงินบำรุง</option>
+                    </select>
                   </div>
                 </div><!-- Col -->
+              </div><!--Row-->
+              <div class="row">
                 <div class="col-sm-6">
                   <div class="mb-3">
-                    <label class="form-label">Last Name</label>
-                    <input type="text" class="form-control" placeholder="Enter last name">
+                    <label class="form-label">ครุภัณฑ์</label>
+                    <input type="text" class="form-control" placeholder="เช่นเตียงผู้ป่วย อ๊อกซิเจน...">
                   </div>
                 </div><!-- Col -->
+                <div class="col-sm-3">
+                  <div class="mb-3">
+                    <label class="form-label">รหัสครุภัณฑ์</label>
+                    <input type="text" class="form-control" placeholder="000-000-000/0">
+                  </div>
+                </div><!-- Col -->
+                <div class="col-sm-3">
+                  <label class="form-label">วันที่ลงรับ</label>
+                  <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd"
+                        name="dp" [(ngModel)]="selectedDate" ngbDatepicker #d="ngbDatepicker">
+                    <button class="input-group-text" type="button" (click)="d.toggle()">
+                      <i class="feather icon-calendar icon-md text-secondary"></i>
+                    </button>
+                  </div>
+                 </div><!-- col -->
               </div><!-- Row -->
               <div class="row">
                 <div class="col-sm-4">
                   <div class="mb-3">
-                    <label class="form-label">City</label>
-                    <input type="text" class="form-control" placeholder="Enter city">
+                    <label class="form-label">ยี่ห้อ</label>
+                    <input type="text" class="form-control" placeholder="honda">
                   </div>
                 </div><!-- Col -->
-                <div class="col-sm-4">
+                <div class="col-sm-2">
                   <div class="mb-3">
-                    <label class="form-label">State</label>
-                    <input type="text" class="form-control" placeholder="Enter state">
+                    <label class="form-label">ราคา</label>
+                    <input type="text" class="form-control" placeholder="0">
                   </div>
                 </div><!-- Col -->
-                <div class="col-sm-4">
+                <div class="col-sm-2">
                   <div class="mb-3">
-                    <label class="form-label">Zip</label>
-                    <input type="text" class="form-control" placeholder="Enter zip code">
+                    <label class="form-label">อานยุการใช้งาน</label>
+                    <input type="text" class="form-control" placeholder="1">
                   </div>
                 </div><!-- Col -->
               </div><!-- Row -->
               <div class="row">
                 <div class="col-sm-6">
                   <div class="mb-3">
-                    <label class="form-label">Email address</label>
-                    <input type="email" class="form-control" placeholder="Enter email">
+                    <label class="form-label">ครุภัณฑ์จาก</label>
+                      <select class="form-select" id="exampleFormControlSelect1">
+                        <option selected disabled>กรุณาเลือก</option>
+                      </select>
                   </div>
                 </div><!-- Col -->
                 <div class="col-sm-6">
                   <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <input type="password" class="form-control" autocomplete="off" placeholder="Password">
+                    <label class="form-label" for="formFile">กรุณาเลือกรูปภาพครุภัณฑ์</label>
+                    <input class="form-control" type="file" id="formFile">
+                  </div>
+                </div>
+              </div><!-- Row -->
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">รายละเอียด</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
                   </div>
                 </div><!-- Col -->
-              </div><!-- Row -->
+              </div><!--Row-->
             </form>
-            <button type="button" class="btn btn-primary submit">Submit form</button>
+            <button type="button" class="btn btn-primary submit">บันทึก</button>
         </div>
       </div>
     </div>
