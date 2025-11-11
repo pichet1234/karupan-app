@@ -19,7 +19,7 @@ import { FeatherIconDirective } from '../../../core/feather-icon/feather-icon.di
     NgFor,
     NgIf,
     NgClass
-  ],
+],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -102,7 +102,7 @@ export class NavbarComponent implements OnInit {
   /**
    * Fixed header menu on scroll
    */
-  @HostListener('window:scroll', ['$event']) getScrollHeight() {    
+  @HostListener('window:scroll', ['$event']) getScrollHeight(event: Event) {    
     if (window.matchMedia('(min-width: 992px)').matches) {
       let header: HTMLElement = document.querySelector('.horizontal-menu') as HTMLElement;
       if(window.pageYOffset >= 60) {
