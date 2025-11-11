@@ -1,1 +1,23 @@
-<p>kreturn works!</p>
+<div class="row">
+    <div class="col-md-12 stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="card-title">คืนครุภัณฑ์</h6>
+            <form>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input class="form-control" type="text"
+                        [ngbTypeahead]="search"
+                        [resultFormatter]="formatter"
+                        [inputFormatter]="formatter"
+                        placeholder="ค้นหาชื่อผู้ยืม">
+                        <button class="input-group-text" type="button" >
+                          <i class="feather icon-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
