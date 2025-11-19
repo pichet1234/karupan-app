@@ -9,7 +9,20 @@ export const MENU: MenuItem[] = [
   {
     label: 'รับครุภัณฑ์',
     icon:'package',
-    link: '/receive'
+    subMenus:[
+      {
+        subMenuItems:[
+          {
+            label:'general',
+            link: '/receive'
+          },
+          {
+            label: 'donat',
+            link: '/receive/donat'
+          }
+        ]
+      }
+    ]
   },
   {
     label: 'ยืมครุภัณฑ์',
@@ -29,7 +42,21 @@ export const MENU: MenuItem[] = [
   {
     label: 'setting',
     icon: 'settings',
-    link: '/setting'
+    link: '/setting',
+    subMenus:[
+      {
+        subMenuItems:[
+          {
+            label: 'User',
+            link: '/setting/user'
+          },
+          {
+            label: 'karupan',
+            link: '/setting/karupan'
+          }
+        ]
+      }
+    ]
   },
  /*
   {
