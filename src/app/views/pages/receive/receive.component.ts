@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component ,OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,FormBuilder } from '@angular/forms';
 import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDatepickerModule, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -16,4 +16,11 @@ import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDatepickerModule, NgbD
 })
 export class ReceiveComponent {
   selectedDate: NgbDateStruct;
+
+  constructor(fb:FormBuilder){
+    
+   }
+  
+
+
 }
