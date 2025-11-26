@@ -11,3 +11,27 @@
         </div>
     </div>
 </div>
+
+          <div class="row mt-3">
+            <div class="col-12 col-md-6 col-xl-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Upload File</h5>
+                  <h6 class="card-subtitle mb-2 text-secondary">Upload a file (image or other)</h6>
+
+                  <input type="file" (change)="onFileSelected($event)" class="form-control" />
+
+                  <div *ngIf="previewUrl" class="mt-2">
+                    <p class="mb-1">Preview:</p>
+                    <img *ngIf="isImage()" [src]="previewUrl" alt="preview" style="max-width:100%;height:auto;border:1px solid #ddd;padding:4px;" />
+                    <p *ngIf="!isImage()" class="small">Selected: {{ selectedFile?.name }}</p>
+                  </div>
+
+                  <button class="btn btn-primary mt-3" (click)="upload()" [disabled]="!selectedFile">Upload</button>
+
+                  <div *ngIf="uploadProgress > 0" class="mt-2">Progress: {{ uploadProgress }}%</div>
+                  <pre *ngIf="uploadResponse" class="mt-2 small">{{ uploadResponse | json }}</pre>
+                </div>
+              </div>
+            </div>
+          </div>
