@@ -63,7 +63,7 @@ export class ReceiveComponent {
         formData.append('redate', dateStr);
 
        this.uploadfileService.uploadfile(formData).subscribe({
-          next:(response)=>{
+          next:(response:any)=>{
             if(response){
               Swal.fire({
                 icon: 'success',

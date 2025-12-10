@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { UploadService } from '../../../../core/services/upload.service';
-
+import { NgbModal,NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-karupan',
   standalone: true,
   imports: [
     CommonModule,
-    JsonPipe
+    JsonPipe,
+    NgbModalModule,
+    ReactiveFormsModule
   ],
   templateUrl: './karupan.component.html',
   styleUrl: './karupan.component.scss'
@@ -17,9 +20,25 @@ export class KarupanComponent {
   previewUrl?: string | ArrayBuffer | null = null;
   uploadProgress = 0;
   uploadResponse: any = null;
+  karupanForm:any //สร้างตัวแปรเก็บฟอร์ม
 
-  constructor(private uploadService: UploadService) {}
+  constructor(
+    private uploadService: UploadService,
+    private modalService: NgbModal,
+    private fb:FormBuilder) {
+      this.karupanForm = this.fb.group({
+        karupanType: ['', Validators.required],//ประเภทครุภัณฑ์
+        details: ['']//รายละเอียด
+      });
+    }
 
+   karupanModal(karupanType:any) {
+   this.modalService.open(karupanType, { centered: true , size:'lg' }); 
+  }
+
+  summitForm(){
+    console.log(this.karupanForm.value);
+  }
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) {

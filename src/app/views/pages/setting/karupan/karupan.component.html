@@ -5,12 +5,40 @@
             <h5 class="card-title">Karupan Type</h5>
             <h6 class="card-subtitle mb-2 text-secondary">add karupan type</h6>
             <p class="card-text mb-3">ครุภัณฑ์สำนักงาน ครุภัณฑ์ยานพาหนะและขนส่ง ครุภัณฑ์ไฟฟ้าและวิทยุ ครุภัณฑ์การแพทย์ ครุภัณฑ์การเกษตร และครุภัณฑ์ก่อสร้าง</p>
-            <a href="" (click)="false" class="card-link">Add</a>
+            <a (click)="karupanModal(karupanType)" class="card-link">Add</a>
             <a href="" (click)="false" class="card-link">views</a>
           </div>
         </div>
     </div>
 </div>
+
+<!-- Modal Template -->
+<ng-template #karupanType let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Add karupanType</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+
+  <form [formGroup]="karupanForm">
+  <div class="modal-body">
+    <div class="mb-3">
+      <label for="form-label">ประเภทครุภัณฑ์</label>
+      <input type="text" class="form-control" name="karupanType" formControlName="karupanType"
+        placeholder="เช่น ครุภัณฑ์สำนักงาน">
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label">รายละเอียด</label>
+      <textarea class="form-control" name="details" formControlName="details" id="exampleFormControlTextarea1" rows="5"></textarea>
+    </div>
+    </div>
+</form>
+
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="modal.dismiss()">ปิด</button>
+    <button class="btn btn-success" (click)="summitForm()">บันทึก</button>
+  </div>
+</ng-template>
+
 
           <div class="row mt-3">
             <div class="col-12 col-md-6 col-xl-4">
