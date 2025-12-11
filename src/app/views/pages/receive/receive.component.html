@@ -33,8 +33,7 @@
                 <div class="col-sm-3">
                   <label class="form-label">วันที่ลงรับ</label>
                   <div class="input-group">
-                    <input class="form-control" placeholder="yyyy-mm-dd" name="redate" formControlName="redate"
-                        name="dp"  ngbDatepicker #d="ngbDatepicker">
+                  <input class="form-control" placeholder="yyyy-mm-dd" formControlName="redate" ngbDatepicker #d="ngbDatepicker">
                     <button class="input-group-text" type="button" (click)="d.toggle()">
                       <i class="feather icon-calendar icon-md text-secondary"></i>
                     </button>
@@ -76,7 +75,7 @@
                 <div class="col-sm-5">
                   <div class="mb-3">
                     <label class="form-label" for="formFile">กรุณาเลือกรูปภาพครุภัณฑ์</label>
-                    <input class="form-control" type="file" id="formFile">
+                    <input class="form-control" type="file"  (change)="onFileSelected($event)" >
                   </div>
                 </div>
               </div><!-- Row -->
@@ -84,12 +83,12 @@
                 <div class="col-sm-6">
                   <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">รายละเอียด</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                    <textarea class="form-control" name="detail" formControlName="detail" id="exampleFormControlTextarea1" rows="5"></textarea>
                   </div>
                 </div><!-- Col -->
               </div><!--Row-->
             </form>
-            <button type="button" class="btn btn-primary submit">บันทึก</button>
+            <button type="button" class="btn btn-primary submit" (click)="onSubmit()">บันทึก</button>
         </div>
       </div>
     </div>

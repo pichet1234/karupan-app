@@ -4,6 +4,7 @@ import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } 
 import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDatepickerModule, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { UploadfileService } from '../../../core/services/uploadfile.service';
 import Swal from 'sweetalert2';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-receive',
   standalone: true,
@@ -19,11 +20,11 @@ import Swal from 'sweetalert2';
   styleUrl: './receive.component.scss'
 })
 export class ReceiveComponent {
-  selectedDate: NgbDateStruct;
+  selectedDate: NgbDateStruct| null = null;
 
   form:FormGroup;
-  selectedFile:File | null;
-  constructor(fb:FormBuilder , private uploadfileService:UploadfileService){
+  selectedFile:File | null = null;
+  constructor(fb:FormBuilder , private uploadfileService:UploadfileService , private http:HttpClient){
     this.form=fb.group({ 
           kname: ['',Validators.required],//ชื่อครุภัณฑ์
           karupanCode: ['',Validators.required],//รหัสครุภัณฑ์
@@ -36,22 +37,33 @@ export class ReceiveComponent {
           usefullife: ['',Validators.required],//อายุการใช้งาน
           status: ['ใช้งานได้'],//สถานะ
           brand: [''],//ยี่ห้อ
-          imageUrl: ['']//รูปภาพครุภัณฑ์
     })
    }
   
-    onFileSelected(event:any){ 
-      this.selectedFile=event.target.files[0];
-    }
 
+ngOnInit(): void { }
+
+  // -----------------------------------------
+  // ✔ ตรวจสอบไฟล์ว่าเลือกสำเร็จหรือยัง
+  // -----------------------------------------
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+
+    if (file) {
+      this.selectedFile = file;
+      console.log("📁 เลือกไฟล์แล้ว:", file.name);
+    } else {
+      this.selectedFile = null;
+      console.warn("⚠ ยังไม่ได้เลือกไฟล์");
+    }
+  }
     onSubmit(){
-      if(this.form.valid && this.selectedFile){
+      if(this.selectedFile){
         const date = this.form.get('redate')?.value; 
         const dateStr = `${date.year}-${date.month}-${date.day}`;
         const formData=new FormData();
         formData.append('kname',this.form.get('kname')?.value);
         formData.append('karupanCode',this.form.get('karupanCode')?.value);
-        formData.append('redate',this.form.get('redate')?.value);
         formData.append('karupantype',this.form.get('karupantype')?.value);
         formData.append('detail',this.form.get('detail')?.value);
         formData.append('price',this.form.get('price')?.value);
@@ -61,6 +73,7 @@ export class ReceiveComponent {
         formData.append('status',this.form.get('status')?.value);
         formData.append('brand',this.form.get('brand')?.value);
         formData.append('redate', dateStr);
+        formData.append('file', this.selectedFile);
 
        this.uploadfileService.uploadfile(formData).subscribe({
           next:(response:any)=>{
@@ -85,7 +98,8 @@ export class ReceiveComponent {
           }
         });
       }
-
+      console.log(this.form.value);
+      console.log(this.selectedFile);
     }
 
 }
