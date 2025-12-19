@@ -9,8 +9,14 @@ export class ApiDataService {
 
   urlserver='http://localhost:3000';
   constructor(private http: HttpClient) { }
-
+  /* เพิ่มประเภทครุภัณฑ์ */
   addkarupanType(data:any):Observable<any>{
     return this.http.post<any>(`${this.urlserver}/addkarupanType`,data);
   }
+
+  /* ดึงข้อมูลประเภทครุภัณฑ์ */
+  getkarupanType():Observable<any>{
+    return this.http.get<any>(`${this.urlserver}/getkarupan`);
+  }
+
 }

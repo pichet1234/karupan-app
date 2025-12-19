@@ -8,11 +8,9 @@
                 <div class="col-sm-4">
                   <div class="mb-3">
                     <label class="form-label">ประเภทครุภัณฑ์</label>
-                    <select class="form-select" id="exampleFormControlSelect1" name="karupantype" formControlName="karupantype">
+                    <select  class="form-select" id="exampleFormControlSelect1" name="karupantype" formControlName="karupantype">
                       <option selected disabled>กรุณาเลือก</option>
-                      <option value="งบค่าเสื่อม">งบค่าเสื่อม</option>
-                      <option value="งบปีงบกระมาณ">งบปีงบกระมาณ</option>
-                      <option value="เงินบำรุง">เงินบำรุง</option>
+                      <option *ngFor="let i of karupanTypes" [value]="i._id">{{ i.karupanType }}</option>
                     </select>
                   </div>
                 </div><!-- Col -->

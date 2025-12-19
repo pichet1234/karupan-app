@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDatepickerModule, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { UploadfileService } from '../../../core/services/uploadfile.service';
+import { ApiDataService } from '../../../core/services/api-data.service';
 import Swal from 'sweetalert2';
 import { HttpClient } from '@angular/common/http';
 @Component({
@@ -21,10 +22,14 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ReceiveComponent {
   selectedDate: NgbDateStruct| null = null;
-
+  karupanTypes: any[] = [];
   form:FormGroup;
   selectedFile:File | null = null;
-  constructor(fb:FormBuilder , private uploadfileService:UploadfileService , private http:HttpClient){
+  constructor(
+        fb:FormBuilder ,
+        private uploadfileService:UploadfileService ,
+        private http:HttpClient ,
+        private apiDataService:ApiDataService){
     this.form=fb.group({ 
           kname: ['',Validators.required],//ชื่อครุภัณฑ์
           karupanCode: ['',Validators.required],//รหัสครุภัณฑ์
@@ -41,21 +46,36 @@ export class ReceiveComponent {
    }
   
 
-ngOnInit(): void { }
+ngOnInit(): void {
+  this.loadKarupanType();
+ }
 
-  // -----------------------------------------
-  // ✔ ตรวจสอบไฟล์ว่าเลือกสำเร็จหรือยัง
-  // -----------------------------------------
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-
-    if (file) {
-      this.selectedFile = file;
-      console.log("📁 เลือกไฟล์แล้ว:", file.name);
-    } else {
-      this.selectedFile = null;
-      console.warn("⚠ ยังไม่ได้เลือกไฟล์");
-    }
+// -----------------------------------------
+// ✔ ตรวจสอบไฟล์ว่าเลือกสำเร็จหรือยัง
+// -----------------------------------------
+onFileSelected(event: any) {
+  const file = event.target.files[0];
+  
+  if (file) {
+    this.selectedFile = file;
+    console.log("📁 เลือกไฟล์แล้ว:", file.name);
+  } else {
+    this.selectedFile = null;
+    console.warn("⚠ ยังไม่ได้เลือกไฟล์");
+  }
+  
+  
+  }
+        loadKarupanType() {
+    this.apiDataService.getkarupanType().subscribe({
+      next: (res) => {
+        console.log(res.data);
+        this.karupanTypes = res.data;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
   }
     onSubmit(){
       if(this.selectedFile){
@@ -101,5 +121,6 @@ ngOnInit(): void { }
       console.log(this.form.value);
       console.log(this.selectedFile);
     }
+
 
 }
