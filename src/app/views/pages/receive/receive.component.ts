@@ -21,6 +21,8 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './receive.component.scss'
 })
 export class ReceiveComponent {
+
+  apiUrl = 'http://localhost:3000';
   selectedDate: NgbDateStruct| null = null;
   karupanTypes: any[] = [];
   form:FormGroup;
