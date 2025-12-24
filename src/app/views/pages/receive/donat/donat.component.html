@@ -3,32 +3,33 @@
       <div class="card">
         <div class="card-body">
           <h6 class="card-title">รับครุภัณฑ์(บริจาค)</h6>
-            <form>
+            <form [formGroup]="form">
               <div class="row">
                 <div class="col-sm-4">
                   <div class="mb-3">
                     <label class="form-label">ประเภทครุภัณฑ์</label>
-                    <select class="form-select" id="exampleFormControlSelect1">
-                      <option selected disabled value="0">งบบริจาค</option>
+                    <select class="form-select" id="exampleFormControlSelect1" name="karupantype" formControlName="karupantype">
+                      <option selected disabled>กรุณาเลือก</option>
+                      <option *ngFor="let i of karupanTypes" [value]="i._id">{{ i.karupanType }}</option>
                     </select>
                   </div>
                 </div><!-- Col -->
               <div class="col-sm-3">
                 <div class="mb-3">
                   <label class="form-label"> ชื่อ - สกุล(ผู้บริจาค)</label>
-                  <input type="text" class="form-control" name="uname">
+                  <input type="text" class="form-control" name="uname" formControlName="uname" >
                 </div>
               </div><!-- Col -->
               <div class="col-sm-3">
                 <div class="mb-3">
                   <label  class="form-label">ที่อยู่</label>
-                  <input type="text" class="form-control" name="uname">
+                  <input type="text" class="form-control" name="address" formControlName="address" >
                 </div>
               </div><!-- Col -->
               <div class="col-sm-2">
                 <div class="mb-3">
                   <label class="form-label"> เบอร์โทร</label>
-                  <input type="tel" class="form-control" name="uname">
+                  <input type="tel" class="form-control" name="tel" formControlName="tel" >
                 </div>
               </div><!-- Col -->
               </div><!--Row-->
@@ -36,20 +37,19 @@
                 <div class="col-sm-6">
                   <div class="mb-3">
                     <label class="form-label">ครุภัณฑ์</label>
-                    <input type="text" class="form-control" placeholder="เช่นเตียงผู้ป่วย อ๊อกซิเจน...">
+                    <input type="text" class="form-control" name="kname" formControlName="kname" placeholder="เช่นเตียงผู้ป่วย อ๊อกซิเจน...">
                   </div>
                 </div><!-- Col -->
                 <div class="col-sm-3">
                   <div class="mb-3">
                     <label class="form-label">รหัสครุภัณฑ์</label>
-                    <input type="text" class="form-control" placeholder="000-000-000/0">
+                    <input type="text" class="form-control" name="karupanCode" formControlName="karupanCode" placeholder="000-000-000/0">
                   </div>
                 </div><!-- Col -->
                 <div class="col-sm-3">
                   <label class="form-label">วันที่ลงรับ</label>
                   <div class="input-group">
-                    <input class="form-control" placeholder="yyyy-mm-dd"
-                        name="dp" [(ngModel)]="selectedDate" ngbDatepicker #d="ngbDatepicker">
+                  <input class="form-control" placeholder="yyyy-mm-dd" formControlName="redate" ngbDatepicker #d="ngbDatepicker">
                     <button class="input-group-text" type="button" (click)="d.toggle()">
                       <i class="feather icon-calendar icon-md text-secondary"></i>
                     </button>
@@ -60,19 +60,19 @@
                 <div class="col-sm-4">
                   <div class="mb-3">
                     <label class="form-label">ยี่ห้อ</label>
-                    <input type="text" class="form-control" placeholder="honda">
+                    <input type="text" class="form-control" name="brand" formControlName="brand" placeholder="honda">
                   </div>
                 </div><!-- Col -->
                 <div class="col-sm-2">
                   <div class="mb-3">
                     <label class="form-label">ราคา</label>
-                    <input type="text" class="form-control" placeholder="0">
+                    <input type="text" class="form-control" name="price" formControlName="price" placeholder="0">
                   </div>
                 </div><!-- Col -->
                 <div class="col-sm-2">
                   <div class="mb-3">
                     <label class="form-label">อานยุการใช้งาน</label>
-                    <input type="text" class="form-control" placeholder="1">
+                    <input type="text" class="form-control" name="usefullife" formControlName="usefullife" placeholder="1">
                   </div>
                 </div><!-- Col -->
               </div><!-- Row -->
@@ -81,14 +81,17 @@
                   <div class="mb-3">
                     <label class="form-label">ครุภัณฑ์จาก</label>
                       <select class="form-select" id="exampleFormControlSelect1">
-                        <option selected disabled>กรุณาเลือก</option>
+                      <option selected disabled>กรุณาเลือก</option>
+                      <option value="งบค่าเสื่อม">งบค่าเสื่อม</option>
+                      <option value="งบปีงบประมาณ">งบปีงบประมาณ</option>
+                      <option value="เงินบำรุง">เงินบำรุง</option>
                       </select>
                   </div>
                 </div><!-- Col -->
                 <div class="col-sm-6">
                   <div class="mb-3">
                     <label class="form-label" for="formFile">กรุณาเลือกรูปภาพครุภัณฑ์</label>
-                    <input class="form-control" type="file" id="formFile">
+                    <input class="form-control" type="file"  (change)="onFileSelected($event)" >
                   </div>
                 </div>
               </div><!-- Row -->
@@ -96,7 +99,7 @@
                 <div class="col-sm-6">
                   <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">รายละเอียด</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                    <textarea class="form-control" name="detail" formControlName="detail" id="exampleFormControlTextarea1" rows="5"></textarea>
                   </div>
                 </div><!-- Col -->
               </div><!--Row-->

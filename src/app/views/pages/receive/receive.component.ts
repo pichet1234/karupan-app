@@ -5,7 +5,6 @@ import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDatepickerModule, NgbD
 import { UploadfileService } from '../../../core/services/uploadfile.service';
 import { ApiDataService } from '../../../core/services/api-data.service';
 import Swal from 'sweetalert2';
-import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-receive',
   standalone: true,
@@ -22,7 +21,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ReceiveComponent {
 
-  apiUrl = 'http://localhost:3000';
   selectedDate: NgbDateStruct| null = null;
   karupanTypes: any[] = [];
   form:FormGroup;
@@ -30,7 +28,6 @@ export class ReceiveComponent {
   constructor(
         fb:FormBuilder ,
         private uploadfileService:UploadfileService ,
-        private http:HttpClient ,
         private apiDataService:ApiDataService){
     this.form=fb.group({ 
           kname: ['',Validators.required],//ชื่อครุภัณฑ์
@@ -68,7 +65,7 @@ onFileSelected(event: any) {
   
   
   }
-        loadKarupanType() {
+   loadKarupanType() {
     this.apiDataService.getkarupanType().subscribe({
       next: (res) => {
         console.log(res.data);

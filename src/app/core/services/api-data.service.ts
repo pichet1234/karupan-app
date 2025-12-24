@@ -13,7 +13,10 @@ export class ApiDataService {
   addkarupanType(data:any):Observable<any>{
     return this.http.post<any>(`${this.urlserver}/addkarupanType`,data);
   }
-
+ /*รับครุภัณฑ์ประเภทบริจาค */
+  addkarupanDonate(data:any):Observable<any>{
+    return this.http.post<any>(`${this.urlserver}/addkarupanDonate`,data);
+  }
   /* ดึงข้อมูลประเภทครุภัณฑ์ */
   getkarupanType():Observable<any>{
     return this.http.get<any>(`${this.urlserver}/getkarupan`);
