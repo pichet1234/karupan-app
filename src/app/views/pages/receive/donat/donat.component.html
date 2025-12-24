@@ -79,17 +79,6 @@
               <div class="row">
                 <div class="col-sm-6">
                   <div class="mb-3">
-                    <label class="form-label">ครุภัณฑ์จาก</label>
-                      <select class="form-select" id="exampleFormControlSelect1">
-                      <option selected disabled>กรุณาเลือก</option>
-                      <option value="งบค่าเสื่อม">งบค่าเสื่อม</option>
-                      <option value="งบปีงบประมาณ">งบปีงบประมาณ</option>
-                      <option value="เงินบำรุง">เงินบำรุง</option>
-                      </select>
-                  </div>
-                </div><!-- Col -->
-                <div class="col-sm-6">
-                  <div class="mb-3">
                     <label class="form-label" for="formFile">กรุณาเลือกรูปภาพครุภัณฑ์</label>
                     <input class="form-control" type="file"  (change)="onFileSelected($event)" >
                   </div>
@@ -104,7 +93,7 @@
                 </div><!-- Col -->
               </div><!--Row-->
             </form>
-            <button type="button" class="btn btn-primary submit">บันทึก</button>
+            <button type="button" class="btn btn-primary submit" (click)="onSubmit()">บันทึก</button>
         </div>
       </div>
     </div>

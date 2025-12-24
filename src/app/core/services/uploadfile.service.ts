@@ -12,8 +12,12 @@ export class UploadfileService {
   constructor(private http: HttpClient) { }
 
   //function to upload file
-
+  
   uploadfile(formData: FormData ): Observable<any> {
     return this.http.post<any>(`${this.apiurl}/addkarupans`, formData);
+  }
+
+    uploadfiledonate(formData: FormData ): Observable<any> {
+    return this.http.post<any>(`${this.apiurl}/donatekarupan`, formData);
   }
 }
