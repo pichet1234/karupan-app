@@ -1,6 +1,6 @@
-import { NgClass } from '@angular/common';
+import { NgClass ,CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormArray, FormGroup, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ArchwizardModule } from '@rg-software/angular-archwizard';
 import { WizardComponent as BaseWizardComponent } from '@rg-software/angular-archwizard';
@@ -10,6 +10,7 @@ import { FeatherIconDirective } from '../../../core/feather-icon/feather-icon.di
   selector: 'app-borrow',
   standalone: true,
   imports: [
+    CommonModule,  
     RouterLink,
     ArchwizardModule,
     NgClass,
@@ -47,9 +48,9 @@ export class BorrowComponent implements OnInit {
          * formw value validation
          */
         this.validationForm2 = this.formBuilder.group({
-          borrow_date: ['', Validators.required],
+          borrow_date: [''],
           personid: [''],
-          patient:['', Validators.required],
+          patient:[''],
           userid:[''] ,
           address:[''],
           expenses:[''],
@@ -61,14 +62,40 @@ export class BorrowComponent implements OnInit {
          * form3 value validation
          */
         this.validationForm3 = this.formBuilder.group({
-
-        })
+          items: this.formBuilder.array([])
+        });
+        this.addItem();
 
         this.isForm1Submitted = false;
         this.isForm2Submitted = false;
         this.isForm3Submitted = false;
-    throw new Error('Method not implemented.');
-    
+  }
+  get items(): FormArray {
+    return this.validationForm3.get('items') as FormArray;
+  }
+
+  createItem(): FormGroup {
+    return this.formBuilder.group({
+      borrowid: ['test'],
+      karupanid: ['test'],
+      statuskarupan: ['test'],
+      diposit: ['test']
+     });
+  }
+    // เพิ่มแถว
+  addItem(): void {
+    this.items.push(this.createItem());
+  }
+    // ลบแถว
+  removeItem(index: number): void {
+    this.items.removeAt(index);
+  }
+  submitform3() {
+  if (this.validationForm3.valid) {
+    console.log(this.validationForm3.value);
+    this.wizardForm.goToNextStep(); 
+  }
+  this.isForm3Submitted = true;
   }
     /**
    * Wizard finish function

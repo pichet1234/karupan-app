@@ -62,7 +62,7 @@
                   <div class="row mb-3">
                     <label for="email" class="col-sm-3 col-form-label">วันที่ยืม</label>
                     <div class="col-sm-2">
-                      <input type="date" class="form-control" id="borrow_date" formControlName=" borrow_date" >
+                      <input type="date" class="form-control" name="borrow_date" formControlName="borrow_date" >
                     </div>
                   </div>
                   <div class="row mb-3">
@@ -72,9 +72,21 @@
                     </div>
                   </div>
                   <div class="row mb-3">
-                    <label for="password" class="col-sm-3 col-form-label">เลือกเจ้าหน้าที่</label>
+                    <label for="password" class="col-sm-3 col-form-label">รหัสผู้ยืม</label>
                     <div class="col-sm-9">
-                      <input type="password" class="form-control" id="password" formControlName="password" >
+                      <input type="text" class="form-control" name="personid" formControlName="personid" >
+                    </div>
+                  </div>
+                   <div class="row mb-3">
+                    <label for="password" class="col-sm-3 col-form-label">เจ้าหน้าที่</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" name="userid" formControlName="userid" >
+                    </div>
+                  </div>
+                 <div class="row mb-3">
+                    <label for="password" class="col-sm-3 col-form-label">ที่อยู่</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" name="address" formControlName="address" >
                     </div>
                   </div>
                   <div class="d-flex justify-content-center mt-2">
@@ -83,12 +95,43 @@
                   </div>
                 </form>
               </aw-wizard-step>
-    
+
+              <aw-wizard-step stepTitle="รายการครุภัณฑ์ที่ยืม">
+                <form [formGroup]="validationForm3">
+                  <div formArrayName="items">
+                    <div *ngFor="let item of items.controls; let i=index" [formGroupName]="i" class="mb-3 border p-3">
+                      <div class="row mb-3">
+                        <label for="borrowID" class="col-sm-3 col-form-label">รหัสการยืม</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" name="borrowid" formControlName="borrowid" placeholder="ชื่อครุภัณฑ์">
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label for="karupanID" class="col-sm-3 col-form-label">รหัสครุภัณฑ์</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" name="karupanid" formControlName="karupanid" placeholder="รหัสครุภัณฑ์">
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label for="diposit" class="col-sm-3 col-form-label">จำนวน</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" name="diposit" formControlName="diposit" placeholder="จำนวน">
+                        </div>
+                      </div>
+                      <button type="button" class="btn btn-danger" (click)="removeItem(i)">ลบรายการ</button>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-secondary mb-3" (click)="addItem()">เพิ่มรายการครุภัณฑ์</button>
+                  <div class="d-flex justify-content-center mt-2">
+                    <button class="btn btn-secondary me-2" type="button" awPreviousStep>Back</button>
+                    <button class="btn btn-primary" type="button" (click)="submitform3()">Continue</button>
+                    </div>
+                    </form>
+                    </aw-wizard-step>
               <aw-wizard-step stepTitle="finish">
                 <div class="text-center">
                   <i data-feather="check-circle" appFeatherIcon class="text-success mt-4 mb-2 icon-xxl"></i>
-                  <h3 class="text-secondary mb-3">Thank you !</h3>
-                  <p class="w-75 mx-auto mb-4 text-secondary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut nulla nunc. Maecenas arcu sem, hendrerit a tempor quis, sagittis accumsan tellus. In hac habitasse platea dictumst</p>
+                  <h3 class="text-secondary mb-3">บันทึกการยืมสำเร็จ !</h3>
                 </div>
                 <div class="d-flex justify-content-center mt-2">
                   <button class="btn btn-secondary me-2" type="button" awPreviousStep>Back</button>
