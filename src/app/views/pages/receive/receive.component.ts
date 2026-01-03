@@ -68,7 +68,6 @@ onFileSelected(event: any) {
    loadKarupanType() {
     this.apiDataService.getkarupanType().subscribe({
       next: (res) => {
-        console.log(res.data);
         this.karupanTypes = res.data;
       },
       error: (err) => {

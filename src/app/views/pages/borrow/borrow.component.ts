@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { ArchwizardModule } from '@rg-software/angular-archwizard';
 import { WizardComponent as BaseWizardComponent } from '@rg-software/angular-archwizard';
 import { FeatherIconDirective } from '../../../core/feather-icon/feather-icon.directive';
+import { ApiDataService } from '../../../core/services/api-data.service';
 
 @Component({
   selector: 'app-borrow',
@@ -29,9 +30,12 @@ export class BorrowComponent implements OnInit {
   isForm1Submitted: Boolean;
   isForm2Submitted: Boolean;
   isForm3Submitted: Boolean;
+
+  karupanborrow: any[] = [];//เก็บข้อมูลครุภัณฑ์ที่สามารถยืมได้
+
   @ViewChild('wizardForm') wizardForm: BaseWizardComponent;
   
-  constructor(public formBuilder: UntypedFormBuilder) {}
+  constructor(public formBuilder: UntypedFormBuilder, private apiDataService: ApiDataService) {}
 
   ngOnInit(): void {
         /**
@@ -69,6 +73,7 @@ export class BorrowComponent implements OnInit {
         this.isForm1Submitted = false;
         this.isForm2Submitted = false;
         this.isForm3Submitted = false;
+        this.loadkarupanborrow();
   }
   get items(): FormArray {
     return this.validationForm3.get('items') as FormArray;
@@ -96,6 +101,18 @@ export class BorrowComponent implements OnInit {
     this.wizardForm.goToNextStep(); 
   }
   this.isForm3Submitted = true;
+  }
+
+  loadkarupanborrow() {
+    // ดึงข้อมูลครุภัณฑ์ที่สามารถยืมได้
+    this.apiDataService.getkarupanborrow().subscribe({ 
+      next: (res)=>{
+        this.karupanborrow = res.data;
+      },
+      error: (err)=>{
+        console.error(err);
+      }
+     });
   }
     /**
    * Wizard finish function

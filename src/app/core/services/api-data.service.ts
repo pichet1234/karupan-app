@@ -21,5 +21,9 @@ export class ApiDataService {
   getkarupanType():Observable<any>{
     return this.http.get<any>(`${this.urlserver}/getkarupan`);
   }
+  /* ดึงข้อมูลครุภัณฑ์ที่สาท่ชารถยืมได้ */
+ getkarupanborrow():Observable<any>{
+    return this.http.get<any>(`${this.urlserver}/getkarupanborrow`);
+  }
 
 }
