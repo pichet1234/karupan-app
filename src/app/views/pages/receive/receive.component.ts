@@ -1,7 +1,7 @@
 import { Component ,OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDatepickerModule, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDatepickerModule, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UploadfileService } from '../../../core/services/uploadfile.service';
 import { ApiDataService } from '../../../core/services/api-data.service';
 import Swal from 'sweetalert2';
@@ -28,7 +28,8 @@ export class ReceiveComponent {
   constructor(
         fb:FormBuilder ,
         private uploadfileService:UploadfileService ,
-        private apiDataService:ApiDataService){
+        private apiDataService:ApiDataService,
+        private modalService:NgbModal,){
     this.form=fb.group({ 
           kname: ['',Validators.required],//ชื่อครุภัณฑ์
           karupanCode: ['',Validators.required],//รหัสครุภัณฑ์
@@ -43,7 +44,6 @@ export class ReceiveComponent {
           brand: [''],//ยี่ห้อ
     })
    }
-  
 
 ngOnInit(): void {
   this.loadKarupanType();

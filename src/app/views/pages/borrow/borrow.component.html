@@ -146,3 +146,43 @@
       </div> <!-- col -->
     
     </div> <!-- row -->
+    <div class="row">
+      <!-- Button trigger xl modal -->
+<button class="btn btn-primary" (click)="openXlModal(xlModal)">ดูครุภัณฑ์</button>
+<!-- Modal -->
+<ng-template #xlModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">ครุภัณฑ์ทางการแพทย์</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+   <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>รหัสครุภัณฑ์</th>
+        <th>ชื่อครุภัณฑ์</th>
+        <th>image</th>
+        <th>สถานะ</th>
+        <th>เลือก</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- แสดงข้อมูลจาก karupanborrow -->
+      <tr *ngFor="let item of karupanborrow">
+        <td>{{ item.karupanCode }}</td>
+        <td>{{ item.kname }}</td>
+        <td>
+      <img [src]="'http://localhost:3000/' + item.imageUrl" alt="รูปครุภัณฑ์" width="80"/>
+        </td>
+        <td>{{ item.status }}</td>
+        <td><button class="btn btn-success btn-sm" (click)="chooseItem(item)">เลือก</button></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="modal.close('by: save button')">Save changes</button>
+  </div>
+</ng-template>
+</div>

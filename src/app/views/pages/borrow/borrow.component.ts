@@ -1,11 +1,12 @@
 import { NgClass ,CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormArray, FormGroup, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ArchwizardModule } from '@rg-software/angular-archwizard';
 import { WizardComponent as BaseWizardComponent } from '@rg-software/angular-archwizard';
 import { FeatherIconDirective } from '../../../core/feather-icon/feather-icon.directive';
 import { ApiDataService } from '../../../core/services/api-data.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-borrow',
@@ -35,8 +36,21 @@ export class BorrowComponent implements OnInit {
 
   @ViewChild('wizardForm') wizardForm: BaseWizardComponent;
   
-  constructor(public formBuilder: UntypedFormBuilder, private apiDataService: ApiDataService) {}
+  constructor(
+              public formBuilder: UntypedFormBuilder, 
+              private apiDataService: ApiDataService, 
+              private modalService:NgbModal) {}
 
+  // --------------------ส่วน Modal แสดงครุภัณฑ์ที่สามารถยืมได้ ---------------------
+     openXlModal(content: TemplateRef<any>) {
+    this.modalService.open(content, {size: 'xl'}).result.then((result) => {
+      console.log("Modal closed" + result);
+    }).catch((res) => {});
+  }
+
+  chooseItem(item:any){
+    console.log(item);
+  }
   ngOnInit(): void {
         /**
      * form1 value validation
@@ -68,7 +82,7 @@ export class BorrowComponent implements OnInit {
         this.validationForm3 = this.formBuilder.group({
           items: this.formBuilder.array([])
         });
-        this.addItem();
+
 
         this.isForm1Submitted = false;
         this.isForm2Submitted = false;
