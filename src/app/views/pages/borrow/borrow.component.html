@@ -89,6 +89,18 @@
                       <input type="text" class="form-control" name="address" formControlName="address" >
                     </div>
                   </div>
+                  <div class="row mb-3">
+                    <label for="details" class="col-sm-3 col-form-label">รายละเอียดการยืม</label>
+                    <div class="col-sm-9">
+                      <textarea class="form-control" rows="3" placeholder="รายละเอียดการยืม" ></textarea>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="remark" class="col-sm-3 col-form-label">หมายเหตุ</label>
+                    <div class="col-sm-9">
+                      <textarea class="form-control" rows="3" placeholder="หมายเหตุ" ></textarea>
+                    </div>
+                  </div>
                   <div class="d-flex justify-content-center mt-2">
                     <button class="btn btn-secondary me-2" type="button" awPreviousStep>Back</button>
                     <button class="btn btn-primary" type="submit">Continue</button>
@@ -156,29 +168,31 @@
     <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
   </div>
   <div class="modal-body">
-   <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>รหัสครุภัณฑ์</th>
-        <th>ชื่อครุภัณฑ์</th>
-        <th>image</th>
-        <th>สถานะ</th>
-        <th>เลือก</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- แสดงข้อมูลจาก karupanborrow -->
-      <tr *ngFor="let item of karupanborrow">
-        <td>{{ item.karupanCode }}</td>
-        <td>{{ item.kname }}</td>
-        <td>
-      <img [src]="'http://localhost:3000/' + item.imageUrl" alt="รูปครุภัณฑ์" width="80"/>
-        </td>
-        <td>{{ item.status }}</td>
-        <td><button class="btn btn-success btn-sm" (click)="chooseItem(item)">เลือก</button></td>
-      </tr>
-    </tbody>
-  </table>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+       <thead>
+         <tr>
+           <th>รหัสครุภัณฑ์</th>
+           <th>ชื่อครุภัณฑ์</th>
+           <th>image</th>
+           <th>สถานะ</th>
+           <th>เลือก</th>
+         </tr>
+       </thead>
+       <tbody>
+         <!-- แสดงข้อมูลจาก karupanborrow -->
+         <tr *ngFor="let item of karupanborrow">
+           <td>{{ item.karupanCode }}</td>
+           <td>{{ item.kname }}</td>
+           <td>
+         <img [src]="'http://localhost:3000/' + item.imageUrl" alt="รูปครุภัณฑ์" width="80"/>
+           </td>
+           <td>{{ item.status }}</td>
+           <td><button class="btn btn-success btn-sm" (click)="chooseItem(item)">เลือก</button></td>
+         </tr>
+       </tbody>
+     </table>
+    </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
