@@ -27,9 +27,7 @@ private tambonData: TambonData[] = TAMBON_DATA;
   getMooByVillage(tambon: string, village: string): string[] {
     return (
       this.tambonData
-        .find(t => t.tambon === tambon)
-        ?.villages.find(v => v.village === village)
-        ?.moo || []
+        .find(t => t.tambon === tambon)?.villages.find(v => v.village === village)?.moo || []
     );
   }
 

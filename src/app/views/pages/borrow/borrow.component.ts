@@ -7,6 +7,7 @@ import { WizardComponent as BaseWizardComponent } from '@rg-software/angular-arc
 import { FeatherIconDirective } from '../../../core/feather-icon/feather-icon.directive';
 import { ApiDataService } from '../../../core/services/api-data.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddressService ,TambonData, MooData } from '../../../core/services/address.service';
 
 @Component({
   selector: 'app-borrow',
@@ -34,12 +35,17 @@ export class BorrowComponent implements OnInit {
 
   karupanborrow: any[] = [];//เก็บข้อมูลครุภัณฑ์ที่สามารถยืมได้
 
+  tambons: TambonData[] = [];
+  villages: MooData[] = [];
+  moos: string[] = [];
+
   @ViewChild('wizardForm') wizardForm: BaseWizardComponent;
   
   constructor(
               public formBuilder: UntypedFormBuilder, 
               private apiDataService: ApiDataService, 
-              private modalService:NgbModal) {}
+              private modalService:NgbModal,
+              private addressService: AddressService) {}
 
   // --------------------ส่วน Modal แสดงครุภัณฑ์ที่สามารถยืมได้ ---------------------
      openXlModal(content: TemplateRef<any>) {
@@ -70,12 +76,30 @@ export class BorrowComponent implements OnInit {
           personid: [''],
           patient:[''],
           userid:[''] ,
-          address:[''],
           expenses:[''],
           details: [''],
-          remark : ['']
+          remark : [''],
+          tambon: [''],
+          village: [{ value: '', disabled: true }],
+          moo: [{ value: '', disabled: true }]
         });
-    
+            this.tambons = this.addressService.getTambons();
+
+    this.validationForm2.get('tambon')?.valueChanges.subscribe(val => {
+      this.villages = this.addressService.getVillagesByTambon(val);
+      this.validationForm2.get('village')?.reset();
+      this.validationForm2.get('village')?.enable();
+      this.moos = [];
+      this.validationForm2.get('moo')?.reset();
+      this.validationForm2.get('moo')?.disable();
+    });
+    this.validationForm2.get('village')?.valueChanges.subscribe(val => {
+      const tambon = this.validationForm2.get('tambon')?.value;
+      this.moos = this.addressService.getMooByVillage(tambon, val);
+      this.validationForm2.get('moo')?.reset();
+      this.validationForm2.get('moo')?.enable();
+    });
+
         /**
          * form3 value validation
          */
