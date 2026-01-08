@@ -146,15 +146,27 @@
                         </div>
                       </div>
                       <div class="row mb-3">
-                        <label for="diposit" class="col-sm-3 col-form-label">จำนวน</label>
+                        <label for="kname" class="col-sm-3 col-form-label">ครุภัณฑ์</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" name="diposit" formControlName="diposit" placeholder="จำนวน">
+                          <input type="text" class="form-control" name="kname" formControlName="kname" placeholder="ชื่อครุภัณฑ์">
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label for="karupuncode" class="col-sm-3 col-form-label">รหัสครุภัณฑ์</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" name="karupuncode" formControlName="karupuncode" placeholder="รหัสครุภัณฑ์">
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label for="diposit" class="col-sm-3 col-form-label">ค่ามัดจำ</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" name="diposit" formControlName="diposit" placeholder="ค่ามัดจำ">
                         </div>
                       </div>
                       <button type="button" class="btn btn-danger" (click)="removeItem(i)">ลบรายการ</button>
                     </div>
                   </div>
-                  <button type="button" class="btn btn-secondary mb-3" (click)="addItem()">เพิ่มรายการครุภัณฑ์</button>
+                  <button class="btn btn-primary" (click)="openXlModal(xlModal)">ดูครุภัณฑ์</button>
                   <div class="d-flex justify-content-center mt-2">
                     <button class="btn btn-secondary me-2" type="button" awPreviousStep>Back</button>
                     <button class="btn btn-primary" type="button" (click)="submitform3()">Continue</button>
@@ -181,7 +193,6 @@
     </div> <!-- row -->
     <div class="row">
       <!-- Button trigger xl modal -->
-<button class="btn btn-primary" (click)="openXlModal(xlModal)">ดูครุภัณฑ์</button>
 <!-- Modal -->
 <ng-template #xlModal let-modal>
   <div class="modal-header">
@@ -209,7 +220,7 @@
          <img [src]="'http://localhost:3000/' + item.imageUrl" alt="รูปครุภัณฑ์" width="80"/>
            </td>
            <td>{{ item.status }}</td>
-           <td><button class="btn btn-success btn-sm" (click)="chooseItem(item)">เลือก</button></td>
+           <td><button class="btn btn-success btn-sm" (click)="addItem(item)" >เลือก</button></td>
          </tr>
        </tbody>
      </table>

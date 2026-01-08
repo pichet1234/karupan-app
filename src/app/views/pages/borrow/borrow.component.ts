@@ -119,15 +119,28 @@ export class BorrowComponent implements OnInit {
 
   createItem(): FormGroup {
     return this.formBuilder.group({
-      borrowid: ['test'],
+      borrowid: ['11111'],
       karupanid: ['test'],
+      kname: [''],
+      karupuncode: [''],
       statuskarupan: ['test'],
       diposit: ['test']
      });
   }
     // เพิ่มแถว
-  addItem(): void {
+  addItem(item: any): void {
     this.items.push(this.createItem());
+    this.items.at(this.items.length - 1).patchValue({
+      karupanid: item._id,
+      kname: item.kname,
+      karupuncode: item.karupanCode,
+      statuskarupan: 'ยืมแล้ว',
+      diposit: item.diposit
+    });
+
+    console.log(this.validationForm3.value);
+
+    this.modalService.dismissAll();
   }
     // ลบแถว
   removeItem(index: number): void {
