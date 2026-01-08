@@ -38,7 +38,7 @@ export class BorrowComponent implements OnInit {
   tambons: TambonData[] = [];
   villages: MooData[] = [];
   moos: string[] = [];
-
+  imgU:any;
   @ViewChild('wizardForm') wizardForm: BaseWizardComponent;
   
   constructor(
@@ -79,6 +79,7 @@ export class BorrowComponent implements OnInit {
           expenses:[''],
           details: [''],
           remark : [''],
+          bannumber: [''],
           tambon: [''],
           village: [{ value: '', disabled: true }],
           moo: [{ value: '', disabled: true }]
@@ -137,7 +138,7 @@ export class BorrowComponent implements OnInit {
       statuskarupan: 'ยืมแล้ว',
       diposit: item.diposit
     });
-
+    this.imgU=item.imageUrl;
     console.log(this.validationForm3.value);
 
     this.modalService.dismissAll();
