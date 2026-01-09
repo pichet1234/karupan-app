@@ -8,6 +8,7 @@ import { FeatherIconDirective } from '../../../core/feather-icon/feather-icon.di
 import { ApiDataService } from '../../../core/services/api-data.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddressService ,TambonData, MooData } from '../../../core/services/address.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-borrow',
@@ -35,10 +36,12 @@ export class BorrowComponent implements OnInit {
 
   karupanborrow: any[] = [];//เก็บข้อมูลครุภัณฑ์ที่สามารถยืมได้
 
-  tambons: TambonData[] = [];
-  villages: MooData[] = [];
-  moos: string[] = [];
-  imgU:any;
+  tambons: TambonData[] = [];// ตำบล
+  villages: MooData[] = [];// หมู่บ้าน
+  moos: string[] = []; // หมู่ที่
+  imgU:any; //เก็บภาพครุภัณฑ์ที่เลือกยืม
+  personid:any;//เก็บรหัสบผู้ยืม
+
   @ViewChild('wizardForm') wizardForm: BaseWizardComponent;
   
   constructor(
@@ -62,8 +65,8 @@ export class BorrowComponent implements OnInit {
      * form1 value validation
      */
         this.validationForm1 = this.formBuilder.group({
-          firstName : ['', Validators.required],
-          lastName : ['', Validators.required],
+          fname : ['', Validators.required],
+          lname : ['', Validators.required],
           phone : ['', Validators.required],
           relation : ['', Validators.required]
         });
@@ -72,17 +75,17 @@ export class BorrowComponent implements OnInit {
          * formw value validation
          */
         this.validationForm2 = this.formBuilder.group({
-          borrow_date: [''],
+          borrow_date: ['' ,Validators.required],
           personid: [''],
-          patient:[''],
+          patient:['' , Validators.required],
           userid:[''] ,
           expenses:[''],
           details: [''],
           remark : [''],
           bannumber: [''],
           tambon: [''],
-          village: [{ value: '', disabled: true }],
-          moo: [{ value: '', disabled: true }]
+          village: [{ value: '', disabled: true },Validators.required],
+          moo: [{ value: '', disabled: true },Validators.required]
         });
             this.tambons = this.addressService.getTambons();
 
@@ -201,6 +204,21 @@ export class BorrowComponent implements OnInit {
      */
     form1Submit() {
       if(this.validationForm1.valid) {
+        this.apiDataService.addPersonnel(this.validationForm1.value).subscribe({ 
+          next: (res)=>{
+            this.personid = res.data._id;
+            this.validationForm2.patchValue({ personid: this.personid }); // set personid in form2
+            console.log(this.personid);
+            Swal.fire({
+              icon: 'success',
+              title: res.message,
+              showConfirmButton: false,
+              timer: 1500
+            });
+          },error: (err)=>{
+            console.error(err);
+          }
+        });
         this.wizardForm.goToNextStep();
       }
       this.isForm1Submitted = true;

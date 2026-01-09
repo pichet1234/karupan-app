@@ -25,5 +25,7 @@ export class ApiDataService {
  getkarupanborrow():Observable<any>{
     return this.http.get<any>(`${this.urlserver}/getkarupanborrow`);
   }
-
+  addPersonnel(data:any):Observable<any>{
+    return this.http.post<any>(`${this.urlserver}/addPersonnel`,data);
+  }
 }

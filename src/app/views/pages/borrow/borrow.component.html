@@ -12,10 +12,10 @@
                   <div class="row mb-3">
                     <label for="firstName" class="col-sm-3 col-form-label">ชื่อ</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="firstName" formControlName="firstName" 
-                      [ngClass]="{'is-invalid': isForm1Submitted && form1.firstName.errors}" placeholder="First name">
-                      @if (isForm1Submitted && form1.firstName.errors?.required) {
-                        <p class="invalid-feedback"> Required </p>
+                      <input type="text" class="form-control" id="fname" formControlName="fname" 
+                      [ngClass]="{'is-invalid': isForm1Submitted && form1.fname.errors}" placeholder="First name">
+                      @if (isForm1Submitted && form1.fname.errors?.required) {
+                        <p class="invalid-feedback"> กรุณากรอกชื่อ </p>
                       }
                     </div>
                   </div>
@@ -23,10 +23,10 @@
                   <div class="row mb-3">
                     <label for="lastName" class="col-sm-3 col-form-label">สกุล</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="lastName" formControlName="lastName" 
-                        [ngClass]="{'is-invalid': isForm1Submitted && form1.lastName.errors}" placeholder="Last name">
-                      @if (isForm1Submitted && form1.lastName.errors?.required) {
-                        <p class="invalid-feedback"> Required </p>
+                      <input type="text" class="form-control" id="lname" formControlName="lname" 
+                        [ngClass]="{'is-invalid': isForm1Submitted && form1.lname.errors}" placeholder="Last name">
+                      @if (isForm1Submitted && form1.lname.errors?.required) {
+                        <p class="invalid-feedback"> กรุณากรอกนามสกุล </p>
                       }
                     </div>
                   </div>
@@ -34,10 +34,10 @@
                   <div class="row mb-3">
                     <label for="userName" class="col-sm-3 col-form-label">เบอร์โทร</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="phone" formControlName="phone" 
+                      <input type="text" class="form-control" name="phone" id="phone" formControlName="phone" 
                       [ngClass]="{'is-invalid': isForm1Submitted && form1.phone.errors}" placeholder="081...">
                       @if (isForm1Submitted && form1.phone.errors?.required) {
-                        <p class="invalid-feedback"> Required </p>
+                        <p class="invalid-feedback"> กรุณากรอกเบอร์โทร </p>
                       }
                     </div>
                   </div>
@@ -47,7 +47,7 @@
                       <input type="text" class="form-control" id="relation" formControlName="relation" 
                       [ngClass]="{'is-invalid': isForm1Submitted && form1.relation.errors}" placeholder="เช่น บุตร สามี เป็นต้น">
                       @if (isForm1Submitted && form1.relation.errors?.required) {
-                        <p class="invalid-feedback"> Required </p>
+                        <p class="invalid-feedback"> กรุณากรอกความสัมพันธ์ </p>
                       }
                     </div>
                   </div>
