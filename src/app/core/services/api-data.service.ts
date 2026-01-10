@@ -28,4 +28,7 @@ export class ApiDataService {
   addPersonnel(data:any):Observable<any>{
     return this.http.post<any>(`${this.urlserver}/addPersonnel`,data);
   }
+  addBorrow(data:any):Observable<any>{
+    return this.http.post<any>(`${this.urlserver}/addborrow`,data);
+  }
 }

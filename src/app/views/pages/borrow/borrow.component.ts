@@ -230,6 +230,19 @@ export class BorrowComponent implements OnInit {
      */
     form2Submit() {
       if(this.validationForm2.valid) {
+        this.apiDataService.addBorrow(this.validationForm2.value).subscribe({
+          next: (res)=>{
+            this.validationForm3.patchValue({ borrowid: res.data._id }); // set borrowid in form3
+            Swal.fire({
+              icon: 'success',
+              title: res.message,
+              showConfirmButton: false,
+              timer: 1500
+            });
+          },error: (err)=>{
+            console.error(err);
+          }
+        });
         this.wizardForm.goToNextStep();
       }
       this.isForm2Submitted = true;
