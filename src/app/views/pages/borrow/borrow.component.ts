@@ -123,18 +123,19 @@ export class BorrowComponent implements OnInit {
 
   createItem(): FormGroup {
     return this.formBuilder.group({
-      borrowid: ['11111'],
+      borrowid: [''],
       karupanid: ['test'],
       kname: [''],
       karupuncode: [''],
       statuskarupan: ['test'],
-      diposit: ['test']
+      diposit: [0]
      });
   }
     // เพิ่มแถว
   addItem(item: any): void {
     this.items.push(this.createItem());
     this.items.at(this.items.length - 1).patchValue({
+      borrowid: item.borrowid,
       karupanid: item._id,
       kname: item.kname,
       karupuncode: item.karupanCode,
@@ -252,6 +253,19 @@ export class BorrowComponent implements OnInit {
      * form 3 
      */
     form3Submit(){
-
+      if(this.validationForm2.value.borrowid != ''){
+        this.apiDataService.addBorrowDetail(this.validationForm3.value).subscribe({
+          next: (res)=>{
+            Swal.fire({
+              icon: 'success',
+              title: res.message,
+              showConfirmButton: false,
+              timer: 1500
+            });
+          },error: (err)=>{
+            console.error(err);
+          }
+        });
+      }
     }
 }

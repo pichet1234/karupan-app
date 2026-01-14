@@ -133,7 +133,7 @@
               </aw-wizard-step>
 
               <aw-wizard-step stepTitle="รายการครุภัณฑ์ที่ยืม">
-                <form [formGroup]="validationForm3">
+                <form (ngSubmit)="form3Submit()" [formGroup]="validationForm3">
                   <div formArrayName="items">
                     <div *ngFor="let item of items.controls; let i=index" [formGroupName]="i" class="mb-3 border p-3">
                       <div class="row mb-3">
@@ -175,7 +175,7 @@
                   <button class="btn btn-primary" (click)="openXlModal(xlModal)">ดูครุภัณฑ์</button>
                   <div class="d-flex justify-content-center mt-2">
                     <button class="btn btn-secondary me-2" type="button" awPreviousStep>Back</button>
-                    <button class="btn btn-primary" type="button" (click)="submitform3()">Continue</button>
+                    <button class="btn btn-primary" type="submit">Continue</button>
                     </div>
                     </form>
                     </aw-wizard-step>
