@@ -116,13 +116,13 @@
                   <div class="row mb-3">
                     <label for="details" class="col-sm-3 col-form-label">รายละเอียดการยืม</label>
                     <div class="col-sm-9">
-                      <textarea class="form-control" rows="3" placeholder="รายละเอียดการยืม" ></textarea>
+                      <textarea class="form-control" rows="3" placeholder="รายละเอียดการยืม" name="details" formControlName="details"></textarea>
                     </div>
                   </div>
                   <div class="row mb-3">
                     <label for="remark" class="col-sm-3 col-form-label">หมายเหตุ</label>
                     <div class="col-sm-9">
-                      <textarea class="form-control" rows="3" placeholder="หมายเหตุ" ></textarea>
+                      <textarea class="form-control" rows="3" placeholder="หมายเหตุ" name="remark" formControlName="remark"></textarea>
                     </div>
                   </div>
                   <div class="d-flex justify-content-center mt-2">
@@ -133,7 +133,7 @@
               </aw-wizard-step>
 
               <aw-wizard-step stepTitle="รายการครุภัณฑ์ที่ยืม">
-                <form (ngSubmit)="form3Submit()" [formGroup]="validationForm3">
+                <form [formGroup]="validationForm3">
                   <div formArrayName="items">
                     <div *ngFor="let item of items.controls; let i=index" [formGroupName]="i" class="mb-3 border p-3">
                       <div class="row mb-3">
@@ -175,7 +175,7 @@
                   <button class="btn btn-primary" (click)="openXlModal(xlModal)">ดูครุภัณฑ์</button>
                   <div class="d-flex justify-content-center mt-2">
                     <button class="btn btn-secondary me-2" type="button" awPreviousStep>Back</button>
-                    <button class="btn btn-primary" type="submit">Continue</button>
+                    <button class="btn btn-primary" type="button" (click)="form3Submit()">Continue</button>
                     </div>
                     </form>
                     </aw-wizard-step>

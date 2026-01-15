@@ -253,8 +253,7 @@ export class BorrowComponent implements OnInit {
      * form 3 
      */
     form3Submit(){
-
-      if(this.borwid){
+      if(this.validationForm3.valid){
         this.apiDataService.addBorrowDetail(this.validationForm3.value).subscribe({
           next: (res)=>{
             Swal.fire({
@@ -263,8 +262,6 @@ export class BorrowComponent implements OnInit {
               showConfirmButton: false,
               timer: 1500
             });
-            this.wizardForm.goToNextStep();
-            this.isForm3Submitted = true;
           },error: (err)=>{
             console.error(err);
           }
