@@ -263,12 +263,12 @@ export class BorrowComponent implements OnInit {
               showConfirmButton: false,
               timer: 1500
             });
+            this.wizardForm.goToNextStep();
+            this.isForm3Submitted = true;
           },error: (err)=>{
             console.error(err);
           }
         });
-        this.wizardForm.goToNextStep();
-        this.isForm3Submitted = true;
       }else{
         Swal.fire({
           icon: 'error',
@@ -276,7 +276,6 @@ export class BorrowComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         });
-
         console.log(this.borwid);
       }
       
