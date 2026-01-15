@@ -41,6 +41,7 @@ export class BorrowComponent implements OnInit {
   moos: string[] = []; // หมู่ที่
   imgU:any; //เก็บภาพครุภัณฑ์ที่เลือกยืม
   personid:any;//เก็บรหัสบผู้ยืม
+  borwid:any;//เก็บรหัสการยืม
 
   @ViewChild('wizardForm') wizardForm: BaseWizardComponent;
   
@@ -123,7 +124,7 @@ export class BorrowComponent implements OnInit {
 
   createItem(): FormGroup {
     return this.formBuilder.group({
-      borrowid: [''],
+      borrowid: this.borwid,
       karupanid: ['test'],
       kname: [''],
       karupuncode: [''],
@@ -135,7 +136,6 @@ export class BorrowComponent implements OnInit {
   addItem(item: any): void {
     this.items.push(this.createItem());
     this.items.at(this.items.length - 1).patchValue({
-      borrowid: item.borrowid,
       karupanid: item._id,
       kname: item.kname,
       karupuncode: item.karupanCode,
@@ -209,7 +209,6 @@ export class BorrowComponent implements OnInit {
           next: (res)=>{
             this.personid = res.data._id;
             this.validationForm2.patchValue({ personid: this.personid }); // set personid in form2
-            console.log(this.personid);
             Swal.fire({
               icon: 'success',
               title: res.message,
@@ -233,7 +232,8 @@ export class BorrowComponent implements OnInit {
       if(this.validationForm2.valid) {
         this.apiDataService.addBorrow(this.validationForm2.value).subscribe({
           next: (res)=>{
-            this.validationForm3.patchValue({ borrowid: res.data._id }); // set borrowid in form3
+            this.borwid = res.data._id;
+            this.validationForm3.patchValue({ borrowid: this.borwid }); // set borrowid in form3
             Swal.fire({
               icon: 'success',
               title: res.message,
@@ -253,7 +253,8 @@ export class BorrowComponent implements OnInit {
      * form 3 
      */
     form3Submit(){
-      if(this.validationForm2.value.borrowid != ''){
+
+      if(this.borwid){
         this.apiDataService.addBorrowDetail(this.validationForm3.value).subscribe({
           next: (res)=>{
             Swal.fire({
@@ -266,6 +267,19 @@ export class BorrowComponent implements OnInit {
             console.error(err);
           }
         });
+        this.wizardForm.goToNextStep();
+        this.isForm3Submitted = true;
+      }else{
+        Swal.fire({
+          icon: 'error',
+          title: 'ไม่สามารถบันทึกข้อมูลได้',
+          showConfirmButton: false,
+          timer: 1500
+        });
+
+        console.log(this.borwid);
       }
+      
+
     }
 }
