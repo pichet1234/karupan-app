@@ -174,7 +174,7 @@ export class BorrowComponent implements OnInit {
    * Wizard finish function
    */
     finishFunction() {
-      alert('Successfully Completed');
+      window.location.reload();
     }
   
     
@@ -262,6 +262,8 @@ export class BorrowComponent implements OnInit {
               showConfirmButton: false,
               timer: 1500
             });
+            this.wizardForm.goToNextStep();
+            this.isForm3Submitted = true;
           },error: (err)=>{
             console.error(err);
           }
