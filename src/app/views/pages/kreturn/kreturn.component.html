@@ -10,8 +10,9 @@
                         [ngbTypeahead]="search"
                         [resultFormatter]="formatter"
                         [inputFormatter]="formatter"
+                        (selectItem)="onClick($event)"  
                         placeholder="ค้นหาชื่อผู้ยืม">
-                        <button class="input-group-text" type="button" >
+                        <button class="input-group-text" type="button">
                           <i class="feather icon-search"></i>
                         </button>
                     </div>

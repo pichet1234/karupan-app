@@ -14,7 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 })
 export class KreturnComponent {
   private names = ['pichet', 'jirapan', 'sarosa', 'Blueberry', 'Cherry', 'Coconut', 'Grape', 'Grapefruit', 'Kiwi', 'Mango', 'Melon', 'Orange', 'Papaya', 'Pineapple', 'Strawberry'];
-
+  selectdata: string | null = null;
   // ฟังก์ชัน search ที่ ngbTypeahead ต้องการ: รับ observable ของ input และคืน observable ของ suggestions
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -26,4 +26,9 @@ export class KreturnComponent {
 
   // ถ้าต้องการแสดงผลใน input ต่างจากผลที่ถูกเลือก ให้ใช้ formatter
   formatter = (result: string) => result;
+
+  onClick(event:any){
+    this.selectdata = event.item;
+    console.log(this.selectdata);
+  }
 }

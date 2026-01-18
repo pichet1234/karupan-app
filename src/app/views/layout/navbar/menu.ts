@@ -7,7 +7,7 @@ export const MENU: MenuItem[] = [
     link: '/dashboard'
   },
   {
-    label: 'รับครุภัณฑ์',
+    label: 'ครุภัณฑ์',
     icon:'package',
     subMenus:[
       {
@@ -19,6 +19,9 @@ export const MENU: MenuItem[] = [
           {
             label: 'donat',
             link: '/receive/donat'
+          },
+          {
+            label: 'ทะเบียนครุภัณฑ์'
           }
         ]
       }
