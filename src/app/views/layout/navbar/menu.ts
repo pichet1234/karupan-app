@@ -22,6 +22,9 @@ export const MENU: MenuItem[] = [
           },
           {
             label: 'ทะเบียนครุภัณฑ์'
+          },
+          {
+            label: 'ทะเบียนยืมครุภัณฑ์'
           }
         ]
       }
