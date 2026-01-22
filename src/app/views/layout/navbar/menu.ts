@@ -21,7 +21,8 @@ export const MENU: MenuItem[] = [
             link: '/receive/donat'
           },
           {
-            label: 'ทะเบียนครุภัณฑ์'
+            label: 'ทะเบียนครุภัณฑ์',
+            link: '/karupan-all'
           },
           {
             label: 'ทะเบียนยืมครุภัณฑ์'

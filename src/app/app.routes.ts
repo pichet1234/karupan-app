@@ -15,6 +15,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/pages/dashboard/dashboard.routes')
       },
       {
+        path: 'karupan-all',
+        loadChildren: () => import('./views/pages/karupan-all/karupan-all.routes')
+      },
+      {
         path: 'borrow',
         loadChildren: () => import('./views/pages/borrow/borrow.routes')
       },
