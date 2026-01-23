@@ -34,4 +34,8 @@ export class ApiDataService {
   addBorrowDetail(data:any):Observable<any>{
     return this.http.post<any>(`${this.urlserver}/borrowdetails`,data);
   }
+  /* ดึงข้อมูล karupan ทั้งหมด*/
+  getKarupanAll():Observable<any>{
+    return this.http.get<any>(`${this.urlserver}/getkarupanall`);
+  }
 }
