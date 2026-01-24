@@ -1,68 +1,137 @@
 <div class="row">
-    <div class="col-md-12 grid-margin stretch-card">
-      <div class="card">
-        <div class="card-body">
-          <h6 class="card-title">ทะเบียนครุภัณฑ์</h6>  
-          <div class="table-responsive pt-3">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th></th>
-                  <th>ครุภัณฑ์</th>
-                  <th>รหัสครุภัณฑ์</th>
-                  <th>ประเภทครุภัณฑ์</th>
-                  <th>ครุภัณฑ์จาก</th>
-                  <th>สถานะ</th>
-                  <th>อายุการใช้งาน</th>
-                </tr>
-              </thead>
-              <tbody>
-                  <tr *ngFor="let karupan of pagedData; let i = index">
-                    <td>{{ (page - 1) * pageSize + i + 1 }}</td>
-                  <td>
-                    <a class="align-items-center"><i data-feather="eye" appFeatherIcon class="icon-sm me-2"></i></a> 
-                    <a class="align-items-center"><i data-feather="trash" appFeatherIcon class="icon-sm me-2"></i> </a>
-                    <a class="align-items-center"><i data-feather="edit-2" appFeatherIcon class="icon-sm me-2"></i> </a>
-                  </td>
-                  <td>{{ karupan.kname}}</td>
-                  <td>{{ karupan.karupanCode}}</td>
-                  <td>{{ karupan.karupanTypeInfo[0].karupanType }}</td>
-                  <td>{{ karupan.expenditure }}</td>
-                  <td>{{ karupan.status }}</td>
-                  <td>{{ karupan.usefullife }}</td>
-                </tr>
-              </tbody>
-            </table>
-            <!-- Pagination -->
-<div class="d-flex justify-content-between align-items-center mt-3">
-
-    <!-- page size -->
-    <div>
-      <select class="form-select form-select-sm w-auto"
-              [(ngModel)]="pageSize"
-              (change)="refreshData()">
-        <option [value]="5">5</option>
-        <option [value]="10">10</option>
-        <option [value]="20">20</option>
-      </select>
-    </div>
-  
-    <!-- pagination ui -->
-    <ngb-pagination
-      [(page)]="page"
-      [pageSize]="pageSize"
-      [collectionSize]="collectionSize"
-      [maxSize]="5"
-      [rotate]="true"
-      [ellipses]="true"
-      (pageChange)="refreshData()">
-    </ngb-pagination>
-  
-  </div>
+  <div class="col-12 col-xl-12 stretch-card">
+    <div class="row flex-grow-1">
+      <div class="col-md-4 grid-margin stretch-card">
+        <div class="card text-white bg-warning bg-opacity-59">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-baseline">
+              <h3 class="card-title mb-0 fs-3">ครุภัณฑ์ทั้งหมด</h3>
+            </div>
+            <div class="row">
+              <div class="col-6 col-md-12 col-xl-5">
+                <h3 class="mb-2">{{ totalKarupan | number }}</h3>
+                <div class="d-flex align-items-baseline">
+                </div>
+              </div>
+              <div class="col-6 col-md-12 col-xl-7">
+                <!-- icon -->
+                <div
+                  class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center position-absolute end-0 me-3 top-50 translate-middle-y">
+                  <i data-feather="box" appFeatherIcon class="text-white big-icon"></i>
+                </div>
+              </div>
+            </div>
           </div>
-  
+        </div>
+      </div>
+      <div class="col-md-4 grid-margin stretch-card">
+        <div class="card text-white bg-success bg-opacity-59">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-baseline">
+              <h6 class="card-title mb-0 fs-3">ครุภัณฑ์ที่ใช้ได้</h6>
+            </div>
+            <div class="row">
+              <div class="col-6 col-md-12 col-xl-5">
+                <h3 class="mb-2">{{ totalKarupanSuccess | number }}</h3>
+                <div class="d-flex align-items-baseline">
+                </div>
+              </div>
+              <div class="col-6 col-md-12 col-xl-7">
+                <!-- icon -->
+                <div
+                  class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center position-absolute end-0 me-3 top-50 translate-middle-y">
+                  <i data-feather="box" appFeatherIcon class="text-white big-icon"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 grid-margin stretch-card">
+        <div class="card  text-white bg-danger bg-opacity-59">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-baseline">
+              <h6 class="card-title mb-0 fs-3">ครุภัณฑ์ที่ชำรุด</h6>
+            </div>
+            <div class="row">
+              <div class="col-6 col-md-12 col-xl-5">
+                <h3 class="mb-2">{{ totalKarupanDanger | number }}</h3>
+                <div class="d-flex align-items-baseline">
+                </div>
+              </div>
+              <div class="col-6 col-md-12 col-xl-7">
+                <!-- icon -->
+                <div
+                  class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center position-absolute end-0 me-3 top-50 translate-middle-y">
+                  <i data-feather="box" appFeatherIcon class="text-white big-icon"></i>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div> <!-- row -->
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">ทะเบียนครุภัณฑ์</h6>
+        <div class="table-responsive pt-3">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th></th>
+                <th>ครุภัณฑ์</th>
+                <th>รหัสครุภัณฑ์</th>
+                <th>ประเภทครุภัณฑ์</th>
+                <th>ครุภัณฑ์จาก</th>
+                <th>สถานะ</th>
+                <th>อายุการใช้งาน</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let karupan of pagedData; let i = index">
+                <td>{{ (page - 1) * pageSize + i + 1 }}</td>
+                <td>
+                  <a class="align-items-center"><i data-feather="eye" appFeatherIcon class="icon-sm me-2"></i></a>
+                  <a class="align-items-center"><i data-feather="trash" appFeatherIcon class="icon-sm me-2"></i> </a>
+                  <a class="align-items-center"><i data-feather="edit-2" appFeatherIcon class="icon-sm me-2"></i> </a>
+                </td>
+                <td>{{ karupan.kname}}</td>
+                <td>{{ karupan.karupanCode}}</td>
+                <td>{{ karupan.karupanTypeInfo[0].karupanType }}</td>
+                <td>{{ karupan.expenditure }}</td>
+                <td>
+                  <span [class]="getBadgeClass(karupan.status)">{{ karupan.status}}</span>
+                </td>
+                <td>{{ karupan.usefullife }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- Pagination -->
+          <div class="d-flex justify-content-between align-items-center mt-3">
+
+            <!-- page size -->
+            <div>
+              <select class="form-select form-select-sm w-auto" [(ngModel)]="pageSize" (change)="refreshData()">
+                <option [value]="5">5</option>
+                <option [value]="10">10</option>
+                <option [value]="20">20</option>
+              </select>
+            </div>
+
+            <!-- pagination ui -->
+            <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="collectionSize" [maxSize]="5"
+              [rotate]="true" [ellipses]="true" (pageChange)="refreshData()">
+            </ngb-pagination>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

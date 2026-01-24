@@ -18,6 +18,10 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './karupan-all.component.scss'
 })
 export class KarupanAllComponent {
+  totalKarupan = 0;
+  totalKarupanSuccess = 0;
+  totalKarupanDanger = 0;
+
   karupans:any[] = [];
   page = 1;                // หน้าปัจจุบัน
   pageSize = 5;            // จำนวนรายการต่อหน้า
@@ -28,13 +32,41 @@ export class KarupanAllComponent {
 
   ngOnInit(): void{
     this.loadData();
+    this.loadCounts();
   }
+  loadCounts(){
+    this.apidataService.countKarupanAll().subscribe({
+      next: (res)=>{
+        this.totalKarupan = res.count;
+      },
+      error: (err)=>{
+        console.log(err);
+      }
+    });
+    this.apidataService.countkpStatusSuccess().subscribe({
+      next: (res)=>{
+        this.totalKarupanSuccess = res.result[0].total;
+      },
+      error: (err)=>{
+        console.log(err);
+      }
+    });
+    this.apidataService.countkarupandanger().subscribe({
+      next: (res)=>{
+        this.totalKarupanDanger = res.result[0].total;
+      },
+      error: (err)=>{
+        console.log(err);
+      }
+    }); 
+  }
+
   loadData(){
     this.apidataService.getKarupanAll().subscribe({
       next: (res)=>{
         this.karupans = res.data;
-        this.collectionSize = this.karupans.length;   // ⭐ สำคัญ
-        this.refreshData();                            // ⭐ slice ข้อมูล
+        this.collectionSize = this.karupans.length;  
+        this.refreshData();                            
         console.log(this.karupans);
       },
       error: (err)=>{
@@ -49,4 +81,15 @@ export class KarupanAllComponent {
       (this.page - 1) * this.pageSize + this.pageSize
     );
   }
+
+  // แปลง status -> badge class
+  getBadgeClass(status: string) {
+    switch (status) {
+      case 'ใช้งานได้': return 'badge bg-success';
+      case 'ชำรุด': return 'badge bg-danger';
+      case 'กำลังซ่อมบำรุง': return 'badge bg-warning text-dark';
+      default: return 'badge bg-secondary';
+    }
+  }
+
 }

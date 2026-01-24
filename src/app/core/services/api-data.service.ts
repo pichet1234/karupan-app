@@ -38,4 +38,13 @@ export class ApiDataService {
   getKarupanAll():Observable<any>{
     return this.http.get<any>(`${this.urlserver}/getkarupanall`);
   }
+  countKarupanAll():Observable<any>{
+    return this.http.get<any>(`${this.urlserver}/countkarupanall`);
+  }
+  countkpStatusSuccess():Observable<any>{
+    return this.http.get<any>(`${this.urlserver}/countkarupanstatus`);
+  }
+  countkarupandanger():Observable<any>{
+    return this.http.get<any>(`${this.urlserver}/countkarupandanger`);
+  }
 }
