@@ -4,20 +4,24 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ApiDataService } from '../../../core/services/api-data.service';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-kreturn',
   standalone: true,
   imports: [
     NgbModule,
-    FormsModule
+    FormsModule,
+    CommonModule
   ],
   templateUrl: './kreturn.component.html',
   styleUrl: './kreturn.component.scss'
 })
 export class KreturnComponent {
-  private names = ['pichet', 'jirapan', 'sarosa', 'Blueberry', 'Cherry', 'Coconut', 'Grape', 'Grapefruit', 'Kiwi', 'Mango', 'Melon', 'Orange', 'Papaya', 'Pineapple', 'Strawberry'];
-  selectdata: string | null = null;
+  imgBase = 'http://localhost:3000/';   // หรือ domain จริง
+  defaultImg = 'images/photos/img15.jpg';
+  searchText: string = '';
+  selectdata: any = null;
   borrows: any[] = [];
   searchPatients: any[] = [];
   searchList: any[] = [];
@@ -67,10 +71,24 @@ search = (text$: Observable<string>) =>
  formatter = (result: any) => result.fullName;
 
 onClick(event:any){
-  this.selectdata = event.item.fullName;
+  this.selectdata = event.item.raw;
 
-  console.log('borrow_id:', event.item.borrow_id);
-  console.log('details:', event.item.details);
-  console.log('ข้อมูลเต็ม:', event.item.raw);
+  console.log('ข้อมูลเต็ม:', this.selectdata);
 }
+
+    getImage(item: any): string {
+
+      // รูปจาก backend (uploads/xxx.jpg)
+      if (item?.karupan?.imageUrl && item.karupan.imageUrl.trim() !== '') {
+        return this.imgBase + item.karupan.imageUrl;
+      }
+
+      if (item?.imageUrl && item.imageUrl.trim() !== '') {
+        return this.imgBase + item.imageUrl;
+      }
+
+      // default frontend
+      return this.defaultImg;   // images/photos/img15.jpg
+    }
+
 }
