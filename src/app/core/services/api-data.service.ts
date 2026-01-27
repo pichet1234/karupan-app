@@ -47,4 +47,7 @@ export class ApiDataService {
   countkarupandanger():Observable<any>{
     return this.http.get<any>(`${this.urlserver}/countkarupandanger`);
   }
+  getAllborrw():Observable<any>{
+    return this.http.get<any>(`${this.urlserver}/getallborrows`);
+  }
 }

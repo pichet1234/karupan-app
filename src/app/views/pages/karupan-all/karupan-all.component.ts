@@ -85,10 +85,10 @@ export class KarupanAllComponent {
   // แปลง status -> badge class
   getBadgeClass(status: string) {
     switch (status) {
-      case 'ใช้งานได้': return 'badge bg-success';
-      case 'ชำรุด': return 'badge bg-danger';
-      case 'กำลังซ่อมบำรุง': return 'badge bg-warning text-dark';
-      default: return 'badge bg-secondary';
+      case 'ใช้งานได้': return 'badge rounded-pill bg-success';
+      case 'ชำรุด': return 'badge rounded-pill bg-danger';
+      case 'กำลังซ่อมบำรุง': return 'badge rounded-pill bg-warning text-dark';
+      default: return 'badge rounded-pill bg-secondary';
     }
   }
 
