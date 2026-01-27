@@ -35,8 +35,8 @@ loaddataBorrow(){
       this.borrows = res.data;
 
       // แปลงข้อมูลจาก lookup → สำหรับ search
-      this.searchList = this.borrows.map((b:any) => ({
-        fullName: `${b.person.fname} ${b.person.lname}`,
+      this.searchPatients = this.borrows.map((b:any) => ({
+        fullName: b.patient,
         phone: b.person.phone,
         borrow_id: b._id,
         details: b.details,
@@ -54,7 +54,7 @@ search = (text$: Observable<string>) =>
     debounceTime(200),
     distinctUntilChanged(),
     map(term => term.length < 1 ? []
-      : this.searchList
+      : this.searchPatients
           .filter(p =>
             p.fullName.toLowerCase().includes(term.toLowerCase()) ||
             (p.phone && p.phone.includes(term))
