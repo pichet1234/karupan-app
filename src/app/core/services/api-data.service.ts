@@ -51,6 +51,9 @@ export class ApiDataService {
     return this.http.get<any>(`${this.urlserver}/getallborrows`);
   }
   returnBorrow(data:any):Observable<any>{
-    return this.http.put<any>(`${this.urlserver}/returnborrow`,data);
+    return this.http.post<any>(`${this.urlserver}/returnborrow`,data);
+  }
+  removeBorwDetail(data:any):Observable<any>{
+    return this.http.delete<any>(`${this.urlserver}/removeborwd/${data}`);
   }
 }

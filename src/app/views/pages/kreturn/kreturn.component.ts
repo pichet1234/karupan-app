@@ -25,7 +25,9 @@ export class KreturnComponent {
   borrows: any[] = [];
   searchPatients: any[] = [];
   searchList: any[] = [];
-  rerurnBorrowitem: any;
+  reBorrowitem: any;
+  idreborwDetl: any;
+
   constructor(
     private apidataService: ApiDataService
   ) {}
@@ -93,10 +95,10 @@ onClick(event:any){
     }
     rerurnBorrow(i: any){
 
-      this.rerurnBorrowitem = i;
-      console.log('ID ที่ส่งคืน:', this.rerurnBorrowitem);
+      this.reBorrowitem = i;
+      console.log('ID ที่ส่งคืน:', this.reBorrowitem);
       
-      this.apidataService.returnBorrow(this.rerurnBorrowitem._id).subscribe({
+      this.apidataService.returnBorrow(this.reBorrowitem).subscribe({
         next: (res) => {
           Swal.fire({
             title: res.message,
@@ -116,5 +118,43 @@ onClick(event:any){
         }
       });
       
-    } 
+    }
+    removeButton(item: any) {
+      this.idreborwDetl = item;   // item = id หรือ object
+      console.log(this.idreborwDetl);
+    
+      Swal.fire({
+        title: 'ยืนยันการลบ?',
+        text: 'ข้อมูลนี้จะไม่สามารถกู้คืนได้!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'ลบ',
+        cancelButtonText: 'ยกเลิก'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.apidataService.removeBorwDetail(this.idreborwDetl).subscribe({
+            next: (res) => {
+              Swal.fire({
+                title: res.message,
+                text: 'ข้อมูลถูกลบเรียบร้อยแล้ว',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false
+                 });
+                },
+                error: (err) => {
+                    Swal.fire({
+                      title: 'เกิดข้อผิดพลาด',
+                      text: err?.error?.message || 'ไม่สามารถลบข้อมูลได้',
+                      icon: 'error'
+                    });
+                  }
+                });
+    
+        }
+      });
+    }
+    
 }
