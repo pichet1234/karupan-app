@@ -50,4 +50,7 @@ export class ApiDataService {
   getAllborrw():Observable<any>{
     return this.http.get<any>(`${this.urlserver}/getallborrows`);
   }
+  returnBorrow(data:any):Observable<any>{
+    return this.http.put<any>(`${this.urlserver}/returnborrow`,data);
+  }
 }

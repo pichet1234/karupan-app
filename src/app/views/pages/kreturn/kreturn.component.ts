@@ -5,7 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ApiDataService } from '../../../core/services/api-data.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-kreturn',
   standalone: true,
@@ -25,6 +25,7 @@ export class KreturnComponent {
   borrows: any[] = [];
   searchPatients: any[] = [];
   searchList: any[] = [];
+  rerurnBorrowitem: any;
   constructor(
     private apidataService: ApiDataService
   ) {}
@@ -90,5 +91,30 @@ onClick(event:any){
       // default frontend
       return this.defaultImg;   // images/photos/img15.jpg
     }
+    rerurnBorrow(i: any){
 
+      this.rerurnBorrowitem = i;
+      console.log('ID ที่ส่งคืน:', this.rerurnBorrowitem);
+      
+      this.apidataService.returnBorrow(this.rerurnBorrowitem._id).subscribe({
+        next: (res) => {
+          Swal.fire({
+            title: res.message,
+            text: 'คืนครุภัณฑ์เรียบร้อยแล้ว',
+            icon: 'success',
+            confirmButtonText: 'ตกลง'
+          });
+
+        },
+        error: (err) => {
+          Swal.fire({
+            title: err.message,
+            text: 'เกิดข้อผิดพลาดในการคืนครุภัณฑ์',
+            icon: 'error',
+            confirmButtonText: 'ตกลง'
+          });
+        }
+      });
+      
+    } 
 }
