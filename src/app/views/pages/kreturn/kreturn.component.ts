@@ -156,5 +156,12 @@ onClick(event:any){
         }
       });
     }
-    
+    // แปลง status -> badge class
+  getBadgeClass(status: string) {
+    switch (status) {
+      case 'คืนแล้ว': return 'badge rounded-pill bg-success';
+      case 'ยังไม่คืน': return 'badge rounded-pill bg-warning text-dark';
+      default: return 'badge rounded-pill bg-secondary';
+    }
+  }
 }

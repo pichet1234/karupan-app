@@ -74,16 +74,16 @@
                 </p>
         
                 <p class="mb-2">
-                  ค่ามัดจำ: <b>{{ item.quantity }}</b>
+                  ค่ามัดจำ: <b>{{ item.diposit }}</b>
                 </p>
         
-                <span class="badge bg-warning text-dark">
-                  สถานะ: กำลังยืม
+                <span [class]="getBadgeClass(item.statuskarupan)">
+                  สถานะ: {{ item.statuskarupan }}
                 </span>
               </div>
         
               <div class="card-footer d-flex justify-content-between">
-                <button class="btn btn-sm btn-outline-danger" (click)="removeButton(item._id)">
+                <button *ngIf="item.statuskarupan === 'ยังไม่คืน' || item.statuskarupan === 'ยืมแล้ว'" class="btn btn-sm btn-outline-danger" (click)="removeButton(item._id)">
                   <i class="feather icon-trash-2"></i> ลบ
                 </button>
 
@@ -91,7 +91,7 @@
                   <i class="feather icon-eye"></i> ดูรายละเอียด
                 </button>
         
-                <button class="btn btn-sm btn-outline-success" (click)="rerurnBorrow(item)">
+                <button *ngIf="item.statuskarupan === 'ยังไม่คืน' || item.statuskarupan === 'ยืมแล้ว'" class="btn btn-sm btn-outline-success" (click)="rerurnBorrow(item)">
                   <i class="feather icon-log-in"></i> คืนครุภัณฑ์
                 </button>
               </div>

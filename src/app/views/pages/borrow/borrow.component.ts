@@ -139,7 +139,7 @@ export class BorrowComponent implements OnInit {
       karupanid: item._id,
       kname: item.kname,
       karupuncode: item.karupanCode,
-      statuskarupan: 'ยืมแล้ว',
+      statuskarupan: 'ยังไม่คืน',
       diposit: item.diposit
     });
     this.imgU=item.imageUrl;
