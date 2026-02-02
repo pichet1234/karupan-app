@@ -91,7 +91,7 @@
                   <i class="feather icon-eye"></i> ดูรายละเอียด
                 </button>
         
-                <button *ngIf="item.statuskarupan === 'ยังไม่คืน' || item.statuskarupan === 'ยืมแล้ว'" class="btn btn-sm btn-outline-success" (click)="rerurnBorrow(item)">
+                <button *ngIf="item.statuskarupan === 'ยังไม่คืน' || item.statuskarupan === 'ยืมแล้ว'" class="btn btn-sm btn-outline-success" (click)="loadModal(returnkarupan,item)">
                   <i class="feather icon-log-in"></i> คืนครุภัณฑ์
                 </button>
               </div>
@@ -124,3 +124,48 @@
     </div>
   </div><!-----/ .col-md-12 stretch-card ------>
 </div><!-----/ .row ------>
+<button class="btn btn-primary" >คืนครุภัณฑ์</button>
+
+<ng-template #returnkarupan let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">คืนครุภัณฑ์</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <form [formGroup]="returnForm">
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="form-label">วันที่คืนครุภัณฑ์</label>
+        <input type="date" class="form-control" name="returnDate" formControlName="returnDate"
+          placeholder="เลือกวันที่คืนครุภัณฑ์">
+      </div>
+      <div class="mb-3">
+        <label for="form-label">รหัสการยืม</label>
+        <input type="text" class="form-control" name="borrow_id" formControlName="borrow_id"
+          placeholder="ระบุรหัสการยืม" readonly> 
+        </div>    
+      <div class="mb-3">
+        <label for="form-label">รหัสครุภัณฑ์</label>
+        <input type="text" class="form-control" name="karupanid" formControlName="karupanid"
+          placeholder="ระบุรหัสครุภัณฑ์" readonly>
+      </div>
+      <div class="mb-3">
+        <label for="form-label">ผู้รับคืนครุภัณฑ์</label>
+        <input type="text" class="form-control" name="receiver" formControlName="receiver"
+          placeholder="ระบุชื่อผู้รับคืนครุภัณฑ์">
+      </div>
+      <div class="mb-3">
+        <label for="form-label">ค่ามัดจำ</label>
+        <input type="number" class="form-control" name="deposit" formControlName="deposit"
+          placeholder="ระบุค่ามัดจำ">
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">หมายเหตุการคืนครุภัณฑ์</label>
+        <textarea class="form-control" name="note" formControlName="note" id="exampleFormControlTextarea1" rows="5"></textarea>
+      </div>
+    </div>
+    </form>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="modal.dismiss()">ปิด</button>
+    <button class="btn btn-success" (click)="noSubmitForm()">บันทึก</button>
+    </div>
+</ng-template>

@@ -5,14 +5,18 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ApiDataService } from '../../../core/services/api-data.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { NgbModal,NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-kreturn',
   standalone: true,
   imports: [
     NgbModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    NgbModalModule,
+    ReactiveFormsModule
   ],
   templateUrl: './kreturn.component.html',
   styleUrl: './kreturn.component.scss'
@@ -27,10 +31,25 @@ export class KreturnComponent {
   searchList: any[] = [];
   reBorrowitem: any;
   idreborwDetl: any;
+  modalRef: any;
+  returnForm:any;
 
   constructor(
-    private apidataService: ApiDataService
-  ) {}
+    private apidataService: ApiDataService,
+    private modalService: NgbModal,
+    private fb:FormBuilder
+  ) {
+    this.returnForm = this.fb.group({
+      returnDate: ['', Validators.required],
+      borrow_id: [''],
+      borrowdetailid: [''],
+      karupanid: [''],
+      receiver: [''],
+      returnRemark: [''],
+      note: [''],
+      deposit: ['']
+    });
+  }
 
   ngOnInit(): void {
     this.loaddataBorrow();
@@ -163,5 +182,38 @@ onClick(event:any){
       case 'ยังไม่คืน': return 'badge rounded-pill bg-warning text-dark';
       default: return 'badge rounded-pill bg-secondary';
     }
+  }
+
+  loadModal(returnkarupan: any,item:any) {
+    this.modalRef = this.modalService.open(returnkarupan, {
+      centered: true,
+      size: 'lg'
+    });
+    this.returnForm.patchValue({
+      borrow_id: item.borrowid,
+      karupanid: item.karupan._id,
+      borrowdetailid: item._id
+    });
+  }
+  noSubmitForm(){
+          this.apidataService.returnBorrow(this.returnForm.value).subscribe({
+        next: (res) => {
+          Swal.fire({
+            title: res.message,
+            text: 'คืนครุภัณฑ์เรียบร้อยแล้ว',
+            icon: 'success',
+            confirmButtonText: 'ตกลง'
+          });
+
+        },
+        error: (err) => {
+          Swal.fire({
+            title: err.message,
+            text: 'เกิดข้อผิดพลาดในการคืนครุภัณฑ์',
+            icon: 'error',
+            confirmButtonText: 'ตกลง'
+          });
+        }
+      });
   }
 }

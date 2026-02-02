@@ -36,7 +36,6 @@ export class KarupanComponent {
     }
 
    karupanModal(karupanType:any) {
-    console.log('OPEN MODAL', karupanType);
     this.modalRef = this.modalService.open(karupanType, {
     centered: true,
     size: 'lg'
