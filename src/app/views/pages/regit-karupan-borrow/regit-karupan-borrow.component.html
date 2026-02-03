@@ -1,1 +1,64 @@
-<p>regit-karupan-borrow works!</p>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="card-title">ทะเบียนยืม/คืนครุภัณฑ์</h6>
+          <div class="table-responsive pt-3">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th></th>
+                  <th>วันที่ยืม</th>
+                  <th>ผู้ป่วย</th>
+                  <th>สถานะ</th>
+                  <th>ผู้ยืม</th>
+                  <th>ที่อยู่</th>
+                  <th>ค่ามัดจำ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let borrow of pagedData; let i = index">
+                  <td>{{ (page - 1) * pageSize + i + 1 }}</td>
+                  <td>
+                    <a class="align-items-center"><i data-feather="eye" appFeatherIcon class="icon-sm me-2"></i></a>
+                    <a class="align-items-center"><i data-feather="trash" appFeatherIcon class="icon-sm me-2"></i> </a>
+                    <a class="align-items-center"><i data-feather="edit-2" appFeatherIcon class="icon-sm me-2"></i> </a>
+                  </td>
+                  <td>{{ borrow.borrow_date | thaidate:true}}</td>
+                  <td>{{ borrow.patient}}</td>
+                  <td>
+                    <span [class]="getBadgeClass(borrow.statusborrow)">{{ borrow.statusborrow}}</span>
+                  </td>
+                  <td>{{ borrow.person?.fname }}&nbsp;{{ borrow.person?.lname}}</td>
+                  <td>
+                    {{ borrow.address?.bannumber+'&nbsp;'+borrow.address?.moo+'&nbsp;'+borrow.address?.village+'&nbsp;'+borrow.address?.tambon}}
+                  </td>
+                  <td> {{ borrow.expenses}} </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- Pagination -->
+            <div class="d-flex justify-content-between align-items-center mt-3">
+  
+              <!-- page size -->
+              <div>
+                <select class="form-select form-select-sm w-auto" [(ngModel)]="pageSize" (change)="refreshData()">
+                  <option [value]="5">5</option>
+                  <option [value]="10">10</option>
+                  <option [value]="20">20</option>
+                </select>
+              </div>
+  
+              <!-- pagination ui -->
+              <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="collectionSize" [maxSize]="5"
+                [rotate]="true" [ellipses]="true" (pageChange)="refreshData()">
+              </ngb-pagination>
+  
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
