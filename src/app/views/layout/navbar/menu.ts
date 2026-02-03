@@ -25,7 +25,8 @@ export const MENU: MenuItem[] = [
             link: '/karupan-all'
           },
           {
-            label: 'ทะเบียนยืมครุภัณฑ์'
+            label: 'ทะเบียนยืม/คืนครุภัณฑ์',
+            link: '/regit-karupan-borrow'
           }
         ]
       }
