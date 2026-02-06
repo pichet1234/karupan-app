@@ -76,7 +76,7 @@ onFileSelected(event: any) {
     });
   }
     onSubmit(){
-      if(this.selectedFile){
+
         const date = this.form.get('redate')?.value; 
         const dateStr = `${date.year}-${date.month}-${date.day}`;
         const formData=new FormData();
@@ -91,7 +91,10 @@ onFileSelected(event: any) {
         formData.append('status',this.form.get('status')?.value);
         formData.append('brand',this.form.get('brand')?.value);
         formData.append('redate', dateStr);
-        formData.append('file', this.selectedFile);
+        
+        if (this.selectedFile) {
+          formData.append('file', this.selectedFile);
+        }
 
        this.uploadfileService.uploadfile(formData).subscribe({
           next:(response:any)=>{
@@ -115,9 +118,7 @@ onFileSelected(event: any) {
             console.error('Error uploading file:',error);
           }
         });
-      }
-      console.log(this.form.value);
-      console.log(this.selectedFile);
+
     }
 
 
