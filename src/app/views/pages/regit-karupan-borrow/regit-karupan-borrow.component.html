@@ -1,4 +1,80 @@
 <div class="row">
+  <div class="col-12 col-xl-12 stretch-card">
+    <div class="row flex-grow-1">
+      <div class="col-md-4 grid-margin stretch-card">
+        <div class="card text-white bg-warning bg-opacity-59">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-baseline">
+              <h3 class="card-title mb-0 fs-3">รายการผู้ยืมทั้งหมด</h3>
+            </div>
+            <div class="row">
+              <div class="col-6 col-md-12 col-xl-5">
+                <h3 class="mb-2">{{totalBorrow}}</h3>
+                <div class="d-flex align-items-baseline">
+                </div>
+              </div>
+              <div class="col-6 col-md-12 col-xl-7">
+                <!-- icon -->
+                <div
+                  class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center position-absolute end-0 me-3 top-50 translate-middle-y">
+                  <i data-feather="box" appFeatherIcon class="text-white big-icon"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 grid-margin stretch-card">
+        <div class="card text-white bg-success bg-opacity-59">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-baseline">
+              <h6 class="card-title mb-0 fs-3">สถานะการ:ยังไม่คืน</h6>
+            </div>
+            <div class="row">
+              <div class="col-6 col-md-12 col-xl-5">
+                <h3 class="mb-2">{{borrowOne}}</h3>
+                <div class="d-flex align-items-baseline">
+                </div>
+              </div>
+              <div class="col-6 col-md-12 col-xl-7">
+                <!-- icon -->
+                <div
+                  class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center position-absolute end-0 me-3 top-50 translate-middle-y">
+                  <i data-feather="box" appFeatherIcon class="text-white big-icon"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 grid-margin stretch-card">
+        <div class="card  text-white bg-danger bg-opacity-59">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-baseline">
+              <h6 class="card-title mb-0 fs-3">สถานะการ:คืนสำเร็จ</h6>
+            </div>
+            <div class="row">
+              <div class="col-6 col-md-12 col-xl-5">
+                <h3 class="mb-2">{{borrowTwo}}</h3>
+                <div class="d-flex align-items-baseline">
+                </div>
+              </div>
+              <div class="col-6 col-md-12 col-xl-7">
+                <!-- icon -->
+                <div
+                  class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center position-absolute end-0 me-3 top-50 translate-middle-y">
+                  <i data-feather="box" appFeatherIcon class="text-white big-icon"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> <!-- row -->
+
+<div class="row">
     <div class="col-md-12 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">

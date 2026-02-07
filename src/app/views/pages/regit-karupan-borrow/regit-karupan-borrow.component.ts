@@ -26,12 +26,43 @@ export class RegitKarupanBorrowComponent {
   collectionSize = 0;      // จำนวนข้อมูลทั้งหมด
 
   pagedData: any[] = [];   // ข้อมูลที่ใช้แสดงจริง
+  borrowOne = 0;
+  borrowTwo = 0;
+  totalBorrow = 0;
 
   constructor(
   private apidataService: ApiDataService
  ){}
  ngOnInit(): void{
+  this.loadCounts();
  this.loaddataBorrow();
+ }
+ loadCounts(){
+  this.apidataService.countStatusOne().subscribe({
+    next: (res)=>{
+      this.borrowOne = res.count;
+    },
+    error: (err)=>{
+      console.log(err);
+    }
+  });
+  this.apidataService.countStatusTwo().subscribe({
+    next: (res)=>{
+      this.borrowTwo = res.count;
+    },
+    error: (err)=>{
+      console.log(err);
+    }
+  });
+  this.apidataService.countBorrowAll().subscribe({
+    next: (res)=>{
+      this.totalBorrow = res.count;
+    },
+    error: (err)=>{
+
+      console.log(err);
+    }
+  });
  }
  loaddataBorrow(){
   this.apidataService.getAllborrw().subscribe({

@@ -56,4 +56,14 @@ export class ApiDataService {
   removeBorwDetail(data:any):Observable<any>{
     return this.http.delete<any>(`${this.urlserver}/removeborwd/${data}`);
   }
+
+  countStatusOne():Observable<any>{
+    return this.http.get<any>(`${this.urlserver}/countborrowstatus`);
+  }
+  countStatusTwo():Observable<any>{
+    return this.http.get<any>(`${this.urlserver}/countborrowstatussuccess`);
+  }
+  countBorrowAll():Observable<any>{
+    return this.http.get<any>(`${this.urlserver}/countborrowall`);
+  }
 }
