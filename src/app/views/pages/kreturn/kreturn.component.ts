@@ -33,6 +33,8 @@ export class KreturnComponent {
   idreborwDetl: any;
   modalRef: any;
   returnForm:any;
+  hasResults = false;
+
 
   constructor(
     private apidataService: ApiDataService,
@@ -75,27 +77,45 @@ loaddataBorrow(){
   });
 }
   // ฟังก์ชัน search ที่ ngbTypeahead ต้องการ: รับ observable ของ input และคืน observable ของ suggestions
+
 search = (text$: Observable<string>) =>
   text$.pipe(
     debounceTime(200),
     distinctUntilChanged(),
-    map(term => term.length < 1 ? []
-      : this.searchPatients
-          .filter(p =>
-            p.fullName.toLowerCase().includes(term.toLowerCase()) ||
-            (p.phone && p.phone.includes(term))
-          )
-          .slice(0, 10)
-    )
+    map(term => {
+      if (!term || term.trim().length === 0) {
+        this.hasResults = false;
+        return [];
+      }
+
+      const results = this.searchPatients.filter(p =>
+        p.fullName.toLowerCase().includes(term.toLowerCase()) ||
+        (p.phone && p.phone.includes(term))
+      );
+
+      this.hasResults = results.length > 0;
+      return results.slice(0, 10);
+    })
   );
 
   // ถ้าต้องการแสดงผลใน input ต่างจากผลที่ถูกเลือก ให้ใช้ formatter
  formatter = (result: any) => result.fullName;
 
 onClick(event:any){
-  this.selectdata = event.item.raw;
+  this.selectdata = event.item;
 
   console.log('ข้อมูลเต็ม:', this.selectdata);
+
+}
+onBlurCheck() {
+  if (!this.selectdata && this.searchText && !this.hasResults) {
+    Swal.fire({
+      title: 'ไม่พบข้อมูล',
+      text: 'ไม่พบชื่อผู้ป่วยที่ค้นหา กรุณาตรวจสอบอีกครั้ง',
+      icon: 'warning',
+      confirmButtonText: 'ตกลง'
+    });
+  }
 }
 
     getImage(item: any): string {

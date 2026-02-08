@@ -11,6 +11,7 @@
                 [ngbTypeahead]="search" 
                 [resultFormatter]="formatter" 
                 [inputFormatter]="formatter"
+                 (blur)="onBlurCheck()"
                 (selectItem)="onClick($event)" placeholder="ค้นหาชื่อผู้ป่วย..." />
               <button class="input-group-text" type="button">
                 <i class="feather icon-search"></i>
@@ -22,7 +23,7 @@
     </div>
   </div>
   <div class="col-md-12 stretch-card">
-    <div class="card">
+    <div class="card" *ngIf="selectdata">
       <div class="card-body">
         <h5 class="card-title">ข้อมูลผู้ป่วย</h5>
 
@@ -56,7 +57,7 @@
         
         <h6 class="mt-3">รายการครุภัณฑ์ที่ยืม</h6>
         
-        <div class="row" *ngIf="selectdata?.details?.length > 0; else noItems">
+        <div class="row">
         
           <div class="col-md-4 mb-3" *ngFor="let item of selectdata.details">
             <div class="card h-100 shadow-sm">
@@ -101,9 +102,6 @@
         
         </div>
         
-        <ng-template #noItems>
-          <p class="text-muted">ไม่มีรายการครุภัณฑ์</p>
-        </ng-template>
         <ng-template #noData>
           <p class="text-muted">ยังไม่ได้เลือกผู้ป่วย</p>
         </ng-template>
@@ -124,8 +122,6 @@
     </div>
   </div><!-----/ .col-md-12 stretch-card ------>
 </div><!-----/ .row ------>
-<button class="btn btn-primary" >คืนครุภัณฑ์</button>
-
 <ng-template #returnkarupan let-modal>
   <div class="modal-header">
     <h5 class="modal-title">คืนครุภัณฑ์</h5>
