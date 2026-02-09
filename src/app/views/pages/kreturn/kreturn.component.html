@@ -30,21 +30,21 @@
 
         <div *ngIf="selectdata; else noData">
           <!-- ชื่อผู้ป่วย -->
-          <p><b>ชื่อ:</b> {{ selectdata?.patient }}</p>
+          <p><b>ชื่อ:</b> {{ selectdata?.fullName }}</p>
 
 
           <!-- ผู้บันทึก -->
-          <p><b>ผู้บันทึก:</b> {{ selectdata?.user_id }}</p>
+          <p><b>ผู้บันทึก:</b> {{ selectdata.raw?.user_id }}</p>
 
           <!-- วันที่ยืม -->
-          <p><b>วันที่ยืม:</b> {{ selectdata?.borrow_date | date:'dd/MM/yyyy' }}</p>
+          <p><b>วันที่ยืม:</b> {{ selectdata.raw?.borrow_date | date:'dd/MM/yyyy' }}</p>
           <!-- ที่อยู่ -->
           <p>
             <b>ที่อยู่:</b>
-            บ้านเลขที่ {{ selectdata.address?.bannumber }}
-            {{ selectdata.address?.moo }}
-            {{ selectdata.address?.village }}
-            {{ selectdata.address?.tambon }}
+            บ้านเลขที่ {{ selectdata.raw.address?.bannumber }}
+            {{ selectdata.raw.address?.moo }}
+            {{ selectdata.raw.address?.village }}
+            {{ selectdata.raw.address?.tambon }}
           </p>
           <!-- จำนวนรายการ -->
           <p><b>จำนวนครุภัณฑ์:</b> {{ selectdata.details?.length }} รายการ</p>
