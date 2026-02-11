@@ -3,11 +3,17 @@
   width: 94px;
   height: 94px;
 }
-.icon-square i {
+ .ic {
   display: contents; /* สำคัญมาก */
+  width: 94px;
+  height: 94px;
 }
 
 .big-icon {
   width: 24px;
   height: 24px;
+}
+.detail-cell {
+  white-space: pre-line;     /* ขึ้นบรรทัดตาม \n */
+  word-break: break-word;    /* ตัดคำเมื่อยาวเกิน */
 }

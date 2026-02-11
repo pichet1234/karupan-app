@@ -15,8 +15,8 @@
               </div>
               <div class="col-6 col-md-12 col-xl-7">
                 <!-- icon -->
-              <div class="icon-square bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center position-absolute end-0 me-3 top-50 translate-middle-y">
-                <i data-feather="box" appFeatherIcon class="text-white"></i>
+              <div class="justify-content-center position-absolute end-0 me-3 top-50 translate-middle-y">
+                <i data-feather="box" appFeatherIcon class="text-white" style="width: 94px;height: 94px;"></i>
               </div>
               </div>
             </div>
@@ -37,9 +37,8 @@
               </div>
               <div class="col-6 col-md-12 col-xl-7">
                 <!-- icon -->
-                <div
-                  class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center position-absolute end-0 me-3 top-50 translate-middle-y">
-                  <i data-feather="box" appFeatherIcon class="text-white big-icon"></i>
+                <div class="justify-content-center position-absolute end-0 me-3 top-50 translate-middle-y">
+                  <i data-feather="box" appFeatherIcon class="text-white icon-square" style="width: 94px;height: 94px;"></i>
                 </div>
               </div>
             </div>
@@ -61,8 +60,8 @@
               <div class="col-6 col-md-12 col-xl-7">
                 <!-- icon -->
                 <div
-                  class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center position-absolute end-0 me-3 top-50 translate-middle-y">
-                  <i data-feather="box" appFeatherIcon class="text-white big-icon"></i>
+                  class="justify-content-center position-absolute end-0 me-3 top-50 translate-middle-y">
+                  <i data-feather="box" appFeatherIcon class="text-white big-icon"  style="width: 94px;height: 94px;"></i>
                 </div>
               </div>
             </div>
@@ -95,7 +94,7 @@
               <tr *ngFor="let karupan of pagedData; let i = index">
                 <td>{{ (page - 1) * pageSize + i + 1 }}</td>
                 <td>
-                  <a class="align-items-center"><i data-feather="eye" appFeatherIcon class="icon-sm me-2"></i></a>
+                  <a class="align-items-center" (click)="onView(karupanModal,karupan)"><i data-feather="eye" appFeatherIcon class="icon-sm me-2" ></i></a>
                   <a class="align-items-center"><i data-feather="trash" appFeatherIcon class="icon-sm me-2"></i> </a>
                   <a class="align-items-center"><i data-feather="edit-2" appFeatherIcon class="icon-sm me-2"></i> </a>
                 </td>
@@ -134,3 +133,105 @@
     </div>
   </div>
 </div>
+<!-- Modal Template -->
+<!-- Modal Template -->
+<ng-template #karupanModal let-modal>
+  <div class="modal-header bg-primary text-white">
+    <h5 class="modal-title">
+      <i class="bi bi-box-seam me-2"></i>
+      รายละเอียดครุภัณฑ์
+    </h5>
+    <button type="button" class="btn-close btn-close-white"
+            (click)="modal.close()">
+    </button>
+  </div>
+
+  <div class="modal-body" *ngIf="viewData">
+
+    <div class="row">
+
+      <!-- รูปภาพ -->
+      <div class="col-md-4 text-center mb-3">
+        <img [src]="viewData.imageUrl ? imgBase + viewData.imageUrl : 'assets/no-image.png'"
+             class="img-fluid rounded shadow"
+             style="max-height:250px; object-fit:cover;">
+      </div>
+
+      <!-- ข้อมูล -->
+      <div class="col-md-8">
+
+        <table class="table table-bordered table-sm">
+          <tr>
+            <th width="40%">รหัสครุภัณฑ์</th>
+            <td>{{ viewData.karupanCode }}</td>
+          </tr>
+
+          <tr>
+            <th>ชื่อครุภัณฑ์</th>
+            <td>{{ viewData.kname }}</td>
+          </tr>
+
+          <tr>
+            <th>ยี่ห้อ</th>
+            <td>{{ viewData.brand }}</td>
+          </tr>
+
+          <tr>
+            <th>รายละเอียด</th>
+            <td class="text-break detail-cell">{{ viewData.detail }}</td>
+          </tr>
+
+          <tr>
+            <th>ราคา</th>
+            <td>{{ viewData.price | number }} บาท</td>
+          </tr>
+
+          <tr>
+            <th>แหล่งที่มา</th>
+            <td>{{ viewData.expenditure }}</td>
+          </tr>
+
+          <tr>
+            <th>สถานที่ใช้งาน</th>
+            <td>{{ viewData.station }}</td>
+          </tr>
+
+          <tr>
+            <th>สถานะ</th>
+            <td>
+              <span class="badge bg-success"
+                    *ngIf="viewData.status === 'ใช้งานได้'">
+                {{ viewData.status }}
+              </span>
+
+              <span class="badge bg-danger"
+                    *ngIf="viewData.status !== 'ใช้งานได้'">
+                {{ viewData.status }}
+              </span>
+            </td>
+          </tr>
+
+          <tr>
+            <th>อายุการใช้งาน</th>
+            <td>{{ viewData.usefullife }} ปี</td>
+          </tr>
+
+          <tr>
+            <th>วันที่รับเข้า</th>
+            <td>{{ viewData.redate | thaidate:true }}</td>
+          </tr>
+
+        </table>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-secondary"
+            (click)="modal.close()">
+      ปิด
+    </button>
+  </div>
+</ng-template>

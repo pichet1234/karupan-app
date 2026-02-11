@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { ApiDataService } from '../../../core/services/api-data.service';
 import { CommonModule } from '@angular/common';
 import { FeatherIconDirective } from '../../../core/feather-icon/feather-icon.directive';
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule ,NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';   
+import { ThaidatePipe } from '../../../core/pipes/thaidate.pipe';
 
 @Component({
   selector: 'app-karupan-all',
@@ -12,7 +13,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     FeatherIconDirective,
     NgbPaginationModule,
-    FormsModule
+    FormsModule,
+    ThaidatePipe
   ],
   templateUrl: './karupan-all.component.html',
   styleUrl: './karupan-all.component.scss'
@@ -28,7 +30,12 @@ export class KarupanAllComponent {
   collectionSize = 0;      // จำนวนข้อมูลทั้งหมด
 
   pagedData: any[] = [];   // ข้อมูลที่ใช้แสดงจริง
-  constructor( private apidataService: ApiDataService){}
+  viewData: any ;
+  imgBase = 'http://localhost:3000/'; // เปลี่ยนตาม backend คุณ
+  constructor( 
+    private apidataService: ApiDataService,
+    private modalService: NgbModal
+    ){}
 
   ngOnInit(): void{
     this.loadData();
@@ -91,5 +98,15 @@ export class KarupanAllComponent {
       default: return 'badge rounded-pill bg-secondary';
     }
   }
+  //===================================ส่วน view modal===================================
+
+    onView(karupan: any, i: any) {
+    this.viewData = i;
+    this.modalService.open(karupan, {
+      size: 'lg'
+    });
+    console.log(this.viewData);
+  }
+  //===================================end ส่วน view modal===================================
 
 }
