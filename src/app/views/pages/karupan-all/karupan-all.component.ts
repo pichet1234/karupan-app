@@ -98,8 +98,11 @@ export class KarupanAllComponent {
       default: return 'badge rounded-pill bg-secondary';
     }
   }
-  //===================================ส่วน view modal===================================
-
+  /**
+   * 
+   * View modal
+   * 
+   */
     onView(karupan: any, i: any) {
     this.viewData = i;
     this.modalService.open(karupan, {
@@ -108,5 +111,10 @@ export class KarupanAllComponent {
     console.log(this.viewData);
   }
   //===================================end ส่วน view modal===================================
-
+/**
+ * Edit modal
+ */
+   editKarupan(){
+      
+  }
 }
