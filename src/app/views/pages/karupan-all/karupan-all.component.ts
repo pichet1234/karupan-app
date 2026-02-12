@@ -5,6 +5,8 @@ import { FeatherIconDirective } from '../../../core/feather-icon/feather-icon.di
 import { NgbPaginationModule ,NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';   
 import { ThaidatePipe } from '../../../core/pipes/thaidate.pipe';
+import { FormBuilder, FormGroup, Validators ,ReactiveFormsModule} from '@angular/forms';
+import { reduce } from 'rxjs';
 
 @Component({
   selector: 'app-karupan-all',
@@ -14,7 +16,8 @@ import { ThaidatePipe } from '../../../core/pipes/thaidate.pipe';
     FeatherIconDirective,
     NgbPaginationModule,
     FormsModule,
-    ThaidatePipe
+    ThaidatePipe,
+    ReactiveFormsModule
   ],
   templateUrl: './karupan-all.component.html',
   styleUrl: './karupan-all.component.scss'
@@ -32,12 +35,30 @@ export class KarupanAllComponent {
   pagedData: any[] = [];   // ข้อมูลที่ใช้แสดงจริง
   viewData: any ;
   imgBase = 'http://localhost:3000/'; // เปลี่ยนตาม backend คุณ
+
+  editForm!: FormGroup;
   constructor( 
+    private fb: FormBuilder,
     private apidataService: ApiDataService,
     private modalService: NgbModal
     ){}
 
   ngOnInit(): void{
+
+      this.editForm = this.fb.group({
+    karupanCode: ['', Validators.required],
+    kname: ['', Validators.required],
+    brand: [''],
+    price: [0, Validators.required],
+    expenditure: [''],
+    station: [''],
+    status: [''],
+    usefullife: [''],
+    redate: [''],
+    detail: [''],
+    imageUrl: ['']
+  });
+
     this.loadData();
     this.loadCounts();
   }
@@ -114,7 +135,25 @@ export class KarupanAllComponent {
 /**
  * Edit modal
  */
-   editKarupan(){
-      
+   editKarupan(karupan: any, i: any){
+      this.viewData = i;
+      this.editForm.patchValue({
+        ...i,
+        redate: i.redate? new Date(i.redate).toISOString().substring(0, 10) : ''
+      });
+      this.modalService.open(karupan, {
+        size: 'lg'
+      });
+      console.log(this.viewData);
   }
+  saveEdit() {
+  if (this.editForm.invalid) return;
+
+  const payload = this.editForm.value;
+
+  console.log('ส่งไป backend:', payload);
+
+  // 👉 เรียก API update ตรงนี้
+}
+
 }

@@ -95,8 +95,8 @@
                 <td>{{ (page - 1) * pageSize + i + 1 }}</td>
                 <td>
                   <a class="align-items-center" (click)="onView(karupanModal,karupan)"><i data-feather="eye" appFeatherIcon class="icon-sm me-2" ></i></a>
-                  <a class="align-items-center"><i data-feather="trash" appFeatherIcon class="icon-sm me-2"></i> </a>
-                  <a class="align-items-center"><i data-feather="edit-2" appFeatherIcon class="icon-sm me-2"></i> </a>
+                  <a class="align-items-center" ><i data-feather="trash" appFeatherIcon class="icon-sm me-2"></i> </a>
+                  <a class="align-items-center" (click)="editKarupan(editKarupanModal,karupan)"><i data-feather="edit-2" appFeatherIcon class="icon-sm me-2"></i> </a>
                 </td>
                 <td>{{ karupan.kname}}</td>
                 <td>{{ karupan.karupanCode}}</td>
@@ -229,9 +229,127 @@
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-secondary"
-            (click)="modal.close()">
-      ปิด
-    </button>
+    <button class="btn btn-secondary" (click)="modal.close()">ปิด</button>
   </div>
 </ng-template>
+<!--edit modal--> 
+<ng-template #editKarupanModal let-modal>
+  <div class="modal-header bg-primary text-white">
+    <h5 class="modal-title">
+      <i class="bi bi-box-seam me-2"></i>
+      แก้ไขข้อมูลครุภัณฑ์
+    </h5>
+    <button type="button" class="btn-close btn-close-white"
+            (click)="modal.close()">
+    </button>
+  </div>
+
+  <div class="modal-body" *ngIf="viewData">
+    <!-- Form content for editing karupan would go here -->
+    <form [formGroup]="editForm">
+
+  <div class="row g-3">
+
+    <!-- รหัสครุภัณฑ์ -->
+    <div class="col-md-6">
+      <label class="form-label">รหัสครุภัณฑ์</label>
+      <input type="text" class="form-control"
+             formControlName="karupanCode">
+    </div>
+
+    <!-- ชื่อครุภัณฑ์ -->
+    <div class="col-md-6">
+      <label class="form-label">ชื่อครุภัณฑ์</label>
+      <input type="text" class="form-control"
+             formControlName="kname">
+    </div>
+
+    <!-- ยี่ห้อ -->
+    <div class="col-md-6">
+      <label class="form-label">ยี่ห้อ</label>
+      <input type="text" class="form-control"
+             formControlName="brand">
+    </div>
+
+    <!-- ราคา -->
+    <div class="col-md-6">
+      <label class="form-label">ราคา</label>
+      <input type="number" class="form-control"
+             formControlName="price">
+    </div>
+
+    <!-- งบประมาณ -->
+    <div class="col-md-6">
+      <label class="form-label">งบประมาณ</label>
+      <select class="form-select"
+              formControlName="expenditure">
+        <option value="">เลือก</option>
+        <option>งบค่าเสื่อม</option>
+        <option>บริจาค</option>
+        <option>งบประมาณแผ่นดิน</option>
+      </select>
+    </div>
+
+    <!-- สถานี -->
+    <div class="col-md-6">
+      <label class="form-label">สถานที่</label>
+      <input type="text" class="form-control"
+             formControlName="station">
+    </div>
+
+    <!-- สถานะ -->
+    <div class="col-md-6">
+      <label class="form-label">สถานะ</label>
+      <select class="form-select"
+              formControlName="status">
+        <option>ใช้งานได้</option>
+        <option>ชำรุด</option>
+        <option>รอจำหน่าย</option>
+      </select>
+    </div>
+
+    <!-- อายุการใช้งาน -->
+    <div class="col-md-6">
+      <label class="form-label">อายุการใช้งาน (ปี)</label>
+      <input type="number" class="form-control"
+             formControlName="usefullife">
+    </div>
+
+    <!-- วันที่รับเข้า -->
+    <div class="col-md-6">
+      <label class="form-label">วันที่รับเข้า</label>
+      <input type="date" class="form-control"
+             formControlName="redate">
+    </div>
+
+    <!-- รายละเอียด -->
+    <div class="col-12">
+      <label class="form-label">รายละเอียด</label>
+      <textarea class="form-control"
+                rows="3"
+                formControlName="detail"></textarea>
+    </div>
+
+    <!-- รูปภาพ -->
+    <div class="col-12">
+      <label class="form-label">รูปภาพ</label>
+
+      <input type="file" class="form-control">
+
+      <img *ngIf="viewData?.imageUrl"
+           [src]="imgBase + viewData.imageUrl"
+           class="img-thumbnail mt-2"
+           style="max-height:150px">
+    </div>
+
+  </div>
+
+</form>
+
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="modal.close()">ปิด</button>
+    <button class="btn btn-primary" (click)="saveEdit()" [disabled]="editForm.invalid">บันทึกการเปลี่ยนแปลง</button>
+  </div>  
+
