@@ -155,5 +155,14 @@ export class KarupanAllComponent {
 
   // 👉 เรียก API update ตรงนี้
 }
+//===================================end ส่วน edit modal===================================
+/*
+* Delete modal
+*/
+  deleteKarupan(karupan: any){
+      this.viewData = karupan;
+     console.log(this.viewData);
+  }
+
 
 }
