@@ -281,10 +281,9 @@
     <!-- งบประมาณ -->
     <div class="col-md-6">
       <label class="form-label">งบประมาณ</label>
-      <select class="form-select"
-              formControlName="expenditure">
-        <option value="">เลือก</option>
+      <select class="form-select" formControlName="expenditure">
         <option>งบค่าเสื่อม</option>
+        <option>เงินบำรุง</option>
         <option>บริจาค</option>
         <option>งบประมาณแผ่นดิน</option>
       </select>
@@ -300,8 +299,7 @@
     <!-- สถานะ -->
     <div class="col-md-6">
       <label class="form-label">สถานะ</label>
-      <select class="form-select"
-              formControlName="status">
+      <select class="form-select" formControlName="status">
         <option>ใช้งานได้</option>
         <option>ชำรุด</option>
         <option>รอจำหน่าย</option>
@@ -334,7 +332,7 @@
     <div class="col-12">
       <label class="form-label">รูปภาพ</label>
 
-      <input type="file" class="form-control">
+      <input type="file" (change)="onFileSelected($event)" />
 
       <img *ngIf="viewData?.imageUrl"
            [src]="imgBase + viewData.imageUrl"

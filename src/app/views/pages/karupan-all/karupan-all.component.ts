@@ -6,7 +6,7 @@ import { NgbPaginationModule ,NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';   
 import { ThaidatePipe } from '../../../core/pipes/thaidate.pipe';
 import { FormBuilder, FormGroup, Validators ,ReactiveFormsModule} from '@angular/forms';
-import { reduce } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-karupan-all',
@@ -36,6 +36,7 @@ export class KarupanAllComponent {
   viewData: any ;
   imgBase = 'http://localhost:3000/'; // เปลี่ยนตาม backend คุณ
 
+  selectedFile: File | null = null;
   editForm!: FormGroup;
   constructor( 
     private fb: FormBuilder,
@@ -148,20 +149,83 @@ export class KarupanAllComponent {
   }
   saveEdit() {
   if (this.editForm.invalid) return;
+    const formData=new FormData();
+   if (this.selectedFile) {
+          formData.append('file', this.selectedFile);
+        }
+   const payload = {
+    ...this.editForm.value,
+    _id: this.viewData._id
+  };
+  this.apidataService.updateKarupan(payload, this.selectedFile!)
+    .subscribe({
+      next: (res: any) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'บันทึกสำเร็จ',
+          timer: 1500,
+          showConfirmButton: false
+        });
 
-  const payload = this.editForm.value;
+        this.modalService.dismissAll();
 
-  console.log('ส่งไป backend:', payload);
-
-  // 👉 เรียก API update ตรงนี้
+        this.loadData(); // reload list
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'เกิดข้อผิดพลาด',
+          text: err.error?.message || 'ไม่สามารถบันทึกได้'
+        });
+      }
+    });
 }
+onFileSelected(event: any) {
+  const file = event.target.files[0];
+  if (file) {
+    this.selectedFile = file;
+  }
+}
+
 //===================================end ส่วน edit modal===================================
 /*
 * Delete modal
 */
   deleteKarupan(karupan: any){
       this.viewData = karupan;
-     console.log(this.viewData);
+     
+      Swal.fire({
+        title: 'คุณแน่ใจหรือไม่?',
+        text: 'คุณต้องการลบข้อมูลนี้หรือไม่?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'ใช่, ลบเลย!',
+        cancelButtonText: 'ไม่, ยกเลิก'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.apidataService.removeKarupan(this.viewData._id).subscribe({
+            next: (res) => {
+              Swal.fire({
+                title: res.message,
+                text: 'ข้อมูลถูกลบเรียบร้อยแล้ว',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false
+              });
+              this.loadData(); // โหลดข้อมูลใหม่หลังลบ
+            },
+            error: (err) => {
+              Swal.fire({
+                title: 'เกิดข้อผิดพลาด',
+                text: err?.error?.message || 'ไม่สามารถลบข้อมูลได้',
+                icon: 'error'
+              });
+            }
+          });
+        }
+      });
   }
 
 

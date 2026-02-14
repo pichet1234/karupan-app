@@ -66,4 +66,17 @@ export class ApiDataService {
   countBorrowAll():Observable<any>{
     return this.http.get<any>(`${this.urlserver}/countborrowall`);
   }
+  removeKarupan(data:any):Observable<any>{
+    return this.http.delete<any>(`${this.urlserver}/removekarupan/${data}`);
+  }
+  updateKarupan(data:any, file?: File):Observable<any>{
+    const formData = new FormData();
+    Object.keys(data).forEach(key => {
+    formData.append(key, data[key]);
+  });
+    if (file) {
+    formData.append('file', file);
+  }
+    return this.http.post<any>(`${this.urlserver}/updatekarupan`,formData);
+  }
 }
