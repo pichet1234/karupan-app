@@ -38,6 +38,9 @@ export class KarupanAllComponent {
 
   selectedFile: File | null = null;
   editForm!: FormGroup;
+
+  searchText: string = '';
+  filteredData: any[] = [];
   constructor( 
     private fb: FormBuilder,
     private apidataService: ApiDataService,
@@ -94,6 +97,7 @@ export class KarupanAllComponent {
     this.apidataService.getKarupanAll().subscribe({
       next: (res)=>{
         this.karupans = res.data;
+        this.filteredData = [...this.karupans];
         this.collectionSize = this.karupans.length;  
         this.refreshData();                            
         console.log(this.karupans);
@@ -105,7 +109,7 @@ export class KarupanAllComponent {
   }
 
   refreshData() {
-    this.pagedData = this.karupans.slice(
+    this.pagedData = this.filteredData.slice(
       (this.page - 1) * this.pageSize,
       (this.page - 1) * this.pageSize + this.pageSize
     );
@@ -120,6 +124,23 @@ export class KarupanAllComponent {
       default: return 'badge rounded-pill bg-secondary';
     }
   }
+  onSearch() {
+  const keyword = this.searchText.toLowerCase().trim();
+
+  if (!keyword) {
+    this.filteredData = [...this.karupans];
+  } else {
+    this.filteredData = this.karupans.filter(k =>
+      k.kname?.toLowerCase().includes(keyword) ||
+      k.karupanCode?.toLowerCase().includes(keyword) ||
+      k.karupanTypeInfo?.[0]?.karupanType?.toLowerCase().includes(keyword)
+    );
+  }
+
+  this.page = 1; // reset page
+  this.collectionSize = this.filteredData.length;
+  this.refreshData();
+}
   /**
    * 
    * View modal

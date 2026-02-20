@@ -76,6 +76,9 @@
     <div class="card">
       <div class="card-body">
         <h6 class="card-title">ทะเบียนครุภัณฑ์</h6>
+        <div class="col-md-3 mb-3">
+          <input type="text" class="form-control" placeholder="ค้นหาครุภัณฑ์..." [(ngModel)]="searchText" (input)="onSearch()">
+        </div>
         <div class="table-responsive pt-3">
           <table class="table table-bordered">
             <thead>
