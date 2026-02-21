@@ -17,3 +17,21 @@
   white-space: pre-line;     /* ขึ้นบรรทัดตาม \n */
   word-break: break-word;    /* ตัดคำเมื่อยาวเกิน */
 }
+.icon-purple-box {
+  background-color: #6f42c1; /* สีม่วง */
+  color: rgb(248, 246, 246);              /* สีไอคอน */
+  width: 46px;               /* ปรับขนาดความกว้าง */
+  height: 46px;              /* ปรับขนาดความสูง */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;        /* ความมนของมุม */
+  margin-right: 12px;
+  vertical-align: middle;
+}
+
+/* เพิ่มขนาดเฉพาะตัวไอคอนด้านใน */
+.icon-purple-box svg {
+  width: 4px; 
+  height: 4px;
+}
