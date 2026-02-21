@@ -63,6 +63,9 @@ export class ApiDataService {
   countStatusTwo():Observable<any>{
     return this.http.get<any>(`${this.urlserver}/countborrowstatussuccess`);
   }
+  countkborrow(): Observable<any>{
+    return this.http.get<any>(`${this.urlserver}/countkborrw`);//นับจำนวนครุภัณฑ์ที่ถูกยืม
+  }
   countBorrowAll():Observable<any>{
     return this.http.get<any>(`${this.urlserver}/countborrowall`);
   }

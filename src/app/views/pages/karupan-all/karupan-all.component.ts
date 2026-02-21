@@ -26,6 +26,7 @@ export class KarupanAllComponent {
   totalKarupan = 0;
   totalKarupanSuccess = 0;
   totalKarupanDanger = 0;
+  totalKarupanborrw = 0;
 
   karupans:any[] = [];
   page = 1;                // หน้าปัจจุบัน
@@ -91,6 +92,14 @@ export class KarupanAllComponent {
         console.log(err);
       }
     }); 
+    this.apidataService.countkborrow().subscribe({
+      next:(res)=>{
+        this.totalKarupanborrw = res.result[0].total;
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    });
   }
 
   loadData(){
