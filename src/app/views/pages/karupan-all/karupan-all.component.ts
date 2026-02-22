@@ -45,6 +45,7 @@ export class KarupanAllComponent {
 
   searchText: string = '';
   filteredData: any[] = [];
+  currentFilter: string = 'all';
   constructor( 
     private fb: FormBuilder,
     private apidataService: ApiDataService,
@@ -133,6 +134,7 @@ export class KarupanAllComponent {
       case 'ใช้งานได้': return 'badge rounded-pill bg-success';
       case 'ชำรุด': return 'badge rounded-pill bg-danger';
       case 'กำลังซ่อมบำรุง': return 'badge rounded-pill bg-warning text-dark';
+      case 'ถูกยืม': return 'badge rounded-pill bg-secondary';
       default: return 'badge rounded-pill bg-secondary';
     }
   }
@@ -150,6 +152,23 @@ export class KarupanAllComponent {
   }
 
   this.page = 1; // reset page
+  this.collectionSize = this.filteredData.length;
+  this.refreshData();
+}
+
+filterByStatus(status: string) {
+  this.currentFilter = status;
+
+  if (status === 'all') {
+    this.filteredData = [...this.karupans];
+  } else if ( status === '') {
+    // ถ้ามี field บอกว่ายืม เช่น k.borrowStatus === true
+    this.filteredData = this.karupans.filter(k => k.isBorrowed === true);
+  } else {
+    this.filteredData = this.karupans.filter(k => k.status === status);
+  }
+
+  this.page = 1;
   this.collectionSize = this.filteredData.length;
   this.refreshData();
 }

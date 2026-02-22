@@ -29,25 +29,41 @@
           <div class="col-6 col-md-3">
             <div class="p-3 bg-light rounded text-center border-bottom border-primary border-3">
               <p class="text-muted mb-1 small">ทั้งหมด</p>
-              <h4 class="fw-bold mb-0 text-dark">{{ totalKarupan | number }}</h4>
+              <h4 class="fw-bold mb-0 text-dark">
+              <a href="javascript:void(0)" (click)="filterByStatus('all')" class="text-dark text-decoration-none">
+                {{ totalKarupan | number }}
+              </a>
+            </h4>
             </div>
           </div>
           <div class="col-6 col-md-3">
             <div class="p-3 bg-light rounded text-center border-bottom border-success border-3">
               <p class="text-muted mb-1 small">ใช้งานได้</p>
-              <h4 class="fw-bold mb-0 text-success">{{ totalKarupanSuccess | number }}</h4>
+              <h4 class="fw-bold mb-0 text-success">
+              <a href="javascript:void(0)" (click)="filterByStatus('ใช้งานได้')" class="text-success text-decoration-none">
+                {{ totalKarupanSuccess | number }}
+              </a>
+            </h4>
             </div>
           </div>
           <div class="col-6 col-md-3 mt-3 mt-md-0">
             <div class="p-3 bg-light rounded text-center border-bottom border-danger border-3">
               <p class="text-muted mb-1 small">ชำรุด</p>
-              <h4 class="fw-bold mb-0 text-danger">{{ totalKarupanDanger | number }}</h4>
+              <a href="javascript:void(0)"
+                (click)="filterByStatus('ชำรุด')"
+                class="fw-bold mb-0 text-danger text-decoration-none">
+                {{ totalKarupanDanger | number }}
+              </a>
             </div>
           </div>
           <div class="col-6 col-md-3 mt-3 mt-md-0">
             <div class="p-3 bg-light rounded text-center border-bottom border-secondary border-3">
               <p class="text-muted mb-1 small">ถูกยืม</p>
-              <h4 class="fw-bold mb-0 text-secondary">{{ totalKarupanborrw | number }}</h4>
+              <a href="javascript:void(0)"
+                (click)="filterByStatus('ถูกยืม')"
+                class="fw-bold mb-0 text-secondary text-decoration-none">
+                {{ totalKarupanborrw | number }}
+              </a>
             </div>
           </div>
         </div>
@@ -65,7 +81,12 @@
             แสดง {{ (page-1)*pageSize + 1 }} - {{ (page*pageSize) > collectionSize ? collectionSize : (page*pageSize) }} จากทั้งหมด {{ collectionSize }} รายการ
           </div>
         </div>
-
+        <div *ngIf="currentFilter !== 'all'" class="mb-2 text-muted small">
+          กำลังแสดงผล: {{ currentFilter }}
+          <a href="javascript:void(0)" (click)="filterByStatus('all')" class="ms-2">
+            แสดงทั้งหมด
+          </a>
+        </div>
         <div class="table-responsive">
           <table class="table table-hover align-middle">
             <thead class="bg-light text-muted">
