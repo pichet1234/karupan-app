@@ -88,7 +88,7 @@
                   <i class="feather icon-trash-2"></i> ลบ
                 </button>
 
-                <button class="btn btn-sm btn-outline-primary">
+                <button class="btn btn-sm btn-outline-primary" (click)="onview(viewkarupan,item.karupan)">
                   <i class="feather icon-eye"></i> ดูรายละเอียด
                 </button>
         
@@ -164,4 +164,76 @@
     <button class="btn btn-secondary" (click)="modal.dismiss()">ปิด</button>
     <button class="btn btn-success" (click)="noSubmitForm()">บันทึก</button>
     </div>
+</ng-template>
+<!--View karupan detail-->
+<ng-template #viewkarupan let-modal>
+  <div class="modal-header bg-light">
+    <h5 class="modal-title d-flex align-items-center">
+      <i class="bi bi-info-circle-fill me-2 text-primary"></i>
+      รายละเอียดครุภัณฑ์
+    </h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  
+  <div class="modal-body p-0">
+    <div class="position-relative">
+<img [src]="getImage(viewdata)" class="w-100 img-fluid rounded shadow-sm" style="max-height: 350px; object-fit: contain; background-color: #f8f9fa;" />
+      <div class="position-absolute bottom-0 start-0 m-3">
+        <span [class]="'badge p-2 shadow-sm ' + getBadgeClass(viewdata.status)">
+          {{ viewdata.status }}
+        </span>
+      </div>
+    </div>
+
+    <div class="p-4">
+      <div class="mb-4">
+        <h4 class="fw-bold text-primary mb-1">{{ viewdata.kname }}</h4>
+        <p class="text-muted"><i class="bi bi-qr-code me-1"></i> รหัส: {{ viewdata.karupanCode }}</p>
+      </div>
+
+      <hr class="my-3 opacity-25">
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="small text-muted d-block">ยี่ห้อ (Brand)</label>
+          <span class="fw-semibold text-dark">{{ viewdata.brand || '-' }}</span>
+        </div>
+        <div class="col-md-6">
+          <label class="small text-muted d-block">ราคา</label>
+          <span class="fw-semibold text-success">{{ viewdata.price | number }} บาท</span>
+        </div>
+        <div class="col-md-6">
+          <label class="small text-muted d-block">หน่วยงานที่ดูแล</label>
+          <span class="text-dark">{{ viewdata.station }}</span>
+        </div>
+        <div class="col-md-6">
+          <label class="small text-muted d-block">อายุการใช้งาน</label>
+          <span class="text-dark">{{ viewdata.usefullife }} ปี</span>
+        </div>
+        <div class="col-md-12">
+          <label class="small text-muted d-block">รายละเอียด</label>
+          <p class="text-dark mb-0 bg-light p-2 rounded" style="font-size: 0.95rem;">
+            {{ viewdata.detail }}
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-4 pt-3 border-top">
+        <div class="row">
+          <div class="col-6">
+            <small class="text-muted d-block">งบประมาณ</small>
+            <span class="badge bg-info text-dark">{{ viewdata.expenditure }}</span>
+          </div>
+          <div class="col-6 text-end">
+            <small class="text-muted d-block">วันที่รับเข้า</small>
+            <span>{{ viewdata.redate | thaidate:true }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer border-0">
+    <button class="btn btn-outline-secondary px-4" (click)="modal.dismiss()">ปิด</button>
+  </div>
 </ng-template>

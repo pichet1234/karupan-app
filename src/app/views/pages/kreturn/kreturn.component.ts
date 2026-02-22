@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { NgbModal,NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { ThaidatePipe } from '../../../core/pipes/thaidate.pipe';
 @Component({
   selector: 'app-kreturn',
   standalone: true,
@@ -16,7 +17,8 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
     FormsModule,
     CommonModule,
     NgbModalModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ThaidatePipe
   ],
   templateUrl: './kreturn.component.html',
   styleUrl: './kreturn.component.scss'
@@ -31,6 +33,7 @@ export class KreturnComponent {
   searchList: any[] = [];
   reBorrowitem: any;
   idreborwDetl: any;
+  viewdata: any;
   modalRef: any;
   returnForm:any;
   hasResults = false;
@@ -193,6 +196,15 @@ onBlurCheck() {
                 });
     
         }
+      });
+    }
+
+    onview(viewkarupan: any,item:any){
+      this.viewdata = item;
+      console.log(this.viewdata);
+      this.modalRef = this.modalService.open(viewkarupan, {
+        centered: true,
+        size: 'lg'
       });
     }
     // แปลง status -> badge class

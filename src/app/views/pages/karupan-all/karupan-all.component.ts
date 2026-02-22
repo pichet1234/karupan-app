@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { ApiDataService } from '../../../core/services/api-data.service';
 import { CommonModule } from '@angular/common';
 import { FeatherIconDirective } from '../../../core/feather-icon/feather-icon.directive';
-import { NgbPaginationModule ,NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule ,NgbModal,NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';   
 import { ThaidatePipe } from '../../../core/pipes/thaidate.pipe';
 import { FormBuilder, FormGroup, Validators ,ReactiveFormsModule} from '@angular/forms';
 import Swal from 'sweetalert2';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-karupan-all',
@@ -17,7 +18,9 @@ import Swal from 'sweetalert2';
     NgbPaginationModule,
     FormsModule,
     ThaidatePipe,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbDropdownModule,
+    RouterModule
   ],
   templateUrl: './karupan-all.component.html',
   styleUrl: './karupan-all.component.scss'
