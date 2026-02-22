@@ -172,6 +172,17 @@ filterByStatus(status: string) {
   this.collectionSize = this.filteredData.length;
   this.refreshData();
 }
+filterByexpenditure(expenditure: string) {
+  this.currentFilter = expenditure;
+  if (expenditure === 'all') {
+    this.filteredData = [...this.karupans];
+  } else {
+    this.filteredData = this.karupans.filter(k => k.expenditure === expenditure);
+  }
+  this.page = 1;
+  this.collectionSize = this.filteredData.length;
+  this.refreshData();
+}
   /**
    * 
    * View modal
