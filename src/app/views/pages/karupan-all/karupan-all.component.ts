@@ -60,10 +60,7 @@ export class KarupanAllComponent {
     kname: ['', Validators.required],
     brand: [''],
     price: [0, Validators.required],
-    karupanTypeId:{
-      id: [''],
-      karupanType: ['']
-    },
+    karupanTypeId:[''],
     expenditure: [''],
     station: [''],
     status: [''],
@@ -215,8 +212,7 @@ filterByexpenditure(expenditure: string) {
       this.viewData = i;
       this.editForm.patchValue({
         ...i,
-        karupanTypeId: i.karupanTypeInfo._id,
-        karupanType: i.karupanTypeInfo.karupanType,
+        karupanTypeId: i.karupantypeid,
         redate: i.redate? new Date(i.redate).toISOString().substring(0, 10) : ''
       });
       this.modalService.open(karupan, {

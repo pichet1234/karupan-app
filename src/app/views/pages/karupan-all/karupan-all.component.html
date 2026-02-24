@@ -317,8 +317,8 @@
     <div class="col-md-6">
       <label class="form-label">ประเภทครุภัณฑ์</label>
       <select class="form-select" formControlName="karupanTypeId">
-        <option selected disabled>เลือกประเภทครุภัณฑ์</option>
-        <option *ngFor="let type of karupanTypes" [value]="type._id">
+        <option value="">-- เลือกประเภท --</option>
+      <option *ngFor="let type of karupanTypes" [value]="type._id">
           {{ type.karupanType }}
         </option>
       </select>
