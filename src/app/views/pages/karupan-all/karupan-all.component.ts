@@ -46,6 +46,7 @@ export class KarupanAllComponent {
   searchText: string = '';
   filteredData: any[] = [];
   currentFilter: string = 'all';
+  karupanTypes: any[] = []; // ประเภทครุภัณฑ์
   constructor( 
     private fb: FormBuilder,
     private apidataService: ApiDataService,
@@ -59,6 +60,10 @@ export class KarupanAllComponent {
     kname: ['', Validators.required],
     brand: [''],
     price: [0, Validators.required],
+    karupanTypeId:{
+      id: [''],
+      karupanType: ['']
+    },
     expenditure: [''],
     station: [''],
     status: [''],
@@ -113,12 +118,19 @@ export class KarupanAllComponent {
         this.filteredData = [...this.karupans];
         this.collectionSize = this.karupans.length;  
         this.refreshData();                            
-        console.log(this.karupans);
       },
       error: (err)=>{
         console.log(err);
       }
     });
+      this.apidataService.getkarupanType().subscribe({
+        next: (res) => {
+          this.karupanTypes = res.data;
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      });
   }
 
   refreshData() {
@@ -155,7 +167,7 @@ export class KarupanAllComponent {
   this.collectionSize = this.filteredData.length;
   this.refreshData();
 }
-
+// กรองตามสถานะ เช้น all, ใช้งานได้, ชำรุด, กำลังซ่อมบำรุง, ถูกยืม 
 filterByStatus(status: string) {
   this.currentFilter = status;
 
@@ -172,6 +184,7 @@ filterByStatus(status: string) {
   this.collectionSize = this.filteredData.length;
   this.refreshData();
 }
+// กรองตามครุภัณฑ์ที่ได้มา เช่น จากปีงบประมาณ งบบำรุง หรือบริจาคเป็นต้น 
 filterByexpenditure(expenditure: string) {
   this.currentFilter = expenditure;
   if (expenditure === 'all') {
@@ -193,7 +206,6 @@ filterByexpenditure(expenditure: string) {
     this.modalService.open(karupan, {
       size: 'lg'
     });
-    console.log(this.viewData);
   }
   //===================================end ส่วน view modal===================================
 /**
@@ -203,11 +215,14 @@ filterByexpenditure(expenditure: string) {
       this.viewData = i;
       this.editForm.patchValue({
         ...i,
+        karupanTypeId: i.karupanTypeInfo._id,
+        karupanType: i.karupanTypeInfo.karupanType,
         redate: i.redate? new Date(i.redate).toISOString().substring(0, 10) : ''
       });
       this.modalService.open(karupan, {
         size: 'lg'
       });
+      console.log(this.editForm.value.karupanTypeId);
       console.log(this.viewData);
   }
   saveEdit() {
@@ -220,8 +235,7 @@ filterByexpenditure(expenditure: string) {
     ...this.editForm.value,
     _id: this.viewData._id
   };
-  this.apidataService.updateKarupan(payload, this.selectedFile!)
-    .subscribe({
+  this.apidataService.updateKarupan(payload, this.selectedFile!).subscribe({
       next: (res: any) => {
         Swal.fire({
           icon: 'success',

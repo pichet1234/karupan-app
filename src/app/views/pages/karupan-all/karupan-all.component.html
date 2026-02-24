@@ -158,8 +158,8 @@
     </div>
   </div>
 </div>
-<!-- Modal Template -->
-<!-- Modal Template -->
+
+<!-- Modal View karupan -->
 <ng-template #karupanModal let-modal>
   <div class="modal-header bg-primary text-white">
     <h5 class="modal-title">
@@ -257,6 +257,7 @@
     <button class="btn btn-secondary" (click)="modal.close()">ปิด</button>
   </div>
 </ng-template>
+<!--end view karupan-->
 <!--edit modal--> 
 <ng-template #editKarupanModal let-modal>
   <div class="modal-header bg-primary text-white">
@@ -313,7 +314,15 @@
         <option>งบปีงบประมาณ</option>
       </select>
     </div>
-
+    <div class="col-md-6">
+      <label class="form-label">ประเภทครุภัณฑ์</label>
+      <select class="form-select" formControlName="karupanTypeId">
+        <option selected disabled>เลือกประเภทครุภัณฑ์</option>
+        <option *ngFor="let type of karupanTypes" [value]="type._id">
+          {{ type.karupanType }}
+        </option>
+      </select>
+    </div>
     <!-- สถานี -->
     <div class="col-md-6">
       <label class="form-label">สถานที่</label>
