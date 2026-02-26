@@ -91,4 +91,9 @@ export class RegitKarupanBorrowComponent {
       default: return 'badge rounded-pill bg-secondary';
     }
   }
+
+  getTotalDeducted(financelog: any[]): number {
+  if (!financelog) return 0;
+  return financelog.reduce((sum, f) => sum + (f.deductedAmount || 0), 0);
+}
 }

@@ -83,7 +83,12 @@
                     {{ borrow.address?.bannumber }} ม.{{ borrow.address?.moo }} ต.{{ borrow.address?.tambon }}
                   </small>
                 </td>
-                <td class="fw-bold text-primary">{{ borrow.expenses | number }}</td>
+                <td >
+                 เงินหลังหักค่ามัดจำ:
+                 <span class="fw-bold text-danger">
+                   {{ getTotalDeducted(borrow.financelog) | number }}
+                 </span>
+                </td>
                 <td class="text-center">
                   <span class="badge rounded-pill" [class]="getBadgeClass(borrow.statusborrow)">
                     {{ borrow.statusborrow }}
