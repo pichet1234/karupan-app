@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ApiDataService } from '../../../core/services/api-data.service';
 import { CommonModule } from '@angular/common';
 import { FeatherIconDirective } from '../../../core/feather-icon/feather-icon.directive';
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule ,NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms'; 
 import { ThaidatePipe } from '../../../core/pipes/thaidate.pipe';
 
@@ -29,9 +29,10 @@ export class RegitKarupanBorrowComponent {
   borrowOne = 0;
   borrowTwo = 0;
   totalBorrow = 0;
-
+  viewData: any ;
   constructor(
-  private apidataService: ApiDataService
+  private apidataService: ApiDataService,
+  private modalService: NgbModal
  ){}
  ngOnInit(): void{
   this.loadCounts();
@@ -70,7 +71,7 @@ export class RegitKarupanBorrowComponent {
       this.borrows = res.data
       this.collectionSize = this.borrows.length;
       this.refreshData();
-      console.log(this.borrows);
+      // console.log(this.borrows);
     },error:(err) => {
       console.log(err);
     }
@@ -92,8 +93,12 @@ export class RegitKarupanBorrowComponent {
     }
   }
 
-  getTotalDeducted(financelog: any[]): number {
-  if (!financelog) return 0;
-  return financelog.reduce((sum, f) => sum + (f.deductedAmount || 0), 0);
-}
+      getTotalDeducted(financelog: any[]): number {
+      if (!financelog) return 0;
+      return financelog.reduce((sum, f) => sum + (f.deductedAmount || 0), 0);
+    }
+    onViewDetails(borrow: any, i:any) {
+      this.viewData = i;
+      this.modalService.open(borrow, { size: 'lg' });
+    }
 }

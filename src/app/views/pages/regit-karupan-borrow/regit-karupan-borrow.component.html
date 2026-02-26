@@ -96,7 +96,7 @@
                 </td>
                 <td class="text-end pe-4">
                   <div class="btn-group shadow-sm border rounded bg-white">
-                    <button class="btn btn-link btn-sm text-info px-2" title="ดูรายละเอียด"><i data-feather="eye" class="icon-sm"></i></button>
+                    <button class="btn btn-link btn-sm text-info px-2" title="ดูรายละเอียด" (click)="onViewDetails(Viewborrow, borrow)"><i data-feather="eye" class="icon-sm"></i></button>
                     <button class="btn btn-link btn-sm text-warning px-2 border-start border-end" title="แก้ไข">
                       <i data-feather="edit-2" appFeatherIcon class="icon-sm"></i>
                     </button>
@@ -135,3 +135,90 @@
     </div>
   </div>
 </div>
+
+<ng-template #Viewborrow let-modal>
+  <div class="modal-header bg-light">
+    <h5 class="modal-title">
+      <i class="bi bi-file-earmark-text me-2"></i>รายละเอียดการยืม-คืน 
+      <small class="text-muted">#{{ viewData._id.slice(-6) }}</small>
+    </h5>
+    <span class="badge" [ngClass]="viewData.statusborrow === 'คืนสำเร็จ' ? 'bg-success' : 'bg-warning text-dark'">
+      {{ viewData.statusborrow }}
+    </span>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row mb-4">
+      <div class="col-md-6 border-end">
+        <h6 class="text-primary fw-bold mb-3">ข้อมูลผู้ยืม (ญาติ)</h6>
+        <p class="mb-1"><strong>ชื่อ-สกุล:</strong> {{ viewData.person.fname }} {{ viewData.person.lname }}</p>
+        <p class="mb-1"><strong>ความสัมพันธ์:</strong> {{ viewData.person.relation }}</p>
+        <p class="mb-1"><strong>เบอร์โทรศัพท์:</strong> {{ viewData.person.phone }}</p>
+      </div>
+      <div class="col-md-6 ps-md-4">
+        <h6 class="text-primary fw-bold mb-3">ข้อมูลผู้ป่วย & ที่อยู่</h6>
+        <p class="mb-1"><strong>ผู้ป่วย:</strong> {{ viewData.patient }}</p>
+        <p class="mb-1">
+          <strong>ที่อยู่:</strong> บ้านเลขที่ {{ viewData.address.bannumber }} {{ viewData.address.moo }} 
+          {{ viewData.address.village }} {{ viewData.address.tambon }}
+        </p>
+        <p class="mb-1"><strong>วันที่ยืม:</strong> {{ viewData.borrow_date | date:'dd/MM/yyyy' }}</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <h6 class="text-primary fw-bold mb-3">รายการครุภัณฑ์ที่ยืม</h6>
+    <div class="table-responsive">
+      <table class="table table-bordered align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>รหัส/ชื่อครุภัณฑ์</th>
+            <th class="text-center">เงินประกัน</th>
+            <th class="text-center">สถานะ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of viewData.details">
+            <td>
+              <div class="fw-bold">{{ item.kname }}</div>
+              <small class="text-muted">รหัส: {{ item.karupuncode }}</small>
+            </td>
+            <td class="text-center text-success fw-bold">
+              {{ (item.diposit || 0) | number }}.-
+            </td>
+            <td class="text-center">
+              <span class="badge rounded-pill" [ngClass]="item.statuskarupan === 'คืนแล้ว' ? 'bg-outline-success border border-success text-success' : 'bg-info'">
+                {{ item.statuskarupan }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+    <h6 class="text-primary fw-bold mb-3">ประวัติการเงิน / หมายเหตุ</h6>
+    <div class="bg-light p-3 rounded">
+      <div *ngFor="let log of viewData.financelog" class="small mb-2 border-bottom pb-1">
+        <i class="bi bi-clock-history"></i> {{ log.createdAt | date:'dd/MM/yyyy HH:mm' }} : 
+        <strong>{{ log.note }}</strong>
+        <span class="float-end">
+          <span class="text-success" *ngIf="log.depositReceived > 0">รับเงิน: +{{ log.depositReceived }}</span>
+          <span class="text-danger" *ngIf="log.deductedAmount > 0">หักเงิน: -{{ log.deductedAmount }}</span>
+          <span class="text-primary" *ngIf="log.refundPaid > 0">คืนเงิน: {{ log.refundPaid }}</span>
+        </span>
+      </div>
+      <div class="mt-2 text-muted" *ngIf="viewData.remark">
+        <strong>หมายเหตุเพิ่มเติม:</strong> {{ viewData.remark }}
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.close()">พิมพ์ใบสำคัญ</button>
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">ปิดหน้าต่าง</button>
+  </div>
+</ng-template>
