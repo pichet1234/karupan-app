@@ -82,4 +82,10 @@ export class ApiDataService {
   }
     return this.http.post<any>(`${this.urlserver}/updatekarupan`,formData);
   }
+  regiterUser(data:any): Observable<any>{
+    return this.http.post<any>(`${this.urlserver}/register`,data);
+  }
+  loginUser(data:any): Observable<any>{
+    return this.http.post<any>(`${this.urlserver}/login`,data);
+  }
 }
