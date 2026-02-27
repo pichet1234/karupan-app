@@ -15,6 +15,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/pages/dashboard/dashboard.routes')
       },
       {
+        path: 'forbidden',
+        loadChildren:() => import('./views/pages/forbidden/forbidden.routes')
+      },
+      {
         path: 'regit-karupan-borrow',
         loadChildren: () => import('./views/pages/regit-karupan-borrow/regit-karupan-borrow.routes')
       },
