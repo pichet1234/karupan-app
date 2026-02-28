@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { BaseComponent } from './views/layout/base/base.component';
 import { authGuard } from './core/guards/auth.guard';
+import { superAdminGuard } from './core/guard/role.guard';
 
 export const routes: Routes = [
   { path: 'auth', loadChildren: () => import('./views/pages/auth/auth.routes')},
@@ -44,7 +45,8 @@ export const routes: Routes = [
       },
       {
         path: 'setting',
-        loadChildren: () => import('./views/pages/setting/setting.routes')
+        loadChildren: () => import('./views/pages/setting/setting.routes'),
+        canActivate: [superAdminGuard]
       },
       {
         path: 'apps',

@@ -1,24 +1,108 @@
 <div class="row">
-    <div class="col-12 col-md-6 col-xl-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Karupan Type</h5>
-            <h6 class="card-subtitle mb-2 text-secondary">add karupan type</h6>
-            <p class="card-text mb-3">ครุภัณฑ์สำนักงาน ครุภัณฑ์ยานพาหนะและขนส่ง ครุภัณฑ์ไฟฟ้าและวิทยุ ครุภัณฑ์การแพทย์ ครุภัณฑ์การเกษตร และครุภัณฑ์ก่อสร้าง</p>
-            <a href="" (click)="false" class="card-link">Add</a>
-            <a href="" (click)="false" class="card-link">views</a>
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        
+        <div class="row align-items-center mb-4">
+          <div class="col-md-6">
+            <h4 class="fw-bold mb-0">
+              <i data-feather="users" appFeatherIcon class="text-primary me-2"></i>
+              จัดการผู้ใช้งานระบบ
+            </h4>
+            <p class="text-muted small mb-0">จัดการข้อมูลและสิทธิ์การเข้าใช้งานของบุคลากร</p>
+          </div>
+          <div class="col-md-6 text-md-end mt-3 mt-md-0">
+            <button class="btn btn-primary px-4 shadow-sm" (click)="openAddUser()">
+              <i data-feather="plus" appFeatherIcon class="me-1 icon-sm"></i>
+              เพิ่มผู้ใช้งานใหม่
+            </button>
           </div>
         </div>
-    </div>
-        <div class="col-12 col-md-6 col-xl-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">User</h5>
-            <h6 class="card-subtitle mb-2 text-secondary">Add user</h6>
-            <p class="card-text mb-3">เจ้าหน้าที่ในรพ.สต.</p>
-            <a href="" (click)="false" class="card-link">Add</a>
-            <a href="" (click)="false" class="card-link">Views</a>
+
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <div class="input-group input-group-merge">
+              <span class="input-group-text bg-light border-end-0">
+                <i data-feather="search" appFeatherIcon class="icon-sm text-muted"></i>
+              </span>
+              <input
+                type="text"
+                class="form-control bg-light border-start-0 ps-0"
+                placeholder="ค้นหาชื่อ, อีเมล หรือตำแหน่ง..."
+                [(ngModel)]="searchText"
+                (input)="onSearch()"
+              />
+            </div>
           </div>
         </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover align-middle border-top">
+            <thead class="bg-light">
+              <tr>
+                <th class="border-0 text-uppercase small fw-bold" style="width: 50px;">#</th>
+                <th class="border-0 text-uppercase small fw-bold">ผู้ใช้งาน</th>
+                <th class="border-0 text-uppercase small fw-bold">ตำแหน่ง / เบอร์โทร</th>
+                <th class="border-0 text-uppercase small fw-bold">สิทธิ์การใช้งาน</th>
+                <th class="border-0 text-uppercase small fw-bold text-center">จัดการ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of filteredUsers; let i = index">
+                <td class="text-muted">{{ i + 1 }}</td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="avatar-sm me-3 bg-soft-primary rounded-circle d-flex align-items-center justify-content-center text-primary fw-bold" style="width: 38px; height: 38px; background-color: #e7f1ff;">
+                      {{ user.fullname | slice:0:1 }}
+                    </div>
+                    <div>
+                      <div class="fw-bold text-dark">{{ user.fullname }}</div>
+                      <div class="text-muted small">{{ user.email }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="mb-1 text-dark">{{ user.position }}</div>
+                  <div class="text-muted small"><i data-feather="phone" appFeatherIcon class="icon-xs me-1"></i>{{ user.tel }}</div>
+                </td>
+                <td>
+                  <span
+                    class="badge rounded-pill px-3 py-2"
+                    [ngClass]="{
+                      'bg-soft-success text-success': user.role === 'admin',
+                      'bg-soft-info text-info': user.role === 'user',
+                      'bg-soft-warning text-warning': user.role === 'manager'
+                    }"
+                    style="font-weight: 600; font-size: 0.75rem; letter-spacing: 0.5px;"
+                  >
+                    {{ user.role | uppercase }}
+                  </span>
+                </td>
+                <td class="text-center">
+                  <div class="btn-group">
+                    <button class="btn btn-link text-warning p-2" (click)="editUser(user)" title="แก้ไข">
+                      <i data-feather="edit-3" appFeatherIcon class="icon-md"></i>
+                    </button>
+                    <button class="btn btn-link text-danger p-2" (click)="deleteUser(user._id)" title="ลบ">
+                      <i data-feather="trash-2" appFeatherIcon class="icon-md"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr *ngIf="filteredUsers.length === 0">
+                <td colspan="5" class="text-center py-5">
+                  <div class="text-muted">
+                    <i data-feather="inbox" appFeatherIcon class="mb-2" style="width: 48px; height: 48px; opacity: 0.2;"></i>
+                    <p class="mb-0">ไม่พบข้อมูลผู้ใช้งานที่ตรงตามเงื่อนไข</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
     </div>
+  </div>
 </div>

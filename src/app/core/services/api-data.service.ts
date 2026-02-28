@@ -88,4 +88,7 @@ export class ApiDataService {
   loginUser(data:any): Observable<any>{
     return this.http.post<any>(`${this.urlserver}/login`,data);
   }
+  getUser(): Observable<any>{
+    return this.http.get<any>(`${this.urlserver}/getuser`);
+  }
 }
