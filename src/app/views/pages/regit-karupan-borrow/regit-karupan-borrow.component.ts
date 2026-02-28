@@ -97,7 +97,16 @@ export class RegitKarupanBorrowComponent {
       if (!financelog) return 0;
       return financelog.reduce((sum, f) => sum + (f.deductedAmount || 0), 0);
     }
+      /**
+   * 
+   * View modal details
+   * 
+   */
     onViewDetails(borrow: any, i:any) {
+      this.viewData = i;
+      this.modalService.open(borrow, { size: 'lg' });
+    }
+    editBorrow(borrow: any, i:any) {
       this.viewData = i;
       this.modalService.open(borrow, { size: 'lg' });
     }
