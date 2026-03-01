@@ -7,6 +7,7 @@ import { DOCUMENT, NgClass, NgFor, NgIf } from '@angular/common';
 import { MENU } from './menu';
 import { MenuItem } from './menu.model';
 import { FeatherIconDirective } from '../../../core/feather-icon/feather-icon.directive';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -24,7 +25,7 @@ import { FeatherIconDirective } from '../../../core/feather-icon/feather-icon.di
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnInit {
-
+  user:any
   currentTheme: string;
   menuItems: MenuItem[] = []
 
@@ -32,7 +33,8 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private themeModeService: ThemeModeService
+    private themeModeService: ThemeModeService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -55,6 +57,9 @@ export class NavbarComponent implements OnInit {
         }
       });
     // }
+    this.user = this.authService.getUser();
+    console.log(this.user)
+
   }
 
   showActiveTheme(theme: string) {

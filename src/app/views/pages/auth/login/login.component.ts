@@ -54,14 +54,16 @@ export class LoginComponent implements OnInit {
     this.apidataservice.loginUser(this.loginForm.value).subscribe({
 
       next: (res: any) => {
+          // 💾 บันทึก token
+          this.authService.saveTokens(res.accessToken, res.refreshToken);
 
-        // 💾 บันทึก token
-        this.authService.saveTokens(res.accessToken, res.refreshToken);
+          // 💾 บันทึก user
+          localStorage.setItem('user', JSON.stringify(res.user));
 
-        // 🔁 redirect กลับหน้าที่ตั้งใจเข้า
-        this.router.navigateByUrl(this.returnUrl);
+          // 🔁 redirect
+          this.router.navigateByUrl(this.returnUrl);
 
-        this.loading = false;
+          this.loading = false;
       },
 
       error: (err) => {
