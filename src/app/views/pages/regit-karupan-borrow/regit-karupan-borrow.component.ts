@@ -134,6 +134,9 @@ export class RegitKarupanBorrowComponent {
       console.log('Edit Borrow:', this.viewData);
           this.borrowForm.patchValue({
       ...i,
+      borrow_date: i.borrow_date ? new Date(i.borrow_date).toISOString().substring(0, 10) : '',
+      return_date: i.return_date ? new Date(i.return_date).toISOString().substring(0, 10) : '',
+
       address: {
         bannumber: i.address?.bannumber || '',
         moo: i.address?.moo || '',
