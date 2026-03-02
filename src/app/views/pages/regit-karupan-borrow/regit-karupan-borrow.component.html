@@ -97,7 +97,7 @@
                 <td class="text-end pe-4">
                   <div class="btn-group shadow-sm border rounded bg-white">
                     <button class="btn btn-link btn-sm text-info px-2" title="ดูรายละเอียด" (click)="onViewDetails(Viewborrow, borrow)"><i data-feather="eye" class="icon-sm"></i></button>
-                    <button class="btn btn-link btn-sm text-warning px-2 border-start border-end" title="แก้ไข">
+                    <button class="btn btn-link btn-sm text-warning px-2 border-start border-end" title="แก้ไข" (click)="editBorrow(kborrow, borrow)">
                       <i data-feather="edit-2" appFeatherIcon class="icon-sm"></i>
                     </button>
                     <button class="btn btn-link btn-sm text-danger px-2" title="ลบ">
@@ -220,5 +220,103 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary" (click)="modal.close()">พิมพ์ใบสำคัญ</button>
     <button type="button" class="btn btn-secondary" (click)="modal.close()">ปิดหน้าต่าง</button>
+  </div>
+</ng-template>
+
+<ng-template #kborrow let-modal>
+  <div class="modal-header bg-light border-bottom-0">
+    <h5 class="modal-title d-flex align-items-center">
+      <div class="icon-shape bg-primary-soft text-primary me-2 rounded-circle">
+        <i class="bi bi-pencil-square"></i>
+      </div>
+      <span>แก้ไขรายการยืม-คืน</span>
+      <span class="badge bg-secondary-soft text-dark ms-2 fw-normal">ID: {{ viewData._id.slice(-6) }}</span>
+    </h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+
+  <div class="modal-body px-4">
+    <form [formGroup]="borrowForm" >
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label fw-bold">วันที่ยืม</label>
+          <input type="date" class="form-control" name="borrow_date" formControlName="borrow_date">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-bold">วันที่คืน (ถ้ามี)</label>
+          <input type="date" class="form-control" formControlName="return_date">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-bold">ผู้ป่วย/ผู้รับบริการ</label>
+          <input type="text" class="form-control" formControlName="patient" placeholder="ชื่อ-นามสกุล">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-bold">จำนวนที่ยืม</label>
+          <div class="input-group">
+            <input type="number" class="form-control" formControlName="countn">
+            <span class="input-group-text">ชิ้น/หน่วย</span>
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-4 text-muted opacity-25">
+
+      <h6 class="mb-3 text-primary"><i class="bi bi-geo-alt me-1"></i> ที่อยู่สำหรับจัดส่ง/ใช้งาน</h6>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label small">บ้านเลขที่</label>
+          <input type="text" class="form-control" >
+        </div>
+        <div class="col-md-4">
+          <label class="form-label small">หมู่ที่</label>
+          <input type="text" class="form-control" >
+        </div>
+        <div class="col-md-4">
+          <label class="form-label small">หมู่บ้าน</label>
+          <input type="text" class="form-control" >
+        </div>
+        <div class="col-md-12">
+          <label class="form-label small">ตำบล</label>
+          <input type="text" class="form-control" >
+        </div>
+      </div>
+
+      <hr class="my-4 text-muted opacity-25">
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label fw-bold">ค่าใช้จ่าย</label>
+          <div class="input-group">
+            <input type="number" class="form-control" formControlName="expenses">
+            <span class="input-group-text">฿</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-bold">สถานะ</label>
+          <select class="form-select"  formControlName="statusborrow">
+            <option value="borrowing">กำลังยืม</option>
+            <option value="returned">คืนแล้ว</option>
+            <option value="damaged">ชำรุด</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <label class="form-label fw-bold">รายละเอียดการยืม</label>
+          <textarea class="form-control" rows="2"  formControlName="details"></textarea>
+        </div>
+        <div class="col-12">
+          <label class="form-label fw-bold text-danger">หมายเหตุ (ถ้ามี)</label>
+          <textarea class="form-control border-danger-subtle" rows="2"  formControlName="remark"></textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer bg-light border-top-0 px-4">
+    <button type="button" class="btn btn-outline-secondary px-4" (click)="modal.close()">
+      <i class="bi bi-x-lg me-1"></i> ยกเลิก
+    </button>
+    <button type="button" class="btn btn-primary px-5 shadow-sm" (click)="updateBorrow(modal)">
+      <i class="bi bi-check2-circle me-1"></i> บันทึกการเปลี่ยนแปลง
+    </button>
   </div>
 </ng-template>

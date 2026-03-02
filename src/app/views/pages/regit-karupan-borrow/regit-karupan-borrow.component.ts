@@ -5,6 +5,7 @@ import { FeatherIconDirective } from '../../../core/feather-icon/feather-icon.di
 import { NgbPaginationModule ,NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms'; 
 import { ThaidatePipe } from '../../../core/pipes/thaidate.pipe';
+import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-regit-karupan-borrow',
@@ -14,7 +15,8 @@ import { ThaidatePipe } from '../../../core/pipes/thaidate.pipe';
     FeatherIconDirective,
     NgbPaginationModule,
     FormsModule,
-    ThaidatePipe
+    ThaidatePipe,
+    ReactiveFormsModule
   ],
   templateUrl: './regit-karupan-borrow.component.html',
   styleUrl: './regit-karupan-borrow.component.scss'
@@ -30,10 +32,31 @@ export class RegitKarupanBorrowComponent {
   borrowTwo = 0;
   totalBorrow = 0;
   viewData: any ;
+  borrowForm!: FormGroup;
   constructor(
   private apidataService: ApiDataService,
-  private modalService: NgbModal
- ){}
+  private modalService: NgbModal,
+  private fb: FormBuilder,
+ ){
+      this.borrowForm = this.fb.group({
+      _id: [''],
+      borrow_date: ['', Validators.required],
+      return_date: [''],
+      patient: ['', Validators.required],
+      countn: [1, Validators.required],
+      expenses: [0],
+      statusborrow: ['borrowing'],
+      details: [''],
+      remark: [''],
+
+      address: this.fb.group({
+        bannumber: [''],
+        moo: [''],
+        village: [''],
+        tambon: ['']
+      })
+    });
+ }
  ngOnInit(): void{
   this.loadCounts();
  this.loaddataBorrow();
@@ -106,8 +129,26 @@ export class RegitKarupanBorrowComponent {
       this.viewData = i;
       this.modalService.open(borrow, { size: 'lg' });
     }
-    editBorrow(borrow: any, i:any) {
+    editBorrow(kborrow: any, i:any) {
       this.viewData = i;
-      this.modalService.open(borrow, { size: 'lg' });
+      console.log('Edit Borrow:', this.viewData);
+          this.borrowForm.patchValue({
+      ...i,
+      address: {
+        bannumber: i.address?.bannumber || '',
+        moo: i.address?.moo || '',
+        village: i.address?.village || '',
+        tambon: i.address?.tambon || ''
+      }
+    });
+      this.modalService.open(kborrow, { size: 'lg' });
     }
+     updateBorrow(modal: any) {
+
+    if (this.borrowForm.invalid) {
+      this.borrowForm.markAllAsTouched();
+      return;
+    }
+    
+  }
 }

@@ -7,17 +7,12 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const token = authService.getAccessToken();
 
-  console.log("INTERCEPTOR RUN");
-  console.log("TOKEN:", token);
-
   if (token) {
     const cloned = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`
       }
     });
-
-    console.log("HEADER ADDED");
 
     return next(cloned);
   }

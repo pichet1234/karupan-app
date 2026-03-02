@@ -58,7 +58,6 @@ export class NavbarComponent implements OnInit {
       });
     // }
     this.user = this.authService.getUser();
-    console.log(this.user)
 
   }
 
