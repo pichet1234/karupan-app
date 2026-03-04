@@ -1,7 +1,6 @@
 import { NgClass ,CommonModule } from '@angular/common';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormArray, FormGroup, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { ArchwizardModule } from '@rg-software/angular-archwizard';
 import { WizardComponent as BaseWizardComponent } from '@rg-software/angular-archwizard';
 import { FeatherIconDirective } from '../../../core/feather-icon/feather-icon.directive';
@@ -15,7 +14,6 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [
     CommonModule,  
-    RouterLink,
     ArchwizardModule,
     NgClass,
     ReactiveFormsModule,
@@ -100,7 +98,9 @@ export class BorrowComponent implements OnInit {
     });
     this.validationForm2.get('village')?.valueChanges.subscribe(val => {
       const tambon = this.validationForm2.get('tambon')?.value;
-      this.moos = this.addressService.getMooByVillage(tambon, val);
+
+      this.moos = this.addressService.getMooByVillageId(tambon, val);
+
       this.validationForm2.get('moo')?.reset();
       this.validationForm2.get('moo')?.enable();
     });

@@ -99,7 +99,7 @@
                     <div class="col-sm col-sm-2">
                     <select class="form-control" formControlName="village">
                       <option value="">-- เลือกบ้าน --</option>
-                      <option *ngFor="let v of villages" [value]="v.village">
+                      <option *ngFor="let v of villages" [value]="v.id">
                         {{ v.village }}
                       </option>
                     </select>
