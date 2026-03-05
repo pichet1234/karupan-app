@@ -6,6 +6,7 @@ import { NgbPaginationModule ,NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms'; 
 import { ThaidatePipe } from '../../../core/pipes/thaidate.pipe';
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
+import { AddressService ,TambonData, MooData } from '../../../core/services/address.service';
 
 @Component({
   selector: 'app-regit-karupan-borrow',
@@ -32,34 +33,50 @@ export class RegitKarupanBorrowComponent {
   borrowTwo = 0;
   totalBorrow = 0;
   viewData: any ;
+
+  tambons: TambonData[] = [];// ตำบล
+  villages: MooData[] = [];// หมู่บ้าน
+  moos: string[] = []; // หมู่ที่
+
   borrowForm!: FormGroup;
   constructor(
   private apidataService: ApiDataService,
   private modalService: NgbModal,
   private fb: FormBuilder,
+  private addressService: AddressService
  ){
       this.borrowForm = this.fb.group({
       _id: [''],
       borrow_date: ['', Validators.required],
       return_date: [''],
       patient: ['', Validators.required],
-      countn: [1, Validators.required],
-      expenses: [0],
-      statusborrow: ['borrowing'],
       details: [''],
       remark: [''],
-
-      address: this.fb.group({
-        bannumber: [''],
-        moo: [''],
-        village: [''],
-        tambon: ['']
-      })
+      bannumber: [''],
+      moo: [''],
+      village: [''],
+      tambon: ['']
     });
  }
  ngOnInit(): void{
+
+  this.tambons = this.addressService.getTambons();
+  
+  this.borrowForm.get('tambon')?.valueChanges.subscribe(val => {
+    this.villages = this.addressService.getVillagesByTambon(val);
+    this.borrowForm.get('village')?.setValue('');
+    this.moos = [];
+    this.borrowForm.get('moo')?.setValue('');
+  });
+
+this.borrowForm.get('village')?.valueChanges.subscribe(val => {
+      const tambon = this.borrowForm.get('tambon')?.value;
+  this.moos = this.addressService.getMooByVillageId(tambon, val);
+  this.borrowForm.get('moo')?.setValue('');
+});
+
   this.loadCounts();
- this.loaddataBorrow();
+  this.loaddataBorrow();
  }
  loadCounts(){
   this.apidataService.countStatusOne().subscribe({
@@ -136,13 +153,10 @@ export class RegitKarupanBorrowComponent {
       ...i,
       borrow_date: i.borrow_date ? new Date(i.borrow_date).toISOString().substring(0, 10) : '',
       return_date: i.return_date ? new Date(i.return_date).toISOString().substring(0, 10) : '',
-
-      address: {
-        bannumber: i.address?.bannumber || '',
-        moo: i.address?.moo || '',
-        village: i.address?.village || '',
-        tambon: i.address?.tambon || ''
-      }
+      bannumber: i.address.bannumber || '',
+      villages: i.address.village || '',
+      moo: i.address.moo || '',
+      tambon: i.address.tambon || '',
     });
       this.modalService.open(kborrow, { size: 'lg' });
     }

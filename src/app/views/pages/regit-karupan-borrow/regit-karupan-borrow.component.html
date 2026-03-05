@@ -250,58 +250,56 @@
           <label class="form-label fw-bold">ผู้ป่วย/ผู้รับบริการ</label>
           <input type="text" class="form-control" formControlName="patient" placeholder="ชื่อ-นามสกุล">
         </div>
-        <div class="col-md-6">
-          <label class="form-label fw-bold">จำนวนที่ยืม</label>
-          <div class="input-group">
-            <input type="number" class="form-control" formControlName="countn">
-            <span class="input-group-text">ชิ้น/หน่วย</span>
-          </div>
-        </div>
       </div>
 
       <hr class="my-4 text-muted opacity-25">
 
       <h6 class="mb-3 text-primary"><i class="bi bi-geo-alt me-1"></i> ที่อยู่สำหรับจัดส่ง/ใช้งาน</h6>
       <div class="row g-3">
+
         <div class="col-md-4">
           <label class="form-label small">บ้านเลขที่</label>
-          <input type="text" class="form-control" >
+          <input type="text" class="form-control" name="bannumber" formControlName="bannumber">
         </div>
+
         <div class="col-md-4">
           <label class="form-label small">หมู่ที่</label>
-          <input type="text" class="form-control" >
+          <select class="form-select" name="moo" formControlName="moo">
+            <option [value]="viewData.address.moo">เลือกหมู่</option>
+            <option *ngFor="let m of moos" [value]="m">
+              {{m}}
+            </option>
+          </select>
         </div>
+
         <div class="col-md-4">
           <label class="form-label small">หมู่บ้าน</label>
-          <input type="text" class="form-control" >
+          <select class="form-select" name="village" formControlName="village">
+            <option [value]="viewData.address.village">เลือกหมู่บ้าน</option>
+            <option *ngFor="let v of villages" [value]="v.id">
+              {{v.village}}
+            </option>
+          </select>
         </div>
+
         <div class="col-md-12">
           <label class="form-label small">ตำบล</label>
-          <input type="text" class="form-control" >
+          <select class="form-select" name="tambon" formControlName="tambon">
+            <option value="">เลือกตำบล</option>
+            <option *ngFor="let t of tambons" [value]="t.tambon">
+              {{t.tambon}}
+            </option>
+          </select>
         </div>
+
       </div>
 
       <hr class="my-4 text-muted opacity-25">
 
       <div class="row g-3">
-        <div class="col-md-6">
-          <label class="form-label fw-bold">ค่าใช้จ่าย</label>
-          <div class="input-group">
-            <input type="number" class="form-control" formControlName="expenses">
-            <span class="input-group-text">฿</span>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label fw-bold">สถานะ</label>
-          <select class="form-select"  formControlName="statusborrow">
-            <option value="borrowing">กำลังยืม</option>
-            <option value="returned">คืนแล้ว</option>
-            <option value="damaged">ชำรุด</option>
-          </select>
-        </div>
         <div class="col-12">
           <label class="form-label fw-bold">รายละเอียดการยืม</label>
-          <textarea class="form-control" rows="2"  formControlName="details"></textarea>
+          <textarea class="form-control" rows="2" ></textarea>
         </div>
         <div class="col-12">
           <label class="form-label fw-bold text-danger">หมายเหตุ (ถ้ามี)</label>
