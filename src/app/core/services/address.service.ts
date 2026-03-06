@@ -59,6 +59,10 @@ export class AddressService {
     }
     return undefined;
   }
+  getVillagesByTambon(tambon: string) {
+    const data = this.addressData.find(t => t.tambon === tambon);
+    return data ? data.villages : [];
+  }
 
   constructor() { }
 }

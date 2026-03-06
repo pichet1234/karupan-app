@@ -34,9 +34,9 @@ export class RegitKarupanBorrowComponent {
   totalBorrow = 0;
   viewData: any ;
 
-  tambons: TambonData[] = [];// ตำบล
-villages: VillageData[] = [];
-  moos: string[] = []; // หมู่ที่
+  tambons: string[] = [];
+  moos: string[] = [];
+  villages: any[] = [];
 
   borrowForm!: FormGroup;
   constructor(
@@ -59,9 +59,40 @@ villages: VillageData[] = [];
     });
  }
  ngOnInit(): void{
+  this.tambons = this.addressService.getTambons();
+  this.listenAddressChange();
   this.loadCounts();
   this.loaddataBorrow();
  }
+
+ listenAddressChange(){
+
+  this.borrowForm.get('tambon')?.valueChanges.subscribe(val => {
+
+    this.villages = this.addressService.getVillagesByTambon(val);
+
+    this.moos = this.villages.map(v => v.moo);
+
+    this.borrowForm.patchValue({
+      moo:'',
+      village:''
+    },{ emitEvent:false });
+
+  });
+
+  this.borrowForm.get('moo')?.valueChanges.subscribe(val => {
+
+    const village = this.villages.find(v => v.moo === val);
+
+    if(village){
+      this.borrowForm.patchValue({
+        village: village.village
+      },{ emitEvent:false });
+    }
+
+  });
+
+}
  loadCounts(){
   this.apidataService.countStatusOne().subscribe({
     next: (res)=>{
@@ -101,7 +132,9 @@ villages: VillageData[] = [];
       console.log(err);
     }
   });
+
  }
+
  refreshData() {
   this.pagedData = this.borrows.slice(
     (this.page - 1) * this.pageSize,
@@ -132,17 +165,30 @@ villages: VillageData[] = [];
       this.modalService.open(borrow, { size: 'lg' });
     }
     editBorrow(kborrow: any, i:any) {
+
       this.viewData = i;
-       const address = i.address || {};
-      console.log('Edit Borrow:', this.viewData);
-          this.borrowForm.patchValue({
-      ...i,
-      borrow_date: i.borrow_date ? new Date(i.borrow_date).toISOString().substring(0, 10) : '',
-      return_date: i.return_date ? new Date(i.return_date).toISOString().substring(0, 10) : '',
-      bannumber: i.address.bannumber || '',
-
-    });
-
+    
+      this.borrowForm.patchValue({
+        _id:i._id,
+        borrow_date: i.borrow_date ? new Date(i.borrow_date).toISOString().substring(0,10) : '',
+        return_date: i.return_date ? new Date(i.return_date).toISOString().substring(0,10) : '',
+        patient:i.patient,
+        details:i.details,
+        remark:i.remark,
+        bannumber:i.address.bannumber,
+        tambon:i.address.tambon
+      });
+    
+      // โหลด villages
+      this.villages = this.addressService.getVillagesByTambon(i.address.tambon);
+      this.moos = this.villages.map(v => v.moo);
+    
+      // set moo + village
+      this.borrowForm.patchValue({
+        moo:i.address.moo,
+        village:i.address.village
+      });
+    
       this.modalService.open(kborrow, { size: 'lg' });
     }
      updateBorrow(modal: any) {
