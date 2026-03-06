@@ -6,7 +6,7 @@ import { WizardComponent as BaseWizardComponent } from '@rg-software/angular-arc
 import { FeatherIconDirective } from '../../../core/feather-icon/feather-icon.directive';
 import { ApiDataService } from '../../../core/services/api-data.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AddressService ,TambonData, MooData } from '../../../core/services/address.service';
+import { AddressService ,TambonData, MooData, VillageData } from '../../../core/services/address.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -35,7 +35,7 @@ export class BorrowComponent implements OnInit {
   karupanborrow: any[] = [];//เก็บข้อมูลครุภัณฑ์ที่สามารถยืมได้
 
   tambons: TambonData[] = [];// ตำบล
-  villages: MooData[] = [];// หมู่บ้าน
+villages: VillageData[] = [];
   moos: string[] = []; // หมู่ที่
   imgU:any; //เก็บภาพครุภัณฑ์ที่เลือกยืม
   personid:any;//เก็บรหัสบผู้ยืม
