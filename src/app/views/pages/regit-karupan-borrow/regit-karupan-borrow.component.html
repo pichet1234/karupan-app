@@ -264,8 +264,8 @@
 
         <div class="col-md-4">
           <label class="form-label small">หมู่ที่</label>
-          <select class="form-select" name="moo" formControlName="moo">
-            <option [value]="viewData.address.moo">เลือกหมู่</option>
+          <select class="form-select" formControlName="moo">
+            <option value="">เลือกหมู่</option>
             <option *ngFor="let m of moos" [value]="m">
               {{m}}
             </option>
@@ -274,17 +274,17 @@
 
         <div class="col-md-4">
           <label class="form-label small">หมู่บ้าน</label>
-          <select class="form-select" name="village" formControlName="village">
-            <option [value]="viewData.address.village">เลือกหมู่บ้าน</option>
-            <option *ngFor="let v of villages" [value]="v.id">
+          <select class="form-select" formControlName="village">
+            <option value="">เลือกหมู่บ้าน</option>
+            <option *ngFor="let v of villages" [value]="v.village">
               {{v.village}}
             </option>
-          </select>
+          </select> 
         </div>
 
         <div class="col-md-12">
           <label class="form-label small">ตำบล</label>
-          <select class="form-select" name="tambon" formControlName="tambon">
+          <select class="form-select" formControlName="tambon">
             <option value="">เลือกตำบล</option>
             <option *ngFor="let t of tambons" [value]="t.tambon">
               {{t.tambon}}

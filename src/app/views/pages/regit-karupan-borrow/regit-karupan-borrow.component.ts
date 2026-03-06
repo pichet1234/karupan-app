@@ -6,7 +6,7 @@ import { NgbPaginationModule ,NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms'; 
 import { ThaidatePipe } from '../../../core/pipes/thaidate.pipe';
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
-import { AddressService ,TambonData, MooData } from '../../../core/services/address.service';
+import { AddressService ,TambonData, MooData, VillageData } from '../../../core/services/address.service';
 
 @Component({
   selector: 'app-regit-karupan-borrow',
@@ -35,7 +35,7 @@ export class RegitKarupanBorrowComponent {
   viewData: any ;
 
   tambons: TambonData[] = [];// ตำบล
-  villages: MooData[] = [];// หมู่บ้าน
+villages: VillageData[] = [];
   moos: string[] = []; // หมู่ที่
 
   borrowForm!: FormGroup;
@@ -59,20 +59,29 @@ export class RegitKarupanBorrowComponent {
     });
  }
  ngOnInit(): void{
+this.borrowForm.get('tambon')?.valueChanges.subscribe(val => {
 
-  this.tambons = this.addressService.getTambons();
-  
-  this.borrowForm.get('tambon')?.valueChanges.subscribe(val => {
-    this.villages = this.addressService.getVillagesByTambon(val);
-    this.borrowForm.get('village')?.setValue('');
-    this.moos = [];
-    this.borrowForm.get('moo')?.setValue('');
+  this.villages = this.addressService.getVillagesByTambon(val);
+
+  this.borrowForm.patchValue({
+    village: '',
+    moo: ''
   });
 
+  this.moos = [];
+});
+
+
 this.borrowForm.get('village')?.valueChanges.subscribe(val => {
-      const tambon = this.borrowForm.get('tambon')?.value;
-  this.moos = this.addressService.getMooByVillageId(tambon, val);
-  this.borrowForm.get('moo')?.setValue('');
+
+  const tambon = this.borrowForm.get('tambon')?.value;
+
+  this.moos = this.addressService.getMoosByVillage(tambon, val);
+
+  this.borrowForm.patchValue({
+    moo: ''
+  });
+
 });
 
   this.loadCounts();
@@ -110,6 +119,7 @@ this.borrowForm.get('village')?.valueChanges.subscribe(val => {
     next:(res)=>{
       this.borrows = res.data
       this.collectionSize = this.borrows.length;
+
       this.refreshData();
       // console.log(this.borrows);
     },error:(err) => {
@@ -148,16 +158,16 @@ this.borrowForm.get('village')?.valueChanges.subscribe(val => {
     }
     editBorrow(kborrow: any, i:any) {
       this.viewData = i;
+       const address = i.address || {};
       console.log('Edit Borrow:', this.viewData);
           this.borrowForm.patchValue({
       ...i,
       borrow_date: i.borrow_date ? new Date(i.borrow_date).toISOString().substring(0, 10) : '',
       return_date: i.return_date ? new Date(i.return_date).toISOString().substring(0, 10) : '',
       bannumber: i.address.bannumber || '',
-      villages: i.address.village || '',
-      moo: i.address.moo || '',
-      tambon: i.address.tambon || '',
+
     });
+
       this.modalService.open(kborrow, { size: 'lg' });
     }
      updateBorrow(modal: any) {

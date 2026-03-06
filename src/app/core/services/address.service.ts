@@ -3,35 +3,46 @@ import { TAMBON_DATA } from './tambon-data';
 export interface MooData {
   id:number;
   village: string;
-  moo: string[];
+  moo: string;
 }
 
 export interface TambonData {
   tambon: string;
   villages: MooData[];
 }
-
+export interface VillageData {
+  village: string;
+}
 @Injectable({
   providedIn: 'root'
 })
 export class AddressService {
-private tambonData: TambonData[] = TAMBON_DATA;
+getTambons(): TambonData[] {
+  return TAMBON_DATA;
+}
 
-  getTambons(): TambonData[] {
-    return this.tambonData;
-  }
+getVillagesByTambon(tambonName: string): VillageData[] {
 
-  getVillagesByTambon(tambon: string): MooData[] {
-    const data = this.tambonData.find(t => t.tambon === tambon)?.villages || [];
-    return [...data];  // clone กัน mutation
-  }
+  const tambon = TAMBON_DATA.find(t => t.tambon === tambonName);
 
-getMooByVillageId(tambon: string, villageId: number): string[] {
-  return (
-    this.tambonData
-      .find(t => t.tambon === tambon)
-      ?.villages.find(v => v.id === +villageId)?.moo || []
-  );
+  if (!tambon) return [];
+
+  const uniqueVillage = [...new Set(tambon.villages.map(v => v.village))];
+
+  return uniqueVillage.map(v => ({
+    village: v
+  }));
+}
+
+getMoosByVillage(tambonName: string, villageName: string) {
+
+  const tambon = TAMBON_DATA.find(t => t.tambon === tambonName);
+
+  if (!tambon) return [];
+
+  return tambon.villages
+    .filter(v => v.village === villageName)
+    .map(v => v.moo);
 }
 
   constructor() { }
