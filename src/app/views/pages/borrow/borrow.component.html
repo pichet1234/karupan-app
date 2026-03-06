@@ -89,28 +89,23 @@
                     <input type="text" name="bannumber" formControlName="bannumber" class="form-control" placeholder="บ้านเลขที่">
                   </div>
                    <div class="col-sm col-sm-2">
-                    <select class="form-control" name="tambon" formControlName="tambon">
-                      <option value=" ">-- เลือกตำบล --</option>
-                      <option *ngFor="let t of tambons" [value]="t.tambon">
-                        {{ t.tambon }}
+                    <select class="form-control" formControlName="tambon">
+                      <option value="">เลือกตำบล</option>
+                      <option *ngFor="let t of tambons" [value]="t">
+                        {{t}}
                       </option>
                     </select>
                     </div>
                     <div class="col-sm col-sm-2">
-                    <select class="form-control" name="village" formControlName="village">
-                      <option value="">-- เลือกบ้าน --</option>
-                      <option *ngFor="let v of villages" [value]="v.id">
-                        {{ v.village }}
-                      </option>
-                    </select>
+                      <select class="form-control" formControlName="moo">
+                        <option value="">เลือกหมู่</option>
+                        <option *ngFor="let m of moos" [value]="m">
+                          {{m}}
+                        </option>
+                      </select>
                     </div>
                     <div class="col-sm col-sm-3">
-                    <select class="form-control" name="moo" formControlName="moo">
-                      <option value="">-- เลือกหมู่ --</option>
-                      <option *ngFor="let m of moos" [value]="m">
-                        {{ m }}
-                      </option>
-                    </select>
+                      <input type="text" class="form-control" formControlName="village" readonly>
                     </div>
                   </div>
                   <div class="row mb-3">

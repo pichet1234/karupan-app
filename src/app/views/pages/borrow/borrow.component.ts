@@ -34,9 +34,9 @@ export class BorrowComponent implements OnInit {
 
   karupanborrow: any[] = [];//เก็บข้อมูลครุภัณฑ์ที่สามารถยืมได้
 
-  tambons: TambonData[] = [];// ตำบล
-villages: VillageData[] = [];
-  moos: string[] = []; // หมู่ที่
+  tambons: string[] = [];
+  moos: string[] = [];
+  village: string = '';
   imgU:any; //เก็บภาพครุภัณฑ์ที่เลือกยืม
   personid:any;//เก็บรหัสบผู้ยืม
   borwid:any;//เก็บรหัสการยืม
@@ -83,27 +83,27 @@ villages: VillageData[] = [];
           remark : [''],
           bannumber: [''],
           tambon: [''],
-          village: [{ value: '', disabled: true },Validators.required],
-          moo: [{ value: '', disabled: true },Validators.required]
+          village: [''],
+          moo: ['']
         });
-            this.tambons = this.addressService.getTambons();
+    this.tambons = this.addressService.getTambons();
 
-    this.validationForm2.get('tambon')?.valueChanges.subscribe(val => {
-      this.villages = this.addressService.getVillagesByTambon(val);
-      this.validationForm2.get('village')?.reset();
-      this.validationForm2.get('village')?.enable();
-      this.moos = [];
-      this.validationForm2.get('moo')?.reset();
-      this.validationForm2.get('moo')?.disable();
-    });
-    this.validationForm2.get('village')?.valueChanges.subscribe(val => {
-      const tambon = this.validationForm2.get('tambon')?.value;
+        this.validationForm2.get('tambon')?.valueChanges.subscribe(val => {
+          this.moos = this.addressService.getMoosByTambon(val);
 
-      this.moos = this.addressService.getMooByVillageId(tambon, val);
-
-      this.validationForm2.get('moo')?.reset();
-      this.validationForm2.get('moo')?.enable();
-    });
+          this.validationForm2.patchValue({
+            moo:'',
+            village: ''
+          });
+        });
+        this.validationForm2.get('moo')?.valueChanges.subscribe(val => {
+          const village = this.addressService.getVillageByMoo(val);
+          if(village){
+            this.validationForm2.patchValue({
+              village: village.village
+            });
+          }
+        });
 
         /**
          * form3 value validation

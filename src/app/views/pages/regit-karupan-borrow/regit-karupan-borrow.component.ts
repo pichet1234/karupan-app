@@ -59,31 +59,6 @@ villages: VillageData[] = [];
     });
  }
  ngOnInit(): void{
-this.borrowForm.get('tambon')?.valueChanges.subscribe(val => {
-
-  this.villages = this.addressService.getVillagesByTambon(val);
-
-  this.borrowForm.patchValue({
-    village: '',
-    moo: ''
-  });
-
-  this.moos = [];
-});
-
-
-this.borrowForm.get('village')?.valueChanges.subscribe(val => {
-
-  const tambon = this.borrowForm.get('tambon')?.value;
-
-  this.moos = this.addressService.getMoosByVillage(tambon, val);
-
-  this.borrowForm.patchValue({
-    moo: ''
-  });
-
-});
-
   this.loadCounts();
   this.loaddataBorrow();
  }
