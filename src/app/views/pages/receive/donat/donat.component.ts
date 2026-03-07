@@ -51,6 +51,7 @@ export class DonatComponent {
   onFileSelected(event: any) {
     const file = event.target.files[0];
 
+
     if (file) {
       this.selectedFile = file;
       console.log("📁 เลือกไฟล์แล้ว:", file.name);
@@ -91,7 +92,10 @@ export class DonatComponent {
       formData.append('usefullife', this.form.get('usefullife')?.value);
       formData.append('status', 'ใช้งานได้');
       formData.append('brand', this.form.get('brand')?.value);
-      formData.append('file', this.selectedFile);
+
+       if (this.selectedFile) {
+          formData.append('file', this.selectedFile);
+        }
       
       this.uploadService.uploadfiledonate(formData).subscribe({
         next: (res:any) => {
