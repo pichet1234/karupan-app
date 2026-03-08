@@ -37,7 +37,7 @@ export class KreturnComponent {
   modalRef: any;
   returnForm:any;
   hasResults = false;
-
+  karupanborw: any[] = [];//เก็บข้อมูลครุภัณฑ์ที่สามารถยืมได้
 
   constructor(
     private apidataService: ApiDataService,
@@ -57,9 +57,20 @@ export class KreturnComponent {
   }
 
   ngOnInit(): void {
+    this.loadkarupanborrow();
     this.loaddataBorrow();
   }
-
+  loadkarupanborrow() {
+    // ดึงข้อมูลครุภัณฑ์ที่สามารถยืมได้
+    this.apidataService.getkarupanborrow().subscribe({ 
+      next: (res)=>{
+        this.karupanborw = res.data;
+      },
+      error: (err)=>{
+        console.error(err);
+      }
+     });
+  }
 loaddataBorrow(){
   this.apidataService.getAllborrw().subscribe({
     next: (res)=>{
@@ -206,6 +217,12 @@ onBlurCheck() {
         centered: true,
         size: 'lg'
       });
+    }
+    viewKarupan(karupan: any){
+      this.modalRef = this.modalService.open(karupan, { size: 'lg' });
+    }
+    addItem(item:any){
+      console.log(item);
     }
     // แปลง status -> badge class
   getBadgeClass(status: string) {

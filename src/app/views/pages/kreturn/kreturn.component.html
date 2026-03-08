@@ -24,90 +24,107 @@
     </div>
   </div>
 
-  <div class="col-md-12" *ngIf="selectdata">
-    <div class="card border-0 shadow-sm mb-4">
-      <div class="card-header bg-transparent border-0 pt-4 px-4">
-        <h5 class="card-title mb-0 fw-bold text-primary">ข้อมูลการยืมครุภัณฑ์</h5>
-      </div>
-      <div class="card-body px-4 pb-4">
-        <div class="row g-3">
-          <div class="col-sm-6 col-lg-3">
-            <label class="text-muted small d-block">ชื่อผู้ป่วย</label>
-            <span class="fw-bold fs-5">{{ selectdata?.fullName }}</span>
-          </div>
-          <div class="col-sm-6 col-lg-3">
-            <label class="text-muted small d-block">วันที่ยืม</label>
-            <span class="fw-semibold"><i class="feather icon-calendar me-1"></i> {{ selectdata.raw?.borrow_date | thaidate:true }}</span>
-          </div>
-          <div class="col-sm-6 col-lg-3">
-            <label class="text-muted small d-block">จำนวนทั้งหมด</label>
-            <span class="badge bg-info-soft text-info">{{ selectdata.details?.length }} รายการ</span>
-          </div>
-          <div class="col-sm-6 col-lg-3">
-            <label class="text-muted small d-block">ผู้บันทึก</label>
-            <span class="text-dark">{{ selectdata.raw?.user_id }}</span>
-          </div>
-          <div class="col-12">
-            <hr class="my-2 opacity-25">
-            <label class="text-muted small d-block">ที่อยู่ผู้ยืม</label>
-            <p class="mb-0 text-secondary">
-              <i class="feather icon-map-pin me-1"></i>
-              บ้านเลขที่ {{ selectdata.raw.address?.bannumber }} ม.{{ selectdata.raw.address?.moo }} 
-              {{ selectdata.raw.address?.village }} ต.{{ selectdata.raw.address?.tambon }}
-            </p>
-          </div>
-          <div class="col-12" *ngIf="selectdata?.remark">
-            <label class="text-muted small d-block text-danger">หมายเหตุเพิ่มเติม</label>
-            <p class="mb-0 small text-danger italic">{{ selectdata?.remark }}</p>
-          </div>
+<div class="col-md-12" *ngIf="selectdata">
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+      <h5 class="card-title mb-0 fw-bold text-primary">
+        <i class="feather icon-file-text me-2"></i>ข้อมูลการยืมครุภัณฑ์
+      </h5>
+      <button class="btn btn-warning shadow-sm fw-bold px-3" type="button" style="cursor: pointer;" (click)="viewKarupan(karupan)">
+        <i class="feather icon-plus-circle me-1"></i> เพิ่มรายการ
+      </button>
+    </div>
+
+    <div class="card-body px-4 pb-4">
+      <div class="row g-3">
+        <div class="col-sm-6 col-lg-3">
+          <label class="text-muted small d-block">ชื่อผู้ป่วย</label>
+          <span class="fw-bold fs-5 text-dark">{{ selectdata?.fullName }}</span>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <label class="text-muted small d-block">วันที่ยืม</label>
+          <span class="fw-semibold">
+            <i class="feather icon-calendar me-1 text-primary"></i> 
+            {{ selectdata.raw?.borrow_date | thaidate:true }}
+          </span>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <label class="text-muted small d-block">จำนวนทั้งหมด</label>
+          <span class="badge bg-info-soft text-info fs-6">{{ selectdata.details?.length }} รายการ</span>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <label class="text-muted small d-block">ผู้บันทึก</label>
+          <span class="text-dark"><i class="feather icon-user me-1"></i>{{ selectdata.raw?.user_id }}</span>
+        </div>
+        <div class="col-12">
+          <hr class="my-2 opacity-25">
+          <label class="text-muted small d-block">ที่อยู่ผู้ยืม</label>
+          <p class="mb-0 text-secondary">
+            <i class="feather icon-map-pin me-1 text-danger"></i>
+            บ้านเลขที่ {{ selectdata.raw.address?.bannumber }} ม.{{ selectdata.raw.address?.moo }} 
+            {{ selectdata.raw.address?.village }} ต.{{ selectdata.raw.address?.tambon }}
+          </p>
+        </div>
+        <div class="col-12" *ngIf="selectdata?.remark">
+          <label class="text-muted small d-block text-danger">หมายเหตุเพิ่มเติม</label>
+          <p class="mb-0 small text-danger italic">
+            <i class="feather icon-alert-circle me-1"></i>{{ selectdata?.remark }}
+          </p>
         </div>
       </div>
     </div>
+  </div>
 
-    <h6 class="mb-3 fw-bold text-secondary ps-2">รายการครุภัณฑ์ที่ยืมไป</h6>
-    <div class="row g-3">
-      <div class="col-md-4 col-xl-3" *ngFor="let item of selectdata.details">
-        <div class="card h-100 shadow-sm border-0 transition-hover" [style.opacity]="item.statuskarupan === 'คืนสำเร็จ' ? '0.7' : '1'">
-          
-          <div class="position-relative">
-            <img [src]="getImage(item)" class="card-img-top" style="height:160px; object-fit:cover;" />
-            <div class="position-absolute top-0 end-0 m-2">
-              <span class="badge" [class]="getBadgeClass(item.statuskarupan)">
-                {{ item.statuskarupan }}
-              </span>
-            </div>
+  <div class="d-flex align-items-center mb-3 ps-2">
+    <h6 class="mb-0 fw-bold text-secondary">รายการครุภัณฑ์ที่ยืมไป</h6>
+    <div class="flex-grow-1 ms-3"><hr class="my-0 opacity-25"></div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-md-4 col-xl-3" *ngFor="let item of selectdata.details">
+      <div class="card h-100 shadow-sm border-0 transition-hover" 
+           [style.opacity]="item.statuskarupan === 'คืนสำเร็จ' ? '0.7' : '1'"
+           style="cursor: default; transition: transform 0.2s;">
+        
+        <div class="position-relative">
+          <img [src]="getImage(item)" class="card-img-top" style="height:160px; object-fit:cover;" />
+          <div class="position-absolute top-0 end-0 m-2">
+            <span class="badge shadow-sm" [class]="getBadgeClass(item.statuskarupan)">
+              {{ item.statuskarupan }}
+            </span>
           </div>
+        </div>
 
-          <div class="card-body p-3">
-            <h6 class="fw-bold text-truncate mb-1" [title]="item.karupan?.name || item.kname">
-              {{ item.karupan?.name || item.kname }}
-            </h6>
-            <p class="text-muted small mb-2">รหัส: {{ item.karupan?.code || item.karupuncode }}</p>
-            <div class="d-flex justify-content-between align-items-baseline">
-              <span class="small text-muted">มัดจำ:</span>
-              <span class="fw-bold text-success">{{ item.diposit | number }} ฿</span>
-            </div>
+        <div class="card-body p-3">
+          <h6 class="fw-bold text-truncate mb-1" [title]="item.karupan?.name || item.kname">
+            {{ item.karupan?.name || item.kname }}
+          </h6>
+          <p class="text-muted small mb-2">รหัส: {{ item.karupan?.code || item.karupuncode }}</p>
+          <div class="d-flex justify-content-between align-items-baseline">
+            <span class="small text-muted">มัดจำ:</span>
+            <span class="fw-bold text-success">{{ item.diposit | number }} ฿</span>
           </div>
+        </div>
 
-          <div class="card-footer bg-transparent border-top-0 p-3 pt-0">
-            <div class="d-grid gap-2">
-              <div class="btn-group w-100 shadow-sm">
-                <button class="btn btn-outline-light btn-sm text-dark border" (click)="onview(viewkarupan,item.karupan)">
-                  <i class="feather icon-eye"></i>
-                </button>
-                <button *ngIf="item.statuskarupan == 'ยังไม่คืน'" class="btn btn-primary btn-sm flex-grow-1" (click)="loadModal(returnkarupan,item)">
-                  <i class="feather icon-log-in me-1"></i> คืนของ
-                </button>
-                <button *ngIf="item.statuskarupan == 'ยังไม่คืน'" class="btn btn-outline-danger btn-sm border" (click)="removeButton(item._id)">
-                  <i class="feather icon-trash-2"></i>
-                </button>
-              </div>
+        <div class="card-footer bg-transparent border-top-0 p-3 pt-0">
+          <div class="d-grid gap-2">
+            <div class="btn-group w-100 shadow-sm">
+              <button class="btn btn-outline-light btn-sm text-dark border" style="cursor: pointer;" (click)="onview(viewkarupan,item.karupan)">
+                <i class="feather icon-eye"></i>
+              </button>
+              <button *ngIf="item.statuskarupan == 'ยังไม่คืน'" class="btn btn-primary btn-sm flex-grow-1" style="cursor: pointer;" (click)="loadModal(returnkarupan,item)">
+                <i class="feather icon-log-in me-1"></i> คืนของ
+              </button>
+              <button *ngIf="item.statuskarupan == 'ยังไม่คืน'" class="btn btn-outline-danger btn-sm border" style="cursor: pointer;" (click)="removeButton(item._id)">
+                <i class="feather icon-trash-2"></i>
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
   <div class="col-md-12 text-center py-5" *ngIf="!selectdata">
     <div class="py-5">
@@ -237,5 +254,43 @@
 
   <div class="modal-footer border-0">
     <button class="btn btn-outline-secondary px-4" (click)="modal.dismiss()">ปิดหน้าต่าง</button>
+  </div>
+</ng-template>
+
+<ng-template #karupan let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">ครุภัณฑ์ทางการแพทย์</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+       <thead>
+         <tr>
+           <th>รหัสครุภัณฑ์</th>
+           <th>ชื่อครุภัณฑ์</th>
+           <th>image</th>
+           <th>สถานะ</th>
+           <th>เลือก</th>
+         </tr>
+       </thead>
+       <tbody>
+         <!-- แสดงข้อมูลจาก karupanborrow -->
+         <tr *ngFor="let item of karupanborw">
+           <td>{{ item.karupanCode }}</td>
+           <td>{{ item.kname }}</td>
+           <td>
+         <img [src]="'http://localhost:3000/' + item.imageUrl" alt="รูปครุภัณฑ์" width="80"/>
+           </td>
+           <td>{{ item.status }}</td>
+           <td><button class="btn btn-success btn-sm" (click)="addItem(item)" >เลือก</button></td>
+         </tr>
+       </tbody>
+     </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="modal.close('by: save button')">Save changes</button>
   </div>
 </ng-template>

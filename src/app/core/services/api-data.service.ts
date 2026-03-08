@@ -31,6 +31,12 @@ export class ApiDataService {
   addBorrow(data:any):Observable<any>{
     return this.http.post<any>(`${this.urlserver}/addborrow`,data);
   }
+  removeborrow(data:any):Observable<any>{
+    return this.http.post<any>(`${this.urlserver}/removeborrow`,data);
+  }
+  editborrow(data:any):Observable<any>{
+    return this.http.post<any>(`${this.urlserver}/editborrow`,data);
+  }
   addBorrowDetail(data:any):Observable<any>{
     return this.http.post<any>(`${this.urlserver}/borrowdetails`,data);
   }

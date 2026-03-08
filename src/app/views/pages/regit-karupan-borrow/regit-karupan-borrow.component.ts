@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { ThaidatePipe } from '../../../core/pipes/thaidate.pipe';
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
 import { AddressService ,TambonData, MooData, VillageData } from '../../../core/services/address.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-regit-karupan-borrow',
@@ -37,6 +38,8 @@ export class RegitKarupanBorrowComponent {
   tambons: string[] = [];
   moos: string[] = [];
   villages: any[] = [];
+
+  modalRef: any;
 
   borrowForm!: FormGroup;
   constructor(
@@ -167,7 +170,7 @@ export class RegitKarupanBorrowComponent {
     editBorrow(kborrow: any, i:any) {
 
       this.viewData = i;
-    
+      console.log(this.viewData)
       this.borrowForm.patchValue({
         _id:i._id,
         borrow_date: i.borrow_date ? new Date(i.borrow_date).toISOString().substring(0,10) : '',
@@ -189,14 +192,72 @@ export class RegitKarupanBorrowComponent {
         village:i.address.village
       });
     
-      this.modalService.open(kborrow, { size: 'lg' });
+      this.modalRef = this.modalService.open(kborrow, { size: 'lg' });
     }
-     updateBorrow(modal: any) {
+     updateBorrow() {
 
     if (this.borrowForm.invalid) {
-      this.borrowForm.markAllAsTouched();
-      return;
+      console.log('แบบฟอร์มไม่ถูกต้อง');
     }
+    const formValue = this.borrowForm.value;
+    this.apidataService.editborrow(formValue).subscribe({
+      next: (res) => {
+        if (res){
+          Swal.fire({
+            icon: 'success',
+            title: res.message,
+            showConfirmButton: false,
+            timer: 1500
+            });
+            this.modalRef.close();
+            this.loaddataBorrow();
+        }
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'อัพเดตข้อมูลไม่สำเร็จ',
+          showConfirmButton: false,
+          timer: 1500
+          });
+        console.error(err);   
+      }
+    });
     
+  }
+  deleteBorrow(item:any){
+    Swal.fire({
+      title: 'คุณแน่ใจหรือไม่?',
+      text: "คุณจะไม่สามารถกู้คืนข้อมูลนี้ได้!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ใช่, ลบเลย!',
+      cancelButtonText: 'ยกเลิก'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.apidataService.removeborrow(item).subscribe({
+          next: (res) => {
+            if(res){
+              Swal.fire(
+                'Deleted!',
+                'ข้อมูลของคุณถูกลบแล้ว.',
+                'success'
+              );
+              this.loaddataBorrow();
+            }
+          },
+          error: (err) => {
+            Swal.fire(
+              'Error!',
+              'เกิดข้อผิดพลาดในการลบข้อมูล.',
+              'error'
+            );
+            console.error(err);
+          }
+        });
+      }
+    });
   }
 }

@@ -1,3 +1,13 @@
 .ic {
     font-size: 20px;
 }
+.cursor-pointer { cursor: pointer; }
+  .input-group-lg .form-control:focus {
+    border: 2px solid #ffffff !important;
+    box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
+  }
+  .transition-hover:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
