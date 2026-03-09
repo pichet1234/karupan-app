@@ -100,7 +100,7 @@
                     <button class="btn btn-link btn-sm text-warning px-2 border-start border-end" title="แก้ไข" (click)="editBorrow(kborrow, borrow)">
                       <i data-feather="edit-2" appFeatherIcon class="icon-sm"></i>
                     </button>
-                    <button class="btn btn-link btn-sm text-info px-2 border-start border-end" title="เพิ่มรายการ" >
+                    <button class="btn btn-link btn-sm text-info px-2 border-start border-end" title="เพิ่มรายการ" (click)="viewKarupanBorrow(karaupforborw, borrow)">
                       <i data-feather="file-plus" appFeatherIcon class="icon-sm"></i>
                     </button>
                     <button class="btn btn-link btn-sm text-danger px-2" title="ลบ" (click)="deleteBorrow(borrow)">
@@ -313,6 +313,111 @@
     </button>
     <button type="button" class="btn btn-primary px-5 shadow-sm" (click)="updateBorrow()">
       <i class="bi bi-check2-circle me-1"></i> บันทึกการเปลี่ยนแปลง
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #karaupforborw let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">ครุภัณฑ์ทางการแพทย์</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+       <thead>
+         <tr>
+           <th>รหัสครุภัณฑ์</th>
+           <th>ชื่อครุภัณฑ์</th>
+           <th>image</th>
+           <th>สถานะ</th>
+           <th>เลือก</th>
+         </tr>
+       </thead>
+       <tbody>
+         <!-- แสดงข้อมูลจาก karupanborrow -->
+         <tr *ngFor="let item of karupanborrow">
+           <td>{{ item.karupanCode }}</td>
+           <td>{{ item.kname }}</td>
+           <td>
+         <img [src]="'http://localhost:3000/' + item.imageUrl" alt="รูปครุภัณฑ์" width="80"/>
+           </td>
+           <td>{{ item.status }}</td>
+           <td><button class="btn btn-success btn-sm" (click)="chooseButton(item, formadd, modal)">เลือก</button></td>
+         </tr>
+       </tbody>
+     </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="modal.close('by: save button')">Save changes</button>
+  </div>
+</ng-template>
+
+<ng-template #formadd let-modal>
+  <div class="modal-header bg-light">
+    <h5 class="modal-title text-primary">
+      <i class="bi bi-tools me-2"></i>จัดการรายการครุภัณฑ์ทางการแพทย์
+    </h5>
+    <button type="button" class="btn-close" (click)="modal.close()"></button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="karupansForBorrow">
+      <div formArrayName="items">
+        <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" 
+             class="card mb-3 border-0 shadow-sm">
+          
+          <div class="card-body border-start border-primary border-4 rounded-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="badge bg-primary">รายการที่ {{ i + 1 }}</span>
+              </div>
+
+            <div class="row g-3">
+              <div class="col-md-12">
+                <label class="form-label fw-bold">ชื่อครุภัณฑ์</label>
+                <input formControlName="kname" class="form-control" placeholder="ระบุชื่อครุภัณฑ์">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-bold">รหัสครุภัณฑ์</label>
+                <input formControlName="karupuncode" class="form-control" placeholder="เช่น MED-67-XXXX">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-bold">ค่ามัดจำ (บาท)</label>
+                <div class="input-group">
+                  <span class="input-group-text">฿</span>
+                  <input type="number" formControlName="diposit" class="form-control" placeholder="0.00">
+                </div>
+                  <div class="text-danger small"
+                    *ngIf="item.get('diposit')?.touched && item.get('diposit')?.invalid">
+                    กรุณากรอกเงินมัดจำที่ถูกต้อง (ต้องมากกว่า 0)
+                  </div>
+              </div>
+              <!-- รูป -->
+              <div class="text-center mb-2">
+                <img [src]="'http://localhost:3000/' + item.get('imageUrl')?.value" style="width:120px;height:120px;object-fit:cover" class="rounded border" alt="รูปครุภัณฑ์">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </form>
+
+    <div *ngIf="items.length === 0" class="text-center py-4 text-muted">
+      <p>ไม่มีรายการที่เลือก</p>
+    </div>
+  </div>
+
+  <div class="modal-footer bg-light">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.close()">
+      ยกเลิก
+    </button>
+    <button type="button" class="btn btn-primary px-4" (click)="submitBorrow()">
+      บันทึกข้อมูล
     </button>
   </div>
 </ng-template>
