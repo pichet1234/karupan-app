@@ -8,6 +8,7 @@ import { ThaidatePipe } from '../../../core/pipes/thaidate.pipe';
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
 import { AddressService ,TambonData, MooData, VillageData } from '../../../core/services/address.service';
 import Swal from 'sweetalert2';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-regit-karupan-borrow',
@@ -18,8 +19,9 @@ import Swal from 'sweetalert2';
     NgbPaginationModule,
     FormsModule,
     ThaidatePipe,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule,
+    RouterLink
+],
   templateUrl: './regit-karupan-borrow.component.html',
   styleUrl: './regit-karupan-borrow.component.scss'
 })
@@ -46,7 +48,8 @@ export class RegitKarupanBorrowComponent {
   private apidataService: ApiDataService,
   private modalService: NgbModal,
   private fb: FormBuilder,
-  private addressService: AddressService
+  private addressService: AddressService,
+  private router: Router
  ){
       this.borrowForm = this.fb.group({
       _id: [''],
