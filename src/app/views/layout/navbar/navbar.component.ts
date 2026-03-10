@@ -9,6 +9,7 @@ import { MenuItem } from './menu.model';
 import { FeatherIconDirective } from '../../../core/feather-icon/feather-icon.directive';
 import { AuthService } from '../../../core/services/auth.service';
 
+
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -153,6 +154,10 @@ export class NavbarComponent implements OnInit {
         this.currentlyOpenedNavItem = navItem;
       }
     }
+  }
+  logout() {
+    this.authService.logout();
+     this.router.navigate(['/auth/login']);
   }
 
 }
