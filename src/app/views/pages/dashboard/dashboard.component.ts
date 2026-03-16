@@ -4,6 +4,8 @@ import { NgbCalendar, NgbDatepickerModule, NgbDateStruct, NgbDropdownModule } fr
 import { ApexOptions, NgApexchartsModule } from "ng-apexcharts";
 import { FeatherIconDirective } from '../../../core/feather-icon/feather-icon.directive';
 import { ThemeCssVariableService, ThemeCssVariablesType } from '../../../core/services/theme-css-variable.service';
+import { ApiDataService } from '../../../core/services/api-data.service';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +15,8 @@ import { ThemeCssVariableService, ThemeCssVariablesType } from '../../../core/se
     FormsModule, 
     NgbDatepickerModule, 
     NgApexchartsModule,
-    FeatherIconDirective
+    FeatherIconDirective,
+    CurrencyPipe
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
@@ -34,10 +37,13 @@ export class DashboardComponent implements OnInit {
   public revenueChartOptions: ApexOptions | any;
   public monthlySalesChartOptions: ApexOptions | any;
   public cloudStorageChartOptions: ApexOptions | any;
+  karapanAll: any;
+  borrowAll: any;
+  sumdeductedAmount: any;
 
   themeCssVariables = inject(ThemeCssVariableService).getThemeCssVariables();
 
-  constructor() {}
+  constructor(private apiDataService: ApiDataService) {}
 
   ngOnInit(): void {
     this.customersChartOptions = this.getCustomersChartOptions(this.themeCssVariables);
@@ -46,8 +52,19 @@ export class DashboardComponent implements OnInit {
     this.revenueChartOptions = this.getRevenueChartOptions(this.themeCssVariables);
     this.monthlySalesChartOptions = this.getMonthlySalesChartOptions(this.themeCssVariables);
     this.cloudStorageChartOptions = this.getCloudStorageChartOptions(this.themeCssVariables);
+    this.loadData();
   }
-
+  loadData() {
+    this.apiDataService.countKarupanAll().subscribe(data => {
+      this.karapanAll = data;
+    });
+    this.apiDataService.countBorrowAll().subscribe(data => {
+      this.borrowAll = data;
+    });
+    this.apiDataService.countfinance().subscribe(data => {
+      this.sumdeductedAmount = data;
+    });
+  }
 
 
   /**

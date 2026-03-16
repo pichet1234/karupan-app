@@ -21,135 +21,49 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-12 col-xl-12 stretch-card">
-    <div class="row flex-grow-1">
-      <div class="col-md-4 grid-margin stretch-card">
-        <div class="card">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-baseline">
-              <h6 class="card-title mb-0">New Customers</h6>
-              <div ngbDropdown class="mb-2">
-                <a class="no-dropdown-toggle-icon" ngbDropdownToggle id="dropdownMenuButton">
-                  <i class="icon-lg text-secondary pb-3px" data-feather="more-horizontal" appFeatherIcon></i>
-                </a>
-                <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
-                  <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="eye" appFeatherIcon class="icon-sm me-2"></i> <span class="">View</span></a>
-                  <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="edit-2" appFeatherIcon class="icon-sm me-2"></i> <span class="">Edit</span></a>
-                  <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="trash" appFeatherIcon class="icon-sm me-2"></i> <span class="">Delete</span></a>
-                  <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="printer" appFeatherIcon class="icon-sm me-2"></i> <span class="">Print</span></a>
-                  <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="download" appFeatherIcon class="icon-sm me-2"></i> <span class="">Download</span></a>
-                </div>
+<div class="row mb-4">
+  <div class="col-12">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm border-start border-primary border-4">
+          <div class="card-body p-3">
+            <div class="d-flex align-items-center justify-content-between">
+              <div>
+                <p class="text-muted mb-1 fw-bold">รายการครุภัณฑ์ทั้งหมด</p>
+                <h2 class="mb-0">{{ karapanAll?.count }}</h2>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-6 col-md-12 col-xl-5">
-                <h3 class="mb-2">3,897</h3>
-                <div class="d-flex align-items-baseline">
-                  <p class="text-success">
-                    <span>+3.3%</span>
-                    <i data-feather="arrow-up" appFeatherIcon class="icon-sm mb-1"></i>
-                  </p>
-                </div>
-              </div>
-              <div class="col-6 col-md-12 col-xl-7">
-                <div class="mt-md-3 mt-xl-0">
-                  <apx-chart
-                    [series]="customersChartOptions.series"
-                    [chart]="customersChartOptions.chart"
-                    [colors]="customersChartOptions.colors"
-                    [xaxis]="customersChartOptions.xaxis"
-                    [stroke]="customersChartOptions.stroke"
-                    [markers]="customersChartOptions.markers"
-                  ></apx-chart>
-                </div>
+              <div class="bg-primary bg-opacity-10 p-3 rounded">
+                <i data-feather="box" class="text-primary" style="width: 24px; height: 24px;"></i>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-4 grid-margin stretch-card">
-        <div class="card">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-baseline">
-              <h6 class="card-title mb-0">New Orders</h6>
-              <div ngbDropdown class="mb-2">
-                <a class="no-dropdown-toggle-icon" ngbDropdownToggle id="dropdownMenuButton1">
-                  <i class="icon-lg text-secondary pb-3px" data-feather="more-horizontal" appFeatherIcon></i>
-                </a>
-                <div ngbDropdownMenu aria-labelledby="dropdownMenuButton1">
-                  <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="eye" appFeatherIcon class="icon-sm me-2"></i> <span class="">View</span></a>
-                  <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="edit-2" appFeatherIcon class="icon-sm me-2"></i> <span class="">Edit</span></a>
-                  <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="trash" appFeatherIcon class="icon-sm me-2"></i> <span class="">Delete</span></a>
-                  <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="printer" appFeatherIcon class="icon-sm me-2"></i> <span class="">Print</span></a>
-                  <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="download" appFeatherIcon class="icon-sm me-2"></i> <span class="">Download</span></a>
-                </div>
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm border-start border-warning border-4">
+          <div class="card-body p-3">
+            <div class="d-flex align-items-center justify-content-between">
+              <div>
+                <p class="text-muted mb-1 fw-bold">รายการผู้ยืมครุภัณฑ์ทั้งหมด</p>
+                <h2 class="mb-0 text-dark">{{ borrowAll?.count }}</h2>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-6 col-md-12 col-xl-5">
-                <h3 class="mb-2">35,084</h3>
-                <div class="d-flex align-items-baseline">
-                  <p class="text-danger">
-                    <span>-2.8%</span>
-                    <i data-feather="arrow-down" appFeatherIcon class="icon-sm mb-1"></i>
-                  </p>
-                </div>
-              </div>
-              <div class="col-6 col-md-12 col-xl-7">
-                <div class="mt-md-3 mt-xl-0">
-                  <apx-chart
-                    [series]="ordersChartOptions.series"
-                    [chart]="ordersChartOptions.chart"
-                    [colors]="ordersChartOptions.colors"
-                    [plotOptions]="ordersChartOptions.plotOptions"
-                    [xaxis]="ordersChartOptions.xaxis"
-                  ></apx-chart>
-                </div>
+              <div class="bg-warning bg-opacity-10 p-3 rounded">
+                <i data-feather="clock" class="text-warning" style="width: 24px; height: 24px;"></i>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-4 grid-margin stretch-card">
-        <div class="card">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-baseline">
-              <h6 class="card-title mb-0">Growth</h6>
-              <div ngbDropdown class="mb-2">
-                <a class="no-dropdown-toggle-icon" ngbDropdownToggle id="dropdownMenuButton2">
-                  <i class="icon-lg text-secondary pb-3px" data-feather="more-horizontal" appFeatherIcon></i>
-                </a>
-                <div ngbDropdownMenu aria-labelledby="dropdownMenuButton2">
-                  <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="eye" appFeatherIcon class="icon-sm me-2"></i> <span class="">View</span></a>
-                  <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="edit-2" appFeatherIcon class="icon-sm me-2"></i> <span class="">Edit</span></a>
-                  <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="trash" appFeatherIcon class="icon-sm me-2"></i> <span class="">Delete</span></a>
-                  <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="printer" appFeatherIcon class="icon-sm me-2"></i> <span class="">Print</span></a>
-                  <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="download" appFeatherIcon class="icon-sm me-2"></i> <span class="">Download</span></a>
-                </div>
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm border-start border-success border-4">
+          <div class="card-body p-3">
+            <div class="d-flex align-items-center justify-content-between">
+              <div>
+                <p class="text-muted mb-1 fw-bold">เงินค่ามัดจำทั้งหมด(ที่ยังไม่คืน)</p>
+                <h2 class="mb-0 text-success">{{ sumdeductedAmount?.data | currency:'THB':'symbol':'1.2-2' }}</h2>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-6 col-md-12 col-xl-5">
-                <h3 class="mb-2">89.87%</h3>
-                <div class="d-flex align-items-baseline">
-                  <p class="text-success">
-                    <span>+2.8%</span>
-                    <i data-feather="arrow-up" appFeatherIcon class="icon-sm mb-1"></i>
-                  </p>
-                </div>
-              </div>
-              <div class="col-6 col-md-12 col-xl-7">
-                <div class="mt-md-3 mt-xl-0">
-                  <apx-chart
-                    [series]="growthChartOptions.series"
-                    [chart]="growthChartOptions.chart"
-                    [colors]="growthChartOptions.colors"
-                    [xaxis]="growthChartOptions.xaxis"
-                    [stroke]="growthChartOptions.stroke"
-                    [markers]="growthChartOptions.markers"
-                  ></apx-chart>
-                </div>
+              <div class="bg-success bg-opacity-10 p-3 rounded">
+                <i data-feather="check-circle" class="text-success" style="width: 24px; height: 24px;"></i>
               </div>
             </div>
           </div>
@@ -157,7 +71,7 @@
       </div>
     </div>
   </div>
-</div> <!-- row -->
+</div>
 
 <div class="row">
   <div class="col-12 col-xl-12 grid-margin stretch-card">

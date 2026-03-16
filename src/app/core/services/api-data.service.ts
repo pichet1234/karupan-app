@@ -75,6 +75,10 @@ export class ApiDataService {
   countBorrowAll():Observable<any>{
     return this.http.get<any>(`${this.urlserver}/countborrowall`);
   }
+
+  countfinance():Observable<any>{
+    return this.http.get<any>(`${this.urlserver}/getSumdeductedAmount`);//นับจำนวนเงินค่ามัดจำที่ยคืนแล้ว
+  }
   removeKarupan(data:any):Observable<any>{
     return this.http.delete<any>(`${this.urlserver}/removekarupan/${data}`);
   }
