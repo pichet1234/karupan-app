@@ -7,7 +7,7 @@ import { Observable} from 'rxjs';
 })
 export class ApiDataService {
 
-  urlserver='http://localhost:3000';
+  urlserver='https://pro-karupan-backend.onrender.com';
   constructor(private http: HttpClient) { }
   /* เพิ่มประเภทครุภัณฑ์ */
   addkarupanType(data:any):Observable<any>{
