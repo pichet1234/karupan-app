@@ -24,7 +24,7 @@ import { ThaidatePipe } from '../../../core/pipes/thaidate.pipe';
   styleUrl: './kreturn.component.scss'
 })
 export class KreturnComponent {
-  imgBase = 'https://pro-karupan-backend.onrender.com';   // หรือ domain จริง
+  imgBase = 'https://pro-karupan-backend.onrender.com/';   // หรือ domain จริง
   defaultImg = 'images/photos/img15.jpg';
   searchText: string = '';
   selectdata: any = null;
