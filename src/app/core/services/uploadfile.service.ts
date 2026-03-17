@@ -8,7 +8,7 @@ import { Karupan } from '../../views/models/karupan.model';
 })
 export class UploadfileService {
 
-  private apiurl = 'http://localhost:3000';
+  private apiurl = 'https://pro-karupan-backend.onrender.com';
   constructor(private http: HttpClient) { }
 
   //function to upload file

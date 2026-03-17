@@ -10,7 +10,7 @@ export class UploadService {
    * Uploads a file to the server. Default endpoint: http://localhost:3000/upload
    * Returns Http events so component can track progress.
    */
-  uploadFile(file: File, url: string = 'http://localhost:3000/upload'): Observable<HttpEvent<any>> {
+  uploadFile(file: File, url: string = 'https://pro-karupan-backend.onrender.com/upload'): Observable<HttpEvent<any>> {
     const fd = new FormData();
     fd.append('file', file, file.name);
     return this.http.post<any>(url, fd, {
