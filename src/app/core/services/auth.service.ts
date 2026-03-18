@@ -6,7 +6,7 @@ import  { jwtDecode } from 'jwt-decode';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-  private API = 'http://localhost:3000';
+  private API = 'https://pro-karupan-backend.onrender.com';
 
   private currentUserSubject = new BehaviorSubject<any>(null);
   currentUser$ = this.currentUserSubject.asObservable();
