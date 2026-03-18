@@ -221,37 +221,43 @@ filterByexpenditure(expenditure: string) {
       console.log(this.editForm.value.karupanTypeId);
       console.log(this.viewData);
   }
-  saveEdit() {
+saveEdit() {
   if (this.editForm.invalid) return;
-    const formData=new FormData();
-   if (this.selectedFile) {
-          formData.append('file', this.selectedFile);
-        }
-   const payload = {
-    ...this.editForm.value,
-    _id: this.viewData._id
-  };
-  this.apidataService.updateKarupan(payload, this.selectedFile!).subscribe({
-      next: (res: any) => {
-        Swal.fire({
-          icon: 'success',
-          title: 'บันทึกสำเร็จ',
-          timer: 1500,
-          showConfirmButton: false
-        });
 
-        this.modalService.dismissAll();
+  const formData = new FormData();
 
-        this.loadData(); // reload list
-      },
-      error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'เกิดข้อผิดพลาด',
-          text: err.error?.message || 'ไม่สามารถบันทึกได้'
-        });
-      }
-    });
+  // 🔥 ใส่ทุก field
+  Object.keys(this.editForm.value).forEach(key => {
+    formData.append(key, this.editForm.value[key]);
+  });
+
+  formData.append('_id', this.viewData._id);
+
+  // 🔥 ใส่ไฟล์ (ถ้ามี)
+  if (this.selectedFile) {
+    formData.append('image', this.selectedFile);
+  }
+
+  this.apidataService.updateKarupan(formData).subscribe({
+    next: (res: any) => {
+      Swal.fire({
+        icon: 'success',
+        title: 'บันทึกสำเร็จ',
+        timer: 1500,
+        showConfirmButton: false
+      });
+
+      this.modalService.dismissAll();
+      this.loadData();
+    },
+    error: (err) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'เกิดข้อผิดพลาด',
+        text: err.error?.message || 'ไม่สามารถบันทึกได้'
+      });
+    }
+  });
 }
 onFileSelected(event: any) {
   const file = event.target.files[0];

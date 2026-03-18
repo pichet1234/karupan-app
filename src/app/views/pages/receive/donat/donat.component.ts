@@ -74,7 +74,7 @@ export class DonatComponent {
     });
   }
   onSubmit() {
-    if (this.selectedFile){
+
       const date = this.form.get('redate')?.value;
       const dateStr = `${date.year}-${date.month}-${date.day}`;
       const formData=new FormData();
@@ -94,7 +94,7 @@ export class DonatComponent {
       formData.append('brand', this.form.get('brand')?.value);
 
        if (this.selectedFile) {
-          formData.append('file', this.selectedFile);
+          formData.append('image', this.selectedFile);
         }
       
       this.uploadService.uploadfiledonate(formData).subscribe({
@@ -117,6 +117,5 @@ export class DonatComponent {
          },
         error: (err:any) => { console.error(err); }
       });
-    }
   }
 }

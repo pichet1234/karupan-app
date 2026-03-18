@@ -93,7 +93,7 @@ onFileSelected(event: any) {
         formData.append('redate', dateStr);
         
         if (this.selectedFile) {
-          formData.append('file', this.selectedFile);
+          formData.append('image', this.selectedFile);
         }
 
        this.uploadfileService.uploadfile(formData).subscribe({

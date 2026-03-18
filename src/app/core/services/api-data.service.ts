@@ -82,16 +82,19 @@ export class ApiDataService {
   removeKarupan(data:any):Observable<any>{
     return this.http.delete<any>(`${this.urlserver}/removekarupan/${data}`);
   }
-  updateKarupan(data:any, file?: File):Observable<any>{
-    const formData = new FormData();
-    Object.keys(data).forEach(key => {
-    formData.append(key, data[key]);
-  });
-    if (file) {
-    formData.append('file', file);
-  }
-    return this.http.post<any>(`${this.urlserver}/updatekarupan`,formData);
-  }
+  // updateKarupan(data:any, file?: File):Observable<any>{
+  //   const formData = new FormData();
+  //   Object.keys(data).forEach(key => {
+  //   formData.append(key, data[key]);
+  // });
+  //   if (file) {
+  //   formData.append('file', file);
+  // }
+  //   return this.http.post<any>(`${this.urlserver}/updatekarupan`,formData);
+  // }
+  updateKarupan(formData: FormData) {
+  return this.http.put(`${this.urlserver}/updatekarupan`, formData);
+}
   regiterUser(data:any): Observable<any>{
     return this.http.post<any>(`${this.urlserver}/register`,data);
   }
