@@ -54,6 +54,8 @@ export class LoginComponent implements OnInit {
     this.apidataservice.loginUser(this.loginForm.value).subscribe({
 
       next: (res: any) => {
+          console.log('Response:', res);
+          console.log('Token:', res.token);
           // 💾 บันทึก token
           this.authService.saveTokens(res.accessToken, res.refreshToken);
 
