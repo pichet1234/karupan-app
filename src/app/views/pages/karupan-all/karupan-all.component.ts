@@ -38,7 +38,7 @@ export class KarupanAllComponent {
 
   pagedData: any[] = [];   // ข้อมูลที่ใช้แสดงจริง
   viewData: any ;
-  imgBase = 'http://localhost:3000/'; // เปลี่ยนตาม backend คุณ
+  imgBase = 'https://pro-karupan-backend.onrender.com/'; // เปลี่ยนตาม backend คุณ
 
   selectedFile: File | null = null;
   editForm!: FormGroup;
