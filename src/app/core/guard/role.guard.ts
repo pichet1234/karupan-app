@@ -9,8 +9,6 @@ export const superAdminGuard: CanActivateFn = () => {
 
   const user = authService.getUserFromToken();
 
-  console.log('Decoded Role:', user?.role);
-
   if (user?.role === 'superadmin') {
     return true;
   }

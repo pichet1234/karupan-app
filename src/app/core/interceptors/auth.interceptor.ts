@@ -9,8 +9,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req);
 }
   const token = authService.getAccessToken();
-console.log('INTERCEPTOR TOKEN:', token);
-    console.log('URL:', req.url);
+
   if (token) {
     const cloned = req.clone({
       setHeaders: {
