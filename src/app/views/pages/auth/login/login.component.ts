@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
 
       next: (res: any) => {
           console.log('Response:', res);
-          console.log('Token:', res.token);
+          console.log('Token:', res.accessToken);
           // 💾 บันทึก token
           const token = res.accessToken;
           this.authService.saveTokens(token, res.refreshToken);
