@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
           // 💾 บันทึก token
           const token = res.accessToken;
           this.authService.saveTokens(token, res.refreshToken);
-
+        console.log('AFTER SAVE:', localStorage.getItem('accessToken'));
           // 💾 บันทึก user
           localStorage.setItem('user', JSON.stringify(res.user));
 
