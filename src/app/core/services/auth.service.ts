@@ -28,15 +28,15 @@ export class AuthService {
     return null;
   }
 }
-  saveTokens(accessToken: string, refreshToken: string) {
-    localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('refreshToken', refreshToken);
-  }
+saveTokens(accessToken: string, refreshToken: string) {
+  localStorage.setItem('token', accessToken);       
+  localStorage.setItem('refreshToken', refreshToken);
+}
 
   // ================= TOKEN =================
-  getAccessToken() {
-    return localStorage.getItem('accessToken');
-  }
+getAccessToken() {
+  return localStorage.getItem('token');            
+}
 
   getRefreshToken() {
     return localStorage.getItem('refreshToken');
