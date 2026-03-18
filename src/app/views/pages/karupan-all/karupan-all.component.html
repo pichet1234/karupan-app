@@ -177,7 +177,7 @@
 
       <!-- รูปภาพ -->
       <div class="col-md-4 text-center mb-3">
-        <img [src]="viewData.imageUrl ? imgBase + viewData.imageUrl : 'assets/no-image.png'"
+        <img [src]="viewData.imageUrl ?  viewData.imageUrl : 'assets/no-image.png'"
              class="img-fluid rounded shadow"
              style="max-height:250px; object-fit:cover;">
       </div>
@@ -370,7 +370,7 @@
       <input type="file" (change)="onFileSelected($event)" />
 
       <img *ngIf="viewData?.imageUrl"
-           [src]="imgBase + viewData.imageUrl"
+           [src]="viewData.imageUrl"
            class="img-thumbnail mt-2"
            style="max-height:150px">
     </div>
