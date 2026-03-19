@@ -104,4 +104,10 @@ export class ApiDataService {
   getUser(): Observable<any>{
     return this.http.get<any>(`${this.urlserver}/getuser`);
   }
+  getBorwOx(): Observable<any>{
+    return this.http.get<any>(`${this.urlserver}/getBorwOx`);
+  }
+  getBorwbad(): Observable<any>{
+    return this.http.get<any>(`${this.urlserver}/getBorwbad`);
+  }
 }
