@@ -87,7 +87,7 @@
            style="cursor: default; transition: transform 0.2s;">
         
         <div class="position-relative">
-          <img [src]="getImage(item)" class="card-img-top" style="height:160px; object-fit:cover;" />
+          <img [src]="item.imageUrl" class="card-img-top" style="height:160px; object-fit:cover;" />
           <div class="position-absolute top-0 end-0 m-2">
             <span class="badge shadow-sm" [class]="getBadgeClass(item.statuskarupan)">
               {{ item.statuskarupan }}
@@ -188,7 +188,7 @@
     <div class="row g-4">
       <div class="col-md-5">
         <div class="card border-0 shadow-sm overflow-hidden">
-          <img [src]="getImage(viewdata)" class="img-fluid w-100" 
+          <img [src]="viewdata.imageUrl" class="img-fluid w-100" 
                style="height: 250px; object-fit: contain; background: #f8f9fa;" />
           <div class="card-body bg-light text-center py-2">
             <span class="badge rounded-pill shadow-sm" [class]="getBadgeClass(viewdata.status)">
