@@ -140,7 +140,7 @@ onBlurCheck() {
       }
 
       if (item?.imageUrl && item.imageUrl.trim() !== '') {
-        return this.imgBase + item.imageUrl;
+        return item.imageUrl;
       }
 
       // default frontend
