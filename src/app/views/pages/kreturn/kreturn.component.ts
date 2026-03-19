@@ -136,7 +136,7 @@ onBlurCheck() {
 
       // รูปจาก backend (uploads/xxx.jpg)
       if (item?.karupan?.imageUrl && item.karupan.imageUrl.trim() !== '') {
-        return this.imgBase + item.karupan.imageUrl;
+        return item.karupan.imageUrl;
       }
 
       if (item?.imageUrl && item.imageUrl.trim() !== '') {

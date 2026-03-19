@@ -162,7 +162,7 @@
                         </div>
                       </div>
                       <div class="row mb-3">
-                          <img [src]="'http://pro-karupan-backend.onrender.com/' + imgU" alt="รูปครุภัณฑ์" width="160" height="280"/>
+                          <img [src]="imgU" alt="รูปครุภัณฑ์" width="160" height="280"/>
                       </div>
                       <button type="button" class="btn btn-danger" (click)="removeItem(i)">ลบรายการ</button>
                     </div>
@@ -218,7 +218,7 @@
            <td>{{ item.karupanCode }}</td>
            <td>{{ item.kname }}</td>
            <td>
-         <img [src]="'http://localhost:3000/' + item.imageUrl" alt="รูปครุภัณฑ์" width="80"/>
+         <img [src]="item.imageUrl" alt="รูปครุภัณฑ์" width="80"/>
            </td>
            <td>{{ item.status }}</td>
            <td><button class="btn btn-success btn-sm" (click)="addItem(item)" >เลือก</button></td>

@@ -340,7 +340,7 @@
            <td>{{ item.karupanCode }}</td>
            <td>{{ item.kname }}</td>
            <td>
-         <img [src]="'http://pro-karupan-backend.onrender.com/' + item.imageUrl" alt="รูปครุภัณฑ์" width="80"/>
+         <img [src]="item.imageUrl" alt="รูปครุภัณฑ์" width="80"/>
            </td>
            <td>{{ item.status }}</td>
            <td><button class="btn btn-success btn-sm" (click)="chooseButton(item, formadd, modal)">เลือก</button></td>
@@ -398,7 +398,7 @@
               </div>
               <!-- รูป -->
               <div class="text-center mb-2">
-                <img [src]="'http://pro-karupan-backend.onrender.com/' + item.get('imageUrl')?.value" style="width:120px;height:120px;object-fit:cover" class="rounded border" alt="รูปครุภัณฑ์">
+                <img [src]="item.get('imageUrl')?.value" style="width:120px;height:120px;object-fit:cover" class="rounded border" alt="รูปครุภัณฑ์">
               </div>
             </div>
           </div>
