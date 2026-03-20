@@ -1,11 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgbCalendar, NgbDatepickerModule, NgbDateStruct, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbDatepickerModule, NgbDateStruct, NgbDropdownModule  } from '@ng-bootstrap/ng-bootstrap';
 import { ApexOptions, NgApexchartsModule } from "ng-apexcharts";
 import { FeatherIconDirective } from '../../../core/feather-icon/feather-icon.directive';
 import { ThemeCssVariableService, ThemeCssVariablesType } from '../../../core/services/theme-css-variable.service';
 import { ApiDataService } from '../../../core/services/api-data.service';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe,NgClass ,CommonModule  } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +16,9 @@ import { CurrencyPipe } from '@angular/common';
     NgbDatepickerModule, 
     NgApexchartsModule,
     FeatherIconDirective,
-    CurrencyPipe
+    CurrencyPipe,
+    NgClass,
+    CommonModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
@@ -40,7 +42,7 @@ export class DashboardComponent implements OnInit {
   karapanAll: any;
   borrowAll: any;
   sumdeductedAmount: any;
-
+  borrowData: any[] = [];
   themeCssVariables = inject(ThemeCssVariableService).getThemeCssVariables();
 
   constructor(private apiDataService: ApiDataService) {}
@@ -64,6 +66,14 @@ export class DashboardComponent implements OnInit {
     this.apiDataService.countfinance().subscribe(data => {
       this.sumdeductedAmount = data;
     });
+    this.apiDataService.getBorwbad().subscribe({ 
+      next: (res)=>{
+        this.borrowData = res.data;
+      },
+      error: (err)=>{
+        console.error(err);
+      }
+     });
   }
 
 
