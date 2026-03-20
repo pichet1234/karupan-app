@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
   karapanAll: any;
   borrowAll: any;
   sumdeductedAmount: any;
-  borrowData: any;
+  borrowData: any[] = [];
   themeCssVariables = inject(ThemeCssVariableService).getThemeCssVariables();
 
   constructor(private apiDataService: ApiDataService) {}
@@ -66,9 +66,14 @@ export class DashboardComponent implements OnInit {
     this.apiDataService.countfinance().subscribe(data => {
       this.sumdeductedAmount = data;
     });
-    this.apiDataService.getBorwbad().subscribe(data => {
-      this.borrowData = data;
-    });
+    this.apiDataService.getBorwbad().subscribe({ 
+      next: (res)=>{
+        this.borrowData = res.data;
+      },
+      error: (err)=>{
+        console.error(err);
+      }
+     });
   }
 
 
