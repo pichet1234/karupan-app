@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
         if (err.status === 401) {
           this.errorMessage = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
         } else {
-          this.errorMessage = 'เกิดข้อผิดพลาดจากระบบ';
+          this.errorMessage = err.message;
         }
 
         this.loading = false;
