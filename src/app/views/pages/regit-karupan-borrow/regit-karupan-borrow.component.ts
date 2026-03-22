@@ -190,7 +190,6 @@ export class RegitKarupanBorrowComponent {
   editBorrow(kborrow: any, i: any) {
 
     this.viewData = i;
-    console.log(this.viewData)
     this.borrowForm.patchValue({
       _id: i._id,
       borrow_date: i.borrow_date ? new Date(i.borrow_date).toISOString().substring(0, 10) : '',

@@ -12,7 +12,7 @@
             <p class="text-muted small mb-0">จัดการข้อมูลและสิทธิ์การเข้าใช้งานของบุคลากร</p>
           </div>
           <div class="col-md-6 text-md-end mt-3 mt-md-0">
-            <button class="btn btn-primary px-4 shadow-sm" (click)="openAddUser()">
+            <button class="btn btn-primary px-4 shadow-sm" (click)="openAddUser(user)">
               <i data-feather="plus" appFeatherIcon class="me-1 icon-sm"></i>
               เพิ่มผู้ใช้งานใหม่
             </button>
@@ -106,3 +106,70 @@
     </div>
   </div>
 </div>
+
+<!-- Modal Add User -->
+<ng-template #user let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">
+      <i class="bi bi-person-plus-fill me-2"></i>เพิ่มผู้ใช้งานใหม่
+    </h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit(modal)">
+    <div class="modal-body">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-control" formControlName="username" 
+                 [class.is-invalid]="userForm.get('username')?.invalid && userForm.get('username')?.touched">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-control" formControlName="password"
+                 [class.is-invalid]="userForm.get('password')?.invalid && userForm.get('password')?.touched">
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">ชื่อ-นามสกุล</label>
+          <input type="text" class="form-control" formControlName="fullname"
+                 [class.is-invalid]="userForm.get('fullname')?.invalid && userForm.get('fullname')?.touched">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">อีเมล</label>
+          <input type="email" class="form-control" formControlName="email"
+                 placeholder="example@mail.com"
+                 [class.is-invalid]="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">เบอร์โทรศัพท์</label>
+          <input type="text" class="form-control" formControlName="tel"
+                 [class.is-invalid]="userForm.get('tel')?.invalid && userForm.get('tel')?.touched">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">ตำแหน่ง</label>
+          <input type="text" class="form-control" formControlName="position"
+                 [class.is-invalid]="userForm.get('position')?.invalid && userForm.get('position')?.touched">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">บทบาท (Role)</label>
+          <select class="form-select" formControlName="role">
+            <option *ngFor="let r of roles" [value]="r">{{ r | titlecase }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">ยกเลิก</button>
+      <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">
+        <i class="bi bi-save me-1"></i>บันทึกข้อมูล
+      </button>
+    </div>
+  </form>
+</ng-template>
