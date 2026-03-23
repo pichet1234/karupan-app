@@ -70,9 +70,9 @@ export class LoginComponent implements OnInit {
         console.error(err);
 
         if (err.status === 401) {
-          this.errorMessage = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
+          this.errorMessage = 'you are not authorized to access this page.';
         } else {
-          this.errorMessage = 'เกิดข้อผิดพลาดจากระบบ';
+          this.errorMessage = err.error.message;
         }
 
         this.loading = false;

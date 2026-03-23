@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiDataService } from '../../../../core/services/api-data.service';
-import { ReactiveFormsModule ,FormsModule} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,ReactiveFormsModule ,FormsModule} from '@angular/forms';
 import { FeatherIconDirective } from '../../../../core/feather-icon/feather-icon.directive';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-user',
@@ -20,9 +21,26 @@ export class UserComponent {
   filteredUsers: any[] = [];
 
   searchText: string = '';
+  modalRef: any;
+
+  userForm: FormGroup;
+  roles = ['admin', 'staff', 'viewer'];
+
   constructor(
+    private modalService: NgbModal,
     private api:ApiDataService,
-  ){}
+    private fb: FormBuilder
+  ){
+    this.userForm = this.fb.group({
+      username: ['', [Validators.required, Validators.minLength(4)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      fullname: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      position: ['', Validators.required],
+      tel: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      role: ['viewer', Validators.required] // กำหนด default value เป็น viewer
+    });
+  }
   ngOnInit(): void {
     this.getUser();
   }
@@ -41,10 +59,20 @@ export class UserComponent {
   }
   deleteUser(data:any){
   }
-  openAddUser(){
-
+  openAddUser(user: any){
+    this.modalRef = this.modalService.open(user, { size: 'lg' });
   }
-
+onSubmit(modal: any) {
+    if (this.userForm.valid) {
+      console.log('ข้อมูลที่บันทึก:', this.userForm.value);
+      // เพิ่ม logic ส่งข้อมูลไป API ที่นี่
+      modal.close(); // ปิด modal เมื่อสำเร็จ
+      this.userForm.reset({ role: 'viewer' }); // ล้างค่าในฟอร์ม
+    } else {
+      // สั่งให้แสดง error ในกรณีที่กด submit แต่กรอกไม่ครบ
+      this.userForm.markAllAsTouched();
+    }
+  }
     // Search Function
   onSearch() {
     const keyword = this.searchText.toLowerCase().trim();
