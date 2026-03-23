@@ -4,6 +4,7 @@ import { ApiDataService } from '../../../../core/services/api-data.service';
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule ,FormsModule} from '@angular/forms';
 import { FeatherIconDirective } from '../../../../core/feather-icon/feather-icon.directive';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user',
@@ -64,8 +65,24 @@ export class UserComponent {
   }
 onSubmit(modal: any) {
     if (this.userForm.valid) {
-      console.log('ข้อมูลที่บันทึก:', this.userForm.value);
-      // เพิ่ม logic ส่งข้อมูลไป API ที่นี่
+      this.api.regiterUser(this.userForm.value).subscribe({
+        next: (res) => {
+          Swal.fire({
+            icon: 'success',
+            title: res.message || 'เพิ่มผู้ใช้สำเร็จ',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.getUser(); // รีเฟรชข้อมูลผู้ใช้หลังเพิ่มสำเร็จ
+        },
+        error: (err) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'เกิดข้อผิดพลาด',
+            text: err?.error?.message || 'ไม่สามารถเพิ่มผู้ใช้ได้'
+          });
+        }
+      });
       modal.close(); // ปิด modal เมื่อสำเร็จ
       this.userForm.reset({ role: 'viewer' }); // ล้างค่าในฟอร์ม
     } else {
