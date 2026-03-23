@@ -45,6 +45,7 @@ export class DashboardComponent implements OnInit {
   borrowAll: any;
   sumdeductedAmount: any;
   borrowData: any[] = [];
+  borrowOx: any[] = [];
   themeCssVariables = inject(ThemeCssVariableService).getThemeCssVariables();
 
   constructor(private apiDataService: ApiDataService) {}
@@ -74,6 +75,14 @@ export class DashboardComponent implements OnInit {
       },
       error: (err)=>{
         console.error(err);
+      }
+     });
+     this.apiDataService.getBorwOx().subscribe({
+      next: (res) =>{
+        this.borrowOx = res.data;
+      },
+      error: (err)=>{
+        console.error(err)
       }
      });
   }

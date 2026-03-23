@@ -78,7 +78,7 @@
     <div class="card overflow-hidden">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-baseline mb-4 mb-md-3">
-          <h6 class="card-title mb-0">รายการข้อมูลการยืมครุภัณฑ์(เตียงผู้ป่วยที่ยังไม่คืน)</h6>
+          <h6 class="card-title mb-0">รายการข้อมูลการยืมครุภัณฑ์</h6>
           <div ngbDropdown>
             <a class="no-dropdown-toggle-icon" ngbDropdownToggle id="dropdownMenuButton3">
               <i class="icon-lg text-secondary pb-3px" data-feather="more-horizontal" appFeatherIcon></i>
@@ -96,7 +96,7 @@
         <div class="container mt-4">
           <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
-              <h5 class="mb-0">รายการข้อมูลการยืมครุภัณฑ์</h5>
+              <h5 class="mb-0">รายการข้อมูลการยืมครุภัณฑ์(เตียงผู้ป่วยที่ยังไม่คืน)</h5>
             </div>
             <div class="table-responsive">
               <table class="table table-hover align-middle mb-0">
@@ -112,6 +112,63 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of borrowData">
+                    <td>
+                      <img [src]="item.karupan[0]?.imageUrl" 
+                          class="img-thumbnail" 
+                          style="width: 60px; height: 60px; object-fit: cover;"
+                          alt="karupan image">
+                    </td>
+                    <td>
+                      <div class="fw-bold">{{ item.kname }}</div>
+                      <small class="text-muted">รหัส: {{ item.karupuncode }}</small><br>
+                      <small class="badge bg-info text-dark">{{ item.karupan[0]?.station }}</small>
+                    </td>
+                    <td>
+                      <div>{{ item.borrow[0]?.patient }}</div>
+                      <small class="text-muted">ผู้บันทึก: {{ item.borrow[0]?.user_id }}</small>
+                    </td>
+                    <td>
+                      {{ item.borrow[0]?.borrow_date | thaidate:true}}
+                    </td>
+                    <td>
+                      <small>
+                        บ้านเลขที่ {{ item.borrow[0]?.address.bannumber }} 
+                        {{ item.borrow[0]?.address.moo }} 
+                        {{ item.borrow[0]?.address.village }} 
+                        {{ item.borrow[0]?.address.tambon }}
+                      </small>
+                    </td>
+                    <td>
+                      <span class="badge" 
+                        [ngClass]="item.statuskarupan === 'ยังไม่คืน' ? 'bg-danger' : 'bg-success'">
+                        {{ item.statuskarupan }}
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="container mt-4">
+          <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+              <h5 class="mb-0">รายการข้อมูลการยืมครุภัณฑ์(ออกซิเจนที่ยังไม่คืน)</h5>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>รูปภาพ</th>
+                    <th>ข้อมูลครุภัณฑ์</th>
+                    <th>ผู้ยืม/ผู้ป่วย</th>
+                    <th>วันที่ยืม</th>
+                    <th>ที่อยู่</th>
+                    <th>สถานะ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of borrowOx">
                     <td>
                       <img [src]="item.karupan[0]?.imageUrl" 
                           class="img-thumbnail" 
