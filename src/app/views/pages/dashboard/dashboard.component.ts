@@ -6,6 +6,7 @@ import { FeatherIconDirective } from '../../../core/feather-icon/feather-icon.di
 import { ThemeCssVariableService, ThemeCssVariablesType } from '../../../core/services/theme-css-variable.service';
 import { ApiDataService } from '../../../core/services/api-data.service';
 import { CurrencyPipe,NgClass ,CommonModule  } from '@angular/common';
+import { ThaidatePipe } from '../../../core/pipes/thaidate.pipe';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +19,8 @@ import { CurrencyPipe,NgClass ,CommonModule  } from '@angular/common';
     FeatherIconDirective,
     CurrencyPipe,
     NgClass,
-    CommonModule
+    CommonModule,
+    ThaidatePipe
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'

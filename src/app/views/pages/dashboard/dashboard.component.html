@@ -128,7 +128,7 @@
                       <small class="text-muted">ผู้บันทึก: {{ item.borrow[0]?.user_id }}</small>
                     </td>
                     <td>
-                      {{ item.borrow[0]?.borrow_date  }}
+                      {{ item.borrow[0]?.borrow_date | thaidate:true}}
                     </td>
                     <td>
                       <small>
