@@ -434,11 +434,11 @@ export class DashboardComponent implements OnInit {
     return {
       series: [{
         name: 'Sales',
-        data: [152,109,93,113,126,161,188,143,102,113,116,124]
+        data: [5,2,4,3,3,2,1,5,4,1,1,2]
       }],
       chart: {
         type: 'bar',
-        height: '330',
+        height: '30',
         parentHeightOffset: 0,
         foreColor: themeVariables.secondary,
         toolbar: {
@@ -475,7 +475,7 @@ export class DashboardComponent implements OnInit {
       },
       yaxis: {
         title: {
-          text: 'Number of Sales',
+          text: 'จำนวนคนยืม ',
           style:{
             size: 9,
             color: themeVariables.secondary
