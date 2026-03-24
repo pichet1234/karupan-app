@@ -438,7 +438,7 @@ export class DashboardComponent implements OnInit {
       }],
       chart: {
         type: 'bar',
-        height: '30',
+        height: '330',
         parentHeightOffset: 0,
         foreColor: themeVariables.secondary,
         toolbar: {
