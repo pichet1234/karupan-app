@@ -233,18 +233,13 @@
         </div>
         <p class="text-secondary">เริ่มต้นตั้งแต่ 1 ตุลาคม 2568 ถึง 30 กันยายน 2569</p>
         <apx-chart
-          [series]="monthlySalesChartOptions.series"
-          [chart]="monthlySalesChartOptions.chart"
-          [colors]="monthlySalesChartOptions.colors"
-          [fill]="monthlySalesChartOptions.fill"
-          [grid]="monthlySalesChartOptions.grid"
-          [xaxis]="monthlySalesChartOptions.xaxis"
-          [yaxis]="monthlySalesChartOptions.yaxis"
-          [legend]="monthlySalesChartOptions.legend"
-          [stroke]="monthlySalesChartOptions.stroke"
-          [dataLabels]="monthlySalesChartOptions.dataLabels"
-          [plotOptions]="monthlySalesChartOptions.plotOptions"
-        ></apx-chart>
+        *ngIf="chartOptions"
+        [series]="chartOptions.series"
+        [chart]="chartOptions.chart"
+        [xaxis]="chartOptions.xaxis"
+        [title]="chartOptions.title"
+        [colors]="chartOptions.colors">
+      </apx-chart>
       </div> 
     </div>
   </div>

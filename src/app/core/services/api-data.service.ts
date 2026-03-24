@@ -110,4 +110,8 @@ export class ApiDataService {
   getBorwbad(): Observable<any>{
     return this.http.get<any>(`${this.urlserver}/getBorwbad`);
   }
+  getBorrowStats(): Observable<any>{
+    //getBorrowStats()
+    return this.http.get<any>(`${this.urlserver}/getBorrowStats`);
+  }
 }

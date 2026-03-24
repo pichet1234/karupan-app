@@ -41,6 +41,7 @@ export class DashboardComponent implements OnInit {
   public revenueChartOptions: ApexOptions | any;
   public monthlySalesChartOptions: ApexOptions | any;
   public cloudStorageChartOptions: ApexOptions | any;
+  public chartOptions: ApexOptions | any;
   karapanAll: any;
   borrowAll: any;
   sumdeductedAmount: any;
@@ -85,6 +86,57 @@ export class DashboardComponent implements OnInit {
         console.error(err)
       }
      });
+    this.apiDataService.getBorrowStats().subscribe(res =>{
+      const apiData = res.data;
+
+      const monthMap:any = {
+        10:0, 11:0, 12:0,
+        1:0, 2:0, 3:0,
+        4:0, 5:0, 6:0,
+        7:0, 8:0, 9:0
+      };
+
+      apiData.forEach((item:any)=>{
+        monthMap[item._id] = item.total;
+      });
+
+      const months = [
+        "ต.ค","พ.ย","ธ.ค","ม.ค","ก.พ","มี.ค",
+        "เม.ย","พ.ค","มิ.ย","ก.ค","ส.ค","ก.ย"
+      ];
+
+      const totals = [
+        monthMap[10],
+        monthMap[11],
+        monthMap[12],
+        monthMap[1],
+        monthMap[2],
+        monthMap[3],
+        monthMap[4],
+        monthMap[5],
+        monthMap[6],
+        monthMap[7],
+        monthMap[8],
+        monthMap[9]
+      ];
+
+      this.chartOptions = {
+        series: [{
+          name: "จำนวนการยืม",
+          data: totals
+        }],
+        chart: {
+          type: "bar",
+          height: 350
+        },
+        xaxis: {
+          categories: months
+        },
+        title:{
+          text:"สถิติการยืมครุภัณฑ์ ปีงบประมาณ 2569"
+        }
+      };
+    });
   }
 
 
