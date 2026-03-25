@@ -325,7 +325,7 @@
                 <div class="col-md-6">
                   <p><strong>ผู้ป่วย:</strong> {{ patiantBorwlat?.patient }}</p>
                   <p><strong>ผู้ยืม:</strong> {{ patiantBorwlat?.person?.fname }} {{ patiantBorwlat?.person?.lname }} ({{ patiantBorwlat?.person?.relation }})</p>
-                  <p><strong>เบอร์โทรศัพท์:</strong> {{ patiantBorwlat?.person.phone }}</p>
+                  <p><strong>เบอร์โทรศัพท์:</strong> {{ patiantBorwlat?.person?.phone }}</p>
                 </div>
                 <div class="col-md-6 text-md-end">
                   <p><strong>วันที่ยืม:</strong> {{ patiantBorwlat?.borrow_date | thaidate:true }}</p>
@@ -345,7 +345,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of patiantBorwlat.details">
+                    <tr *ngFor="let item of patiantBorwlat?.details">
                       <td><code>{{ item.karupuncode }}</code></td>
                       <td>
                         <div>{{ item.kname }}</div>
