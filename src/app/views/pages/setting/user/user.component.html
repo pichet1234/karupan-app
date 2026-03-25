@@ -70,8 +70,8 @@
                     class="badge rounded-pill px-3 py-2"
                     [ngClass]="{
                       'bg-soft-success text-success': user.role === 'admin',
-                      'bg-soft-info text-info': user.role === 'user',
-                      'bg-soft-warning text-warning': user.role === 'manager'
+                      'bg-soft-info text-info': user.role === 'staff',
+                      'bg-soft-warning text-warning': user.role === 'viewer'
                     }"
                     style="font-weight: 600; font-size: 0.75rem; letter-spacing: 0.5px;"
                   >
