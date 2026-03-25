@@ -315,8 +315,8 @@
           <div class="card shadow-sm">
             <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
               <h5 class="mb-0">ข้อมูลการยืมครุภัณฑ์ล่าสุด</h5>
-              <span class="badge rounded-pill" [ngClass]="getStatusBadge(patiantBorwlat.statusborrow)">
-                {{ patiantBorwlat.statusborrow }}
+              <span class="badge rounded-pill" [ngClass]="getStatusBadge(patiantBorwlat?.statusborrow)">
+                {{ patiantBorwlat?.statusborrow }}
               </span>
             </div>
             
