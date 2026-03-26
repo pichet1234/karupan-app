@@ -178,7 +178,7 @@
     </div>
     <div class="modal-footer border-0">
       <button class="btn btn-link text-muted" (click)="modal.dismiss()">ยกเลิก</button>
-      <button class="btn btn-success px-4 shadow" (click)="noSubmitForm()">
+      <button class="btn btn-success px-4 shadow"  [disabled]="returnForm.invalid" (click)="noSubmitForm()">
         <i class="feather icon-check-circle me-1"></i> ยืนยันการรับคืน
       </button>
     </div>

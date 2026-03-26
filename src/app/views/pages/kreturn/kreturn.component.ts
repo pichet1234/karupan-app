@@ -245,7 +245,11 @@ onBlurCheck() {
     });
   }
   noSubmitForm(){
-          this.apidataService.returnBorrow(this.returnForm.value).subscribe({
+    if(this.returnForm.invalid){
+      this.returnForm.markAllAsTouched();
+      return;
+    }
+    this.apidataService.returnBorrow(this.returnForm.value).subscribe({
         next: (res) => {
           Swal.fire({
             title: res.message,
