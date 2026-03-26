@@ -49,10 +49,10 @@ export class KreturnComponent {
       borrow_id: [''],
       borrowdetailid: [''],
       karupanid: [''],
-      receiver: [''],
+      receiver: ['',Validators.required],
       returnRemark: [''],
       note: [''],
-      deposit: ['']
+      deposit: [0,Validators.required]
     });
   }
 
@@ -253,7 +253,7 @@ onBlurCheck() {
             icon: 'success',
             confirmButtonText: 'ตกลง'
           });
-
+          this.modalRef.close();
         },
         error: (err) => {
           Swal.fire({

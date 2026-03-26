@@ -145,12 +145,18 @@
         <div class="col-md-6">
           <label class="form-label fw-semibold">วันที่คืน</label>
           <input type="date" class="form-control" formControlName="returnDate">
+            <div class="text-danger small" *ngIf="returnForm.get('returnDate')?.touched && returnForm.get('returnDate')?.invalid">
+              กรุณาเลือกวันที่คืน
+            </div>
         </div>
         <div class="col-md-6">
           <label class="form-label fw-semibold">ค่ามัดจำคืน</label>
           <div class="input-group">
-            <input type="number" class="form-control border-success" formControlName="deposit">
+            <input type="number" class="form-control border-success" formControlName="deposit" required>
             <span class="input-group-text">฿</span>
+            <div class="text-danger small" *ngIf="returnForm.get('deposit')?.touched && returnForm.get('deposit')?.invalid">
+              กรุณากรอกค่ามัดจำ
+            </div>
           </div>
         </div>
         <div class="col-md-6">
@@ -159,7 +165,10 @@
         </div>
         <div class="col-md-6">
           <label class="form-label fw-semibold">ชื่อผู้รับคืน</label>
-          <input type="text" class="form-control" formControlName="receiver">
+          <input type="text" class="form-control" formControlName="receiver" required>
+          <div class="text-danger small" *ngIf="returnForm.get('receiver')?.touched && returnForm.get('receiver')?.invalid">
+            กรุณากรอกชื่อผู้รับคืน
+          </div>
         </div>
         <div class="col-12">
           <label class="form-label fw-semibold">บันทึกเพิ่มเติม / สภาพครุภัณฑ์</label>
