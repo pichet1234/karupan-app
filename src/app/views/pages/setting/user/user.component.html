@@ -80,7 +80,7 @@
                 </td>
                 <td class="text-center">
                   <div class="btn-group">
-                    <button class="btn btn-link text-warning p-2" (click)="editUser(user)" title="แก้ไข">
+                    <button class="btn btn-link text-warning p-2" (click)="selectUser(editUser, user)" title="แก้ไข">
                       <i data-feather="edit-3" appFeatherIcon class="icon-md"></i>
                     </button>
                     <button class="btn btn-link text-danger p-2" (click)="deleteUser(user._id)" title="ลบ">
@@ -172,4 +172,49 @@
       </button>
     </div>
   </form>
+</ng-template>
+<!-- Modal Edit User -->
+<ng-template #editUser let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">
+      <i class="bi bi-person-check-fill me-2"></i>แก้ไขข้อมูลผู้ใช้งาน
+    </h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+
+  <form [formGroup]="editUserForm">
+    <div class="modal-body">
+      <div class="row g-3">
+
+        <div class="col-12">
+          <label class="form-label">ชื่อ-นามสกุล</label>
+          <input type="text" class="form-control" formControlName="fullname" [class.is-invalid]="editUserForm.get('fullname')?.invalid && editUserForm.get('fullname')?.touched"> 
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">อีเมล</label>
+          <input type="email" class="form-control" formControlName="email">
+          </div>
+        <div class="col-md-6">
+          <label class="form-label">เบอร์โทรศัพท์</label>
+          <input type="text" class="form-control" formControlName="tel">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">ตำแหน่ง</label>
+          <input type="text" class="form-control" formControlName="position">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">บทบาท (Role)</label>
+          <select class="form-select" formControlName="role">
+            <option *ngFor="let r of roles" [value]="r">{{ r | titlecase }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">ยกเลิก</button>
+      <button type="submit" class="btn btn-primary" [disabled]="editUserForm.invalid">
+        <i class="bi bi-save me-1"></i>บันทึกการแก้ไข
+      </button>
+    </div>
 </ng-template>

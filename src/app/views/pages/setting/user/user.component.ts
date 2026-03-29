@@ -24,6 +24,7 @@ export class UserComponent {
   searchText: string = '';
   modalRef: any;
 
+  editUserForm: FormGroup;
   userForm: FormGroup;
   roles = ['admin', 'staff', 'viewer'];
 
@@ -41,6 +42,15 @@ export class UserComponent {
       tel: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       role: ['viewer', Validators.required] // กำหนด default value เป็น viewer
     });
+
+    this.editUserForm = this.fb.group({
+      id:[''],
+      fullname: [''],
+      email:[''],
+      position: [''],
+      tel:[''],
+      role:['']
+    });
   }
   ngOnInit(): void {
     this.getUser();
@@ -56,10 +66,24 @@ export class UserComponent {
       }
     });
   }
-  editUser(data:any){
+
+  selectUser(editUser: any, user: any){
+    this.modalRef = this.modalService.open(editUser, { size: 'lg' });
+    // กำหนดค่าเริ่มต้นให้กับฟอร์มแก้ไข
+    this.editUserForm.patchValue({
+      id: user._id,
+      fullname: user.fullname,
+      email: user.email,
+      position: user.position,
+      tel: user.tel,
+      role: user.role
+    });
+  }
+  editUser(){
   }
   deleteUser(data:any){
   }
+
   openAddUser(user: any){
     this.modalRef = this.modalService.open(user, { size: 'lg' });
   }
