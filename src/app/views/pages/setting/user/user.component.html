@@ -80,7 +80,7 @@
                 </td>
                 <td class="text-center">
                   <div class="btn-group">
-                    <button class="btn btn-link text-warning p-2" (click)="selectUser(editUser, user)" title="แก้ไข">
+                    <button class="btn btn-link text-warning p-2" (click)="selectUser(editUsers, user)" title="แก้ไข">
                       <i data-feather="edit-3" appFeatherIcon class="icon-md"></i>
                     </button>
                     <button class="btn btn-link text-danger p-2" (click)="deleteUser(user._id)" title="ลบ">
@@ -162,19 +162,23 @@
             <option *ngFor="let r of roles" [value]="r">{{ r | titlecase }}</option>
           </select>
         </div>
+        <div class="col-12">
+          <label class="form-label">อัปโหลดรูปโปรไฟล์</label>
+          <input type="file" class="form-control" (change)="onFileSelected($event)">
+        </div>
       </div>
     </div>
 
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">ยกเลิก</button>
-      <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">
+      <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid" (click)="editUser()">
         <i class="bi bi-save me-1"></i>บันทึกข้อมูล
       </button>
     </div>
   </form>
 </ng-template>
 <!-- Modal Edit User -->
-<ng-template #editUser let-modal>
+<ng-template #editUsers let-modal>
   <div class="modal-header">
     <h5 class="modal-title">
       <i class="bi bi-person-check-fill me-2"></i>แก้ไขข้อมูลผู้ใช้งาน

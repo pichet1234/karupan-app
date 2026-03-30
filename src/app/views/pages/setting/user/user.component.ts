@@ -27,6 +27,7 @@ export class UserComponent {
   editUserForm: FormGroup;
   userForm: FormGroup;
   roles = ['admin', 'staff', 'viewer'];
+  selectedFile: File | null = null;
 
   constructor(
     private modalService: NgbModal,
@@ -80,7 +81,17 @@ export class UserComponent {
     });
   }
   editUser(){
-    this.api.updateUser(this.editUserForm.value).subscribe({
+    const formData = new FormData();
+
+    Object.keys(this.editUserForm.value).forEach(key =>{
+      formData.append(key, this.editUserForm.value[key]);
+    });
+
+    formData.append('id', this.editUserForm.value.id);
+    if (this.selectedFile) {
+        formData.append('image', this.selectedFile);
+    }
+    this.api.updateUser(formData).subscribe({
       next: (res) =>{
         Swal.fire({
           icon: 'success',
@@ -89,16 +100,24 @@ export class UserComponent {
           timer: 1500
         });
         this.getUser(); // รีเฟรชข้อมูลผู้ใช้หลังแก้ไขสำเร็จ
+        this.modalRef.close();
       },
       error: (err) => {
         Swal.fire({
           icon: 'error',
           title: 'เกิดข้อผิดพลาด',
           text: err?.error?.message || 'ไม่สามารถแก้ไขผู้ใช้ได้'
-        })
+        });
+        this.modalRef.close();
       }
     })
   }
+  onFileSelected(event: any) {
+  const file = event.target.files[0];
+  if (file) {
+    this.selectedFile = file;
+  }
+}
   deleteUser(data:any){
   }
 

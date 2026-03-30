@@ -116,8 +116,8 @@ export class ApiDataService {
   getLatestBorrower(): Observable<any>{
     return this.http.get<any>(`${this.urlserver}/getLatestBorrower`);
   }
-  updateUser(data:any): Observable<any>{
+  updateUser(formData: FormData): Observable<any>{
     //updateuser
-    return this.http.post<any>(`${this.urlserver}/updateuser`, data);
+    return this.http.post<any>(`${this.urlserver}/updateuser`, formData);
   }
 }
