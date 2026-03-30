@@ -80,6 +80,24 @@ export class UserComponent {
     });
   }
   editUser(){
+    this.api.updateUser(this.editUserForm.value).subscribe({
+      next: (res) =>{
+        Swal.fire({
+          icon: 'success',
+          title: res.message || 'แก้ไขผู้ใช้สำเร็จ',
+          showConfirmButton: false,
+          timer: 1500
+        });
+        this.getUser(); // รีเฟรชข้อมูลผู้ใช้หลังแก้ไขสำเร็จ
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'เกิดข้อผิดพลาด',
+          text: err?.error?.message || 'ไม่สามารถแก้ไขผู้ใช้ได้'
+        })
+      }
+    })
   }
   deleteUser(data:any){
   }
