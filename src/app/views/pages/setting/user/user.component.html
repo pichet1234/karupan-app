@@ -162,16 +162,12 @@
             <option *ngFor="let r of roles" [value]="r">{{ r | titlecase }}</option>
           </select>
         </div>
-        <div class="col-12">
-          <label class="form-label">อัปโหลดรูปโปรไฟล์</label>
-          <input type="file" class="form-control" (change)="onFileSelected($event)">
-        </div>
       </div>
     </div>
 
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">ยกเลิก</button>
-      <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid" (click)="editUser()">
+      <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">
         <i class="bi bi-save me-1"></i>บันทึกข้อมูล
       </button>
     </div>
@@ -212,12 +208,16 @@
             <option *ngFor="let r of roles" [value]="r">{{ r | titlecase }}</option>
           </select>
         </div>
+        <div class="col-12">
+          <label class="form-label">อัปโหลดรูปโปรไฟล์</label>
+          <input type="file" class="form-control" (change)="onFileSelected($event)">
+        </div>
       </div>
     </div>
   </form>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">ยกเลิก</button>
-      <button type="submit" class="btn btn-primary" [disabled]="editUserForm.invalid">
+      <button type="submit" class="btn btn-primary" [disabled]="editUserForm.invalid" (click)="editUser()">
         <i class="bi bi-save me-1"></i>บันทึกการแก้ไข
       </button>
     </div>
