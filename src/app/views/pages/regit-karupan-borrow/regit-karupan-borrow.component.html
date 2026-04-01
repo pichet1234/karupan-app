@@ -53,77 +53,102 @@
 <div class="row">
   <div class="col-md-12">
     <div class="card shadow-sm border-0">
-      <div class="card-header bg-transparent border-bottom py-3 d-flex justify-content-between align-items-center">
+      <div class="card-header bg-transparent border-bottom py-3">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+          
+          <div class="d-flex align-items-center">
+            <div class="bg-primary bg-opacity-10 p-2 rounded-3 me-3">
+              <i data-feather="clipboard" class="text-primary"></i>
+            </div>
+            <h5 class="card-title mb-0 fw-bold text-dark">ทะเบียนยืม/คืนครุภัณฑ์</h5>
+          </div>
 
-        <h5 class="card-title mb-0 fw-bold">ทะเบียนยืม/คืนครุภัณฑ์</h5>
-      
-        <div class="d-flex gap-2">
-      
-          <!-- search -->
-          <input
-            type="text"
-            class="form-control form-control-sm"
-            style="width:220px"
-            placeholder="ค้นหาชื่อผู้ป่วย..."
-            [(ngModel)]="searchText"
-            (input)="refreshData()"
-          />
-      
-          <button class="btn btn-primary btn-sm px-3" [routerLink]="['/borrow']">
-            + เพิ่มรายการ
-          </button>
-      
+          <div class="d-flex flex-grow-1 justify-content-md-end align-items-center gap-3">
+            
+            <div class="position-relative" style="max-width: 300px; width: 100%;">
+              <span class="position-absolute top-50 start-0 translate-middle-y ps-3 text-muted">
+                <i data-feather="search" style="width: 16px; height: 16px;"></i>
+              </span>
+              <input
+                type="text"
+                class="form-control form-control-sm ps-5 border-light-subtle shadow-none"
+                style="border-radius: 8px; height: 38px;"
+                placeholder="ค้นหาชื่อผู้ป่วย หรือผู้ยืม..."
+                [(ngModel)]="searchText"
+                (input)="refreshData()"
+              />
+            </div>
+
+            <button class="btn btn-primary btn-sm px-4 d-flex align-items-center gap-2" 
+                    style="border-radius: 8px; height: 38px;"
+                    [routerLink]="['/borrow']">
+              <i data-feather="plus" style="width: 18px;"></i>
+              <span>เพิ่มรายการ</span>
+            </button>
+            
+          </div>
         </div>
-      
       </div>
-      <div class="card-body p-0"> <div class="table-responsive">
+
+      <div class="card-body p-0">
+        <div class="table-responsive">
           <table class="table table-hover align-middle mb-0">
-            <thead class="bg-light">
+            <thead class="bg-light-subtle">
               <tr>
-                <th class="ps-4">#</th>
-                <th>วันที่ยืม</th>
-                <th>ผู้ป่วย / ผู้ยืม</th>
-                <th>ที่อยู่</th>
-                <th>ค่ามัดจำ</th>
-                <th class="text-center">สถานะ</th>
-                <th class="text-end pe-4">จัดการ</th>
+                <th class="ps-4 py-3 text-muted fw-semibold" style="width: 60px;">#</th>
+                <th class="py-3 text-muted fw-semibold">วันที่ยืม</th>
+                <th class="py-3 text-muted fw-semibold">ผู้ป่วย / ผู้ยืม</th>
+                <th class="py-3 text-muted fw-semibold">ที่อยู่</th>
+                <th class="py-3 text-muted fw-semibold">ค่ามัดจำ</th>
+                <th class="py-3 text-muted fw-semibold text-center">สถานะ</th>
+                <th class="py-3 text-muted fw-semibold text-end pe-4">จัดการ</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let borrow of pagedData; let i = index">
                 <td class="ps-4">{{ (page - 1) * pageSize + i + 1 }}</td>
-                <td class="text-muted">{{ borrow.borrow_date | thaidate:true}}</td>
                 <td>
-                  <div class="fw-bold">{{ borrow.patient }}</div>
-                  <small class="text-muted">ผู้ยืม: {{ borrow.person?.fname }} {{ borrow.person?.lname }}</small>
+                  <div class="d-flex align-items-center">
+                    <i data-feather="calendar" class="text-muted me-2" style="width: 14px;"></i>
+                    <span class="text-dark">{{ borrow.borrow_date | thaidate:true}}</span>
+                  </div>
                 </td>
-                <td style="max-width: 200px;">
-                  <small class="text-truncate d-block">
+                <td>
+                  <div class="fw-bold text-dark">{{ borrow.patient }}</div>
+                  <small class="text-muted">
+                    <i data-feather="user" class="me-1" style="width: 12px;"></i>
+                    {{ borrow.person?.fname }} {{ borrow.person?.lname }}
+                  </small>
+                </td>
+                <td style="max-width: 220px;">
+                  <small class="text-secondary d-block text-truncate">
                     {{ borrow.address?.bannumber }} ม.{{ borrow.address?.moo }} ต.{{ borrow.address?.tambon }}
                   </small>
                 </td>
-                <td >
-                 เงินหลังหักค่ามัดจำ:
-                 <span class="fw-bold text-danger">
-                   {{ getTotalDeducted(borrow.financelog) | number }}
-                 </span>
+                <td>
+                  <div class="small text-muted mb-1">ยอดสุทธิหลังหัก:</div>
+                  <span class="badge bg-danger-subtle text-danger fw-bold fs-6">
+                    {{ getTotalDeducted(borrow.financelog) | number }} ฿
+                  </span>
                 </td>
                 <td class="text-center">
-                  <span class="badge rounded-pill" [class]="getBadgeClass(borrow.statusborrow)">
+                  <span class="badge px-3 py-2 fw-medium rounded-pill" [class]="getBadgeClass(borrow.statusborrow)">
                     {{ borrow.statusborrow }}
                   </span>
                 </td>
                 <td class="text-end pe-4">
-                  <div class="btn-group shadow-sm border rounded bg-white">
-                    <button class="btn btn-link btn-sm text-info px-2" title="ดูรายละเอียด" (click)="onViewDetails(Viewborrow, borrow)"><i data-feather="eye" class="icon-sm"></i></button>
-                    <button class="btn btn-link btn-sm text-warning px-2 border-start border-end" title="แก้ไข" (click)="editBorrow(kborrow, borrow)">
-                      <i data-feather="edit-2" appFeatherIcon class="icon-sm"></i>
+                  <div class="btn-group border rounded-3 bg-white overflow-hidden shadow-sm">
+                    <button class="btn btn-light btn-sm text-info border-0 px-3" title="ดูรายละเอียด" (click)="onViewDetails(Viewborrow, borrow)">
+                      <i data-feather="eye" style="width: 16px;"></i>
                     </button>
-                    <button class="btn btn-link btn-sm text-info px-2 border-start border-end" title="เพิ่มรายการ" (click)="viewKarupanBorrow(karaupforborw, borrow)">
-                      <i data-feather="file-plus" appFeatherIcon class="icon-sm"></i>
+                    <button class="btn btn-light btn-sm text-warning border-start border-0 px-3" title="แก้ไข" (click)="editBorrow(kborrow, borrow)">
+                      <i data-feather="edit-2" style="width: 16px;"></i>
                     </button>
-                    <button class="btn btn-link btn-sm text-danger px-2" title="ลบ" (click)="deleteBorrow(borrow)">
-                      <i data-feather="trash" appFeatherIcon class="icon-sm"></i>
+                    <button class="btn btn-light btn-sm text-primary border-start border-0 px-3" title="เพิ่มรายการครุภัณฑ์" (click)="viewKarupanBorrow(karaupforborw, borrow)">
+                      <i data-feather="plus-circle" style="width: 16px;"></i>
+                    </button>
+                    <button class="btn btn-light btn-sm text-danger border-start border-0 px-3" title="ลบ" (click)="deleteBorrow(borrow)">
+                      <i data-feather="trash" style="width: 16px;"></i>
                     </button>
                   </div>
                 </td>
@@ -132,16 +157,19 @@
           </table>
         </div>
       </div>
-      <div class="card-footer bg-transparent border-top py-3">
-        <div class="d-flex justify-content-between align-items-center">
-          <div class="d-flex align-items-center">
-            <span class="text-muted small me-2">แสดง</span>
-            <select class="form-select form-select-sm w-auto" [(ngModel)]="pageSize" (change)="refreshData()">
+
+      <div class="card-footer bg-white border-top py-3">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3">
+          <div class="d-flex align-items-center text-muted small">
+            <span>แสดง</span>
+            <select class="form-select form-select-sm mx-2" style="width: 70px; border-radius: 6px;" [(ngModel)]="pageSize" (change)="refreshData()">
               <option [value]="5">5</option>
               <option [value]="10">10</option>
               <option [value]="20">20</option>
             </select>
+            <span>รายการต่อหน้า</span>
           </div>
+          
           <ngb-pagination 
             [(page)]="page" 
             [pageSize]="pageSize" 
