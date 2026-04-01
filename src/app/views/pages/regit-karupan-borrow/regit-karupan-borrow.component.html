@@ -54,8 +54,27 @@
   <div class="col-md-12">
     <div class="card shadow-sm border-0">
       <div class="card-header bg-transparent border-bottom py-3 d-flex justify-content-between align-items-center">
+
         <h5 class="card-title mb-0 fw-bold">ทะเบียนยืม/คืนครุภัณฑ์</h5>
-        <button class="btn btn-primary btn-sm px-3" [routerLink]="['/borrow']">+ เพิ่มรายการ</button>
+      
+        <div class="d-flex gap-2">
+      
+          <!-- search -->
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            style="width:220px"
+            placeholder="ค้นหาชื่อผู้ป่วย..."
+            [(ngModel)]="searchText"
+            (input)="refreshData()"
+          />
+      
+          <button class="btn btn-primary btn-sm px-3" [routerLink]="['/borrow']">
+            + เพิ่มรายการ
+          </button>
+      
+        </div>
+      
       </div>
       <div class="card-body p-0"> <div class="table-responsive">
           <table class="table table-hover align-middle mb-0">
