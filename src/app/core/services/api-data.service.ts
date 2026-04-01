@@ -82,6 +82,9 @@ export class ApiDataService {
   removeKarupan(data:any):Observable<any>{
     return this.http.delete<any>(`${this.urlserver}/removekarupan/${data}`);
   }
+  deleteUser(data:any): Observable<any>{
+    return this.http.delete<any>(`${this.urlserver}/deleteUser/${data}`);
+  }
   // updateKarupan(data:any, file?: File):Observable<any>{
   //   const formData = new FormData();
   //   Object.keys(data).forEach(key => {
