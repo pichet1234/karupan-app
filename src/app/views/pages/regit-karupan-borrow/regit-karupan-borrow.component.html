@@ -137,20 +137,19 @@
                   </span>
                 </td>
                 <td class="text-end pe-4">
-                  <div class="btn-group border rounded-3 bg-white overflow-hidden shadow-sm">
-                    <button class="btn btn-light btn-sm text-info border-0 px-3" title="ดูรายละเอียด" (click)="onViewDetails(Viewborrow, borrow)">
-                      <i data-feather="eye" style="width: 16px;"></i>
+                  <div class="btn-group shadow-sm border rounded bg-white">
+                    <button class="btn btn-link btn-sm text-info px-2" title="ดูรายละเอียด" (click)="onViewDetails(Viewborrow, borrow)">
+                      <i data-feather="eye" class="icon-sm"></i></button>
+                    <button class="btn btn-link btn-sm text-warning px-2 border-start border-end" title="แก้ไข"(click)="editBorrow(kborrow, borrow)">
+                      <i data-feather="edit-2" appFeatherIcon class="icon-sm"></i>
                     </button>
-                    <button class="btn btn-light btn-sm text-warning border-start border-0 px-3" title="แก้ไข" (click)="editBorrow(kborrow, borrow)">
-                      <i data-feather="edit-2" style="width: 16px;"></i>
+                    <button class="btn btn-link btn-sm text-info px-2 border-start border-end" title="เพิ่มรายการ" (click)="viewKarupanBorrow(karaupforborw, borrow)">
+                      <i data-feather="file-plus" appFeatherIcon class="icon-sm"></i>
+                    </button>           
+                    <button class="btn btn-link btn-sm text-danger px-2" title="ลบ" (click)="deleteBorrow(borrow)">
+                      <i data-feather="trash" appFeatherIcon class="icon-sm"></i>           
                     </button>
-                    <button class="btn btn-light btn-sm text-primary border-start border-0 px-3" title="เพิ่มรายการครุภัณฑ์" (click)="viewKarupanBorrow(karaupforborw, borrow)">
-                      <i data-feather="plus-circle" style="width: 16px;"></i>
-                    </button>
-                    <button class="btn btn-light btn-sm text-danger border-start border-0 px-3" title="ลบ" (click)="deleteBorrow(borrow)">
-                      <i data-feather="trash" style="width: 16px;"></i>
-                    </button>
-                  </div>
+                  </div>          
                 </td>
               </tr>
             </tbody>
