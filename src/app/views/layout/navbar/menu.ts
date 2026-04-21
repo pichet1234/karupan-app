@@ -113,7 +113,7 @@ export const MENU: MenuItem[] = [
       }
     ]
   },
-  */
+  
   {
     label: 'UI Kit',
     icon: 'feather',
@@ -449,5 +449,5 @@ export const MENU: MenuItem[] = [
         ]
       }
     ]
-  }
+  }*/
 ];
