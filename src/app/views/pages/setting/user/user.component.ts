@@ -80,6 +80,7 @@ export class UserComponent {
       role: user.role
     });
   }
+
   editUser(){
     const formData = new FormData();
 
@@ -119,6 +120,38 @@ export class UserComponent {
   }
 }
   deleteUser(data:any){
+    Swal.fire({
+      title: 'คุณแน่ใจหรือไม่?',
+      text: '',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'ใช่, ลบเลย!',
+      cancelButtonText: 'ไม่, ยกเลิก'     
+    }).then((result) =>{
+      if (result.isConfirmed) {
+        this.api.deleteUser(data).subscribe({
+          next: (res) =>{
+            Swal.fire({
+              title: res.message,
+              text: 'ข้อมูลถูกลบเรียบร้อยแล้ว',
+              icon: 'success',
+              timer: 1500,
+              showConfirmButton: false             
+             });
+             this.getUser();
+          },
+          error: (err) => {
+            Swal.fire({
+              title: 'เกิดข้อผิดพลาด',
+              text: err?.error?.message || 'ไม่สามารถลบข้อมูลได้',
+              icon: 'error'
+            });
+          }         
+        });
+      }
+    });
   }
 
   openAddUser(user: any){

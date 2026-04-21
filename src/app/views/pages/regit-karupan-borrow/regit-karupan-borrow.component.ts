@@ -26,6 +26,10 @@ import { RouterLink } from '@angular/router';
   styleUrl: './regit-karupan-borrow.component.scss'
 })
 export class RegitKarupanBorrowComponent {
+
+  searchText: string = '';
+  filteredData: any[] = [];
+
   borrows: any[] = [];
   page = 1;                // หน้าปัจจุบัน
   pageSize = 5;            // จำนวนรายการต่อหน้า
@@ -159,10 +163,28 @@ export class RegitKarupanBorrowComponent {
   }
 
   refreshData() {
-    this.pagedData = this.borrows.slice(
-      (this.page - 1) * this.pageSize,
-      (this.page - 1) * this.pageSize + this.pageSize
+
+      // filter search
+  if (this.searchText) {
+    this.filteredData = this.borrows.filter((item: any) =>
+      item.patient?.toLowerCase().includes(this.searchText.toLowerCase())
     );
+  } else {
+    this.filteredData = [...this.borrows];
+  }
+
+  // pagination
+  this.collectionSize = this.filteredData.length;
+
+  const start = (this.page - 1) * this.pageSize;
+  const end = start + this.pageSize;
+
+  this.pagedData = this.filteredData.slice(start, end);
+
+    // this.pagedData = this.borrows.slice(
+    //   (this.page - 1) * this.pageSize,
+    //   (this.page - 1) * this.pageSize + this.pageSize
+    // );
   }
 
   // แปลง status -> badge class
